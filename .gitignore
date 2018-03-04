@@ -1,0 +1,12 @@
+/dist/
+/distTmp/
+/.vscode/
+npm-debug.log
+.DS_Store
+/myworks/
+*.mo
+*.orig
+/oldPro/
+/node_modules/
+.idea/
+package-lock.json
