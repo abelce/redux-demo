@@ -6,6 +6,7 @@ class Counter extends Component {
         return(
             <div>
                 <div>{value}</div>
+                erqwrhqwrehqhroqwruoqwuroquowroqwuro
                 <button onClick={onIncreaseClick}>Increase</button>
             </div>
         )
