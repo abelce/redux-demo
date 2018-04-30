@@ -24,12 +24,12 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: `${process.env.PUBLIC || '/'}`,
-        filename: isDev() ? "[name].[hash].js" : "[name].[chunkhash].js"
+        filename: isDev() ? "[name].[hash].js" : "[name].[hash].js"
     },
     module: {
         rules: [
             {
-                test: /\.jsx$|\.js$/,
+                test: /\.jsx$|\.js$|\.tsx$|\.ts$/,
                 include: /src/,
                 exclude: [
                     /node_modules/,
@@ -120,7 +120,7 @@ module.exports = {
 }
 
 function isDev() {
-    return process.env.APP_ENV === 'testingPMS' || process.env.APP_ENV === 'development'
+    return process.env.APP_ENV === 'development'
 }
 
 function scssRules({global}) {

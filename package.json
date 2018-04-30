@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "export APP_ENV=development && webpack-dev-server"
+    "dev": "export APP_ENV=development && webpack-dev-server",
+    "build": "export APP_ENV=production && rm -rf dist  && webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
