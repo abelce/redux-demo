@@ -19,7 +19,7 @@ module.exports = {
         historyApiFallback: true
     },
     entry: {
-        app: __dirname + '/src/app.jsx'
+        app: __dirname + '/src/app.tsx'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -60,7 +60,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
+                    fallback: "style-loader?modules&localIdentName=[path][name]---[local]---[hash:base64:5]",
                     use: "css-loader"
                 })
             },
@@ -115,7 +115,7 @@ module.exports = {
     ],
     resolve: {
         modules: ['src', 'node_modules'],
-        extensions: ['.js', '.jsx', '.scss'],
+        extensions: ['.js', '.tsx', '.ts', '.scss'],
     }
 }
 
