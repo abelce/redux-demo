@@ -1,10 +1,10 @@
 import * as React from 'react';
-import './style.scss'
+import * as style from'./style.scss'
 
 class NewsFlash extends React.Component {
   render() {
       return(
-          <div className="newsFlash">
+          <div className={style.newsFlash}>
               kuaixun
           </div>
       )

@@ -42,6 +42,7 @@
     "immutable": "^3.8.2",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "typescript": "^2.8.3"
+    "typescript": "^2.8.3",
+    "typings-for-css-modules-loader": "^1.7.0"
   }
 }

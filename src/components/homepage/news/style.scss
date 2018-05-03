@@ -6,6 +6,7 @@
 }
 
 .newContainer {
+    width: 100%;
 
 }
 
@@ -26,20 +27,27 @@
             width: 6px;
             height: 6px;
             // background-color: #3d464d;
-            opacity: 0;
+            // opacity: 0;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        .active {
+            display: inline-block;
+            color: #3d464d;
+        }
+        .active::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #3d464d;
+            opacity: 1;
             border-radius: 50%;
             vertical-align: middle;
             margin-right: 6px;
         }
 
     }
-}
-
-.active {
-
-}
-.active::before {
-    content: '';
-    // background-color: #3d464d;
-    opacity: 1;
 }

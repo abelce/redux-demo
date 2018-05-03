@@ -1,13 +1,13 @@
 import * as React from 'react';
-import "./style.scss";
+import * as style from "./style.scss";
 import Tabs from './tab';
 
 class ListContainer extends React.Component {
   
   render () {
       return (
-        <div className="newContainer">
-        <Tabs/>
+        <div className={style.newContainer}>
+          <Tabs/>
           
         </div>
       )

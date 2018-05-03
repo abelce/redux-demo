@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Carousel from '../../common/carousel';
-import "./style.scss";
+import * as style from "./style.scss";
 import ListContainer from './listContainer';
 
 class News extends React.Component {
@@ -11,7 +11,7 @@ class News extends React.Component {
     ]
   render () {
       return (
-        <div className="news">
+        <div className={style.news}>
           {/* <Carousel images={this.images}/> */}
           <ListContainer/>
         </div>

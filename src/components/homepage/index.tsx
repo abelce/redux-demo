@@ -1,12 +1,12 @@
 import * as React from 'react';
 import News from './news';
 import NewsFlash from './newsFlash';
-import './style.scss';
+import * as style from './style.scss';
 
 class Homepage extends React.Component {
   render () {
       return(
-          <div className="homepage">
+          <div className={style.homepage}>
             <News/>
             <NewsFlash/>
           </div>

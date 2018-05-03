@@ -1,5 +1,5 @@
 import * as React from 'react';
-import style from './style.scss';
+import * as style from './style.scss';
 
 class Tab extends React.Component {
   tabs = [
@@ -35,7 +35,6 @@ class Tab extends React.Component {
   }
 
   handleOnClick = (e: any) => {
-    debugger
     const attr = Array.from(e.target.attributes).find((attr: HTMLObjectElement) => attr.name === 'value');
     if (attr) {
       this.setState({
@@ -46,10 +45,10 @@ class Tab extends React.Component {
 
   render() {
     return (
-      <ul className="tabs" onClick={this.handleOnClick}>
+      <ul className={style.tabs} onClick={this.handleOnClick}>
         {this.tabs.map( tab => <li key={tab.id} 
           value={tab.value} 
-          className={this.state.activeTab === tab.value ? style.active : ""}>
+          className={this.state.activeTab === tab.value ? "active" : ""}>
             {tab.label}
           </li>)}
       </ul>
