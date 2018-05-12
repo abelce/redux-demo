@@ -10,7 +10,7 @@ class MyUpload extends React.Component {
     name: 'file',
     // multiple: true,
     listType: 'picture',
-    action: 'http:/111.231.192.70:9010/upload',
+    action: 'http://111.231.192.70:9010/upload',
     // headers: {
       'Access-Control-Allow-Origin': '*',
     //   "Access-Control-Allow-Headers": 'Content-Type',
