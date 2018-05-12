@@ -9,13 +9,13 @@ class MyUpload extends React.Component {
   config = {
     name: 'file',
     // multiple: true,
-    listType: 'picture',
+  //  listType: 'picture',
     action: 'http://111.231.192.70:9010/upload',
     // headers: {
       'Access-Control-Allow-Origin': '*',
     //   "Access-Control-Allow-Headers": 'Content-Type',
     //   "Access-Control-Allow-Method": "PUT,GET,POST,OPTIONS",
-      'Content-Type': 'multipart/form-data',
+    //  'Content-Type': 'multipart/form-data',
     // },
     onChange(info: any) {
       const status = info.file.status;
