@@ -14,7 +14,7 @@ module.exports = {
         disableHostCheck: true,
         host: "0.0.0.0",
         hot: true,
-        port: 3001,
+        port: 3010,
         contentBase: __dirname + '/dist',
         historyApiFallback: true
     },
