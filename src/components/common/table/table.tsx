@@ -2,13 +2,14 @@ import * as React from 'react';
 
 class Table extends React.Component {
 
-  render() {
-    return (
-      <div>
-        test
-      </div>
-    )
-  }
+  // _dataSource
+  // render() {
+  //   return (
+  //     <div>
+  //       test
+  //     </div>
+  //   )
+  // }
 
 }
 

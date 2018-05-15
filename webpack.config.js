@@ -44,6 +44,7 @@ module.exports = {
                             style: "css"
                         }],
                         ["transform-runtime"],
+                        ['transform-decorators-legacy'],
                     ]
                 }
             },

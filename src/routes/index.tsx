@@ -3,15 +3,17 @@ import { Switch, Route, } from 'react-router-dom';
 import { Layout } from 'antd'
 import Homepage from '../components/homepage';
 import Header from '../layout/header';
+import Upload from '../components/upload';
 
 class Routes extends React.Component {
   render() {
       return(
-          <Layout>
+          <Layout style={{background: '#ffffff'}}>
             <Header/>
             <Layout.Content style={{padding: "0 32px"}}>
               <Switch>
                 <Route exact path="/" component={Homepage}/>
+                <Route exact path="/upload" component={Upload}/>
               </Switch>
             </Layout.Content>
           </Layout>

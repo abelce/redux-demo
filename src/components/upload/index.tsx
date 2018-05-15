@@ -1,73 +1,70 @@
 import * as React from 'react';
-import { 
-  Upload,
-  Icon, 
-  message,
-  Select,
-  Table,
- } from 'antd';
-const Dragger = Upload.Dragger;
-const Option = Select.Option;
+import MyUpload from './upload';
+import { Icon, message, Table } from 'antd';
+import * as style from './style.scss';
 
-console.log('upload.tsx')
-import { test } from './test';
-console.log(test())
+interface File {
+  id: string;
+  fileName: string;
+  type: string;
+  createDate: string;
+  path: string;
+}
 
-class MyUpload extends React.Component {
-
-  props = {
-    name: 'file',
-    // multiple: true,
-    action: '//jsonplaceholder.typicode.com/posts/',
-    onChange(info: any) {
-      const status = info.file.status;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  };
-
-  options = [
-    {
-      id: '1',
-      name: 'javascript'
-    }, {
-      id: '2',
-      name: 'jp(e)g',
-    }, {
-      id: '3',
-      name: 'html',
-    }, 
-  ]
+class Upload extends React.Component {
+  state = {
+    data:[{
+      id: '123',
+      fileName: '1.jpg',
+      type: 'jpg',
+      createDate: '2018-5-15',
+      path: '/data/upload_files'
+    }]
+  }
 
   render() {
     return (
-      <div>
-        <div>
-          <Select>
-            {this.options.map(p => <Option value={p.id}>{p.name}</Option>)}
-          </Select>
+      <div className={style.container}>
+        <div className="upload">
+          <MyUpload/>          
         </div>
-        <Dragger {...this.props}>
-          <p className="ant-upload-drag-icon">
-            <Icon type="inbox" />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
-        </Dragger>
-
-        <div>
-
+        <div className="table">
+          <Table 
+            dataSource={this.state.data}
+            columns={this.columns}
+          />
         </div>
       </div>
-      
     )
   }
+
+  columns = [
+    {
+      dataIndex: 'id',
+      title:'编号',
+      key: 'id',
+    },{
+      dataIndex: 'fileName',
+      title:'文件名',
+      key: 'fileName',
+    },{
+      dataIndex: 'type',
+      title:'类型',
+      key: 'type',
+    },{
+      dataIndex: 'createDate',
+      title:'创建时间',
+      key: 'createDate',
+    },{
+      dataIndex: 'createDate',
+      title:'创建时间',
+      key: 'createDate',
+    },{
+      dataIndex: 'path',
+      title:'',
+      key: 'path',
+    },
+  ]
 }
 
-export default MyUpload;
+export default Upload
