@@ -4,6 +4,7 @@ import { Layout } from 'antd'
 import Homepage from '../components/homepage';
 import Header from '../layout/header';
 import Upload from '../components/upload';
+import Artice from '../components/article';
 
 class Routes extends React.Component {
   render() {
@@ -14,6 +15,7 @@ class Routes extends React.Component {
               <Switch>
                 <Route exact path="/" component={Homepage}/>
                 <Route exact path="/upload" component={Upload}/>
+                <Route exact path="/article" component={Artice}/>
               </Switch>
             </Layout.Content>
           </Layout>

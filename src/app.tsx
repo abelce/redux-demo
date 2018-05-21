@@ -4,23 +4,10 @@ import  {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
 import Routes from './routes';
+import Reducer from './reducer';
 import './assets/style/index.scss'
 
-
-const counter = (state = {count: 0}, action: any) => {
-    const {count} = state;
-    switch (action.type) {
-        case 'increase':
-            return {count: count + 1};
-        default:
-            return state;
-    }
-}
-
-const store = createStore(counter);
-
-
-
+const store = createStore(Reducer);
 
 const render = () => {
   return (
