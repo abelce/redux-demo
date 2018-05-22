@@ -69,13 +69,6 @@ module.exports = {
                 test: /\.scss$/,
                 loader: [
                     'style-loader',
-                    // {
-                    //     loader: 'css-loader',
-                    //     options: {
-                    //         importLoaders: 1,
-                    //         minimize: !isDev()
-                    //     }
-                    // },
                     {
                         loader: 'typings-for-css-modules-loader',
                         options: {
