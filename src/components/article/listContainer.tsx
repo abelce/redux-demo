@@ -20,10 +20,15 @@ const mapDispatchToProps = (dispatch: any) => {
 interface IlistCOntiner {
   articles: Array<article>;
   getArticle: Function;
+  dispatch: any;
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps)
 class ListContainer extends React.Component<IlistCOntiner> {
+
+  componentDidMount() {
+    this.props.dispatch(getArticleList('/article/list'));
+  }
 
   render () {
     return (

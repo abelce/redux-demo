@@ -47,6 +47,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.3.2",
+    "redux-saga": "^0.16.0",
     "typescript": "^2.8.3",
     "typings-for-css-modules-loader": "^1.7.0"
   }
