@@ -10,8 +10,6 @@ const mapStateToProps = (state: any) => {
   }
 }
 const mapDispatchToProps = (dispatch: any) => {
-  const a = getArticleList();
-  console.log(a);
   return {
     getArticle: dispatch(getArticleList()),
   }
@@ -27,6 +25,10 @@ interface IlistCOntiner {
 class ListContainer extends React.Component<IlistCOntiner> {
 
   componentDidMount() {
+    this.queryArticles();
+  }
+
+  queryArticles = () => {
     this.props.dispatch(getArticleList('/article/list'));
   }
 

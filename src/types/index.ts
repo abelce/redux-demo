@@ -1,6 +1,8 @@
 export type actionType = {
   type: string;
   status?: string;
+  payload?: any;
+  meta?: object;
 }
 
 export type article = {

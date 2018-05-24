@@ -6,8 +6,9 @@ const initialState = {
   articles: [],
 }
 
-
 const reducer = (state = initialState, action: actionType) => {
+  console.log(action)
+  
   switch (action.type) {
     case constants.GET_ARITICLE_LIST: 
       return {
@@ -20,6 +21,9 @@ const reducer = (state = initialState, action: actionType) => {
       break;
     case constants.UPDATE_ARTICLE:
       break;
+    case constants.FETCH_ARTICLE_SUCCESS:
+    debugger
+      // const {} = action;
     default:
       return state;
   }
