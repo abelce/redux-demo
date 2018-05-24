@@ -3,6 +3,7 @@ import Item from './item';
 import { article } from '../../types'
 import { connect } from 'react-redux';
 import { getArticleList } from '../../actions/articleAction';
+import * as style from './style.scss';
 
 const mapStateToProps = (state: any) => {
   return {
@@ -33,9 +34,10 @@ class ListContainer extends React.Component<IlistCOntiner> {
   }
 
   render () {
+    console.log(this.props.articles)
     return (
-      <div>
-        {this.props.articles.map(article => <Item article={article}/>)}
+      <div className={style.listContainer}>
+        {this.props.articles.map(article => <Item key={article.id} article={article}/>)}
       </div>
     )
   }

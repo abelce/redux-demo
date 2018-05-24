@@ -3,6 +3,8 @@ import {
   Tag 
 } from 'antd';
 import { article } from '../../types'
+import * as style from './style.scss';
+
 
 type itemType = {
   article: article;
@@ -10,8 +12,12 @@ type itemType = {
 
 const Item = ({ article }: itemType) => {
   return (
-    <div>
-      <h3>{ article.title }</h3>
+    <div className={style.node}>
+      <h1><a href={void 0}>{ article.title }</a></h1>
+      <div className="header">
+        <div className="submitted"></div>
+        <div className="tags"></div>
+      </div>
       <p>{article.description}</p>
       <div>
         <Tag>{article.createTime}</Tag>

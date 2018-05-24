@@ -3,6 +3,7 @@ export type actionType = {
   status?: string;
   payload?: any;
   meta?: object;
+  data?: any;
 }
 
 export type article = {

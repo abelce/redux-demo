@@ -44,6 +44,7 @@
     "@types/react-router-dom": "^4.2.6",
     "antd": "^3.2.3",
     "immutable": "^3.8.2",
+    "marked": "^0.4.0",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.3.2",

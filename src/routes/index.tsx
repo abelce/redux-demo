@@ -5,6 +5,7 @@ import Homepage from '../components/homepage';
 import Header from '../layout/header';
 import Upload from '../components/upload';
 import Artice from '../components/article';
+import ArticleDetail from '../components/article/detail';
 
 class Routes extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class Routes extends React.Component {
                 <Route exact path="/" component={Homepage}/>
                 <Route exact path="/upload" component={Upload}/>
                 <Route exact path="/article" component={Artice}/>
+                <Route exact path="/article/detail" component={ArticleDetail}/>
               </Switch>
             </Layout.Content>
           </Layout>

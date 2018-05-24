@@ -6,6 +6,10 @@ const initialState = {
   articles: [],
 }
 
+function getRequestData({ data }: any) {
+  return data.data;
+}
+
 const reducer = (state = initialState, action: actionType) => {
   console.log(action)
   
@@ -22,8 +26,10 @@ const reducer = (state = initialState, action: actionType) => {
     case constants.UPDATE_ARTICLE:
       break;
     case constants.FETCH_ARTICLE_SUCCESS:
-    debugger
-      // const {} = action;
+      
+      return {
+        articles: getRequestData(action.data),
+      }
     default:
       return state;
   }

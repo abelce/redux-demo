@@ -4,12 +4,11 @@ import * as constants from '../constants';
 
 const AxiosInstance = axios.create({
   baseURL: 'http://111.231.192.70:9001',
-
-})
+});
 
 function* fetchArtice(url: string) {
   const response = yield call(AxiosInstance.get, url);
-  put({type: constants.FETCH_ARTICLE_SUCCESS, data: response});
+  yield put({type: constants.FETCH_ARTICLE_SUCCESS, data: response});
 }
 
 function* watchFetchRequest() {
