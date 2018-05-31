@@ -1,10 +1,34 @@
 import { createAction } from 'redux-actions'
 import * as constants from '../constants';
 
-export const getArticleList = createAction(constants.GET_ARITICLE_LIST);
+// articel list
+export const REQUEST_ARTICLE_LIST = 'REQUEST_ARTICLE_LIST';
+export const SUCCESS_ARTICLE_LIST = 'SUCCESS_ARTICLE_LIST';
+export const FAILURE_ARTICLE_LIST = 'FAILURE_ARTICLE_LIST';
+export const requestArticleList = createAction(REQUEST_ARTICLE_LIST);
+export const successArticleList = createAction(SUCCESS_ARTICLE_LIST);
+export const failureArticleList = createAction(FAILURE_ARTICLE_LIST);
 
-export const getArticleById = createAction(constants.GET_ARTICLE_BY_ID);
+// article by id
+export const REQUEST_ARTICLE_BY_ID = 'REQUEST_ARTICLE_BY_ID';
+export const SUCCESS_ARTICLE_BY_ID = 'SUCCESS_ARTICLE_BY_ID';
+export const FAILURE_ARTICLE_BY_ID = 'FAILURE_ARTICLE_BY_ID';
+export const requestArticleById = createAction(REQUEST_ARTICLE_BY_ID);
+export const successArticleById = createAction(SUCCESS_ARTICLE_BY_ID);
+export const failureArticleById = createAction(FAILURE_ARTICLE_BY_ID);
 
-export const createArticle = createAction(constants.CREATE_ARTICLE);
+// article create
+export const REQUEST_ARTICLE_CREATE = 'REQUEST_ARTICLE_CREATE';
+export const SUCCESS_ARTICLE_CREATE = 'SUCCESS_ARTICLE_CREATE';
+export const FAILURE_ARTICLE_CREATE = 'FAILURE_ARTICLE_CREATE';
+export const requestArticleCreate = createAction(REQUEST_ARTICLE_CREATE);
+export const successArticleCreate = createAction(SUCCESS_ARTICLE_CREATE);
+export const failureArticleCreate = createAction(FAILURE_ARTICLE_CREATE);
 
-export const updateArticle = createAction(constants.UPDATE_ARTICLE);
+// article update
+export const REQUEST_ARTICLE_UPDATE = 'REQUEST_ARTICLE_UPDATE';
+export const SUCCESS_ARTICLE_UPDATE = 'SUCCESS_ARTICLE_UPDATE';
+export const FAILURE_ARTICLE_UPDATE = 'FAILURE_ARTICLE_UPDATE';
+export const requestArticleUpdate = createAction(REQUEST_ARTICLE_UPDATE);
+export const successArticleUpdate = createAction(SUCCESS_ARTICLE_UPDATE);
+export const failureArticleUpdate = createAction(FAILURE_ARTICLE_UPDATE);

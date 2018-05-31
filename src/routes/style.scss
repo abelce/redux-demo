@@ -1,0 +1,12 @@
+.layout {
+  background: #ffffff;
+  height: 100vh;
+}
+
+.content {
+  padding: 0 32px;
+  display: flex;
+  > div{
+    flex: 1;
+  }
+}

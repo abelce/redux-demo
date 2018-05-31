@@ -1,35 +1,70 @@
 import { actionType } from '../types'
-import * as constants from '../constants';
-//article
+import { article } from '../types/index';
+import {
+  REQUEST_ARTICLE_LIST,
+  SUCCESS_ARTICLE_LIST,
+  REQUEST_ARTICLE_BY_ID,
+  SUCCESS_ARTICLE_BY_ID,
+} from '../actions/articleAction';
 
 const initialState = {
-  articles: [],
+  articles: {
+    fetching: false,
+    ids: [],
+    all: {}
+  }
 }
 
-function getRequestData({ data }: any) {
-  return data.data;
+function getArticlesData(state: any, { data }: any) {
+  const {articles} = state;
+  data.data.forEach((at: article) => {
+    if (!state.articles.ids.includes(at.id)) {
+      articles.ids.push(at.id)
+    }
+    articles.all[at.id] = at;
+  });
+  articles.fetching = false;
+
+  return {
+    ...state,
+    articles,
+  };
+}
+
+function getArticle (state: any, {data: {data}}: any) {
+  if (!data) {
+    return state;
+  }
+  const {articles} = state;
+  articles.all[data.id] = data;
+  return {
+    ...state,
+    articles,
+  };
 }
 
 const reducer = (state = initialState, action: actionType) => {
-  console.log(action)
-  
+  const { articles } = state;
   switch (action.type) {
-    case constants.GET_ARITICLE_LIST: 
+    case REQUEST_ARTICLE_LIST:
+      articles.fetching = true;
       return {
-        articles: [],
-      }
+        ...state,
+        articles,
+      };
+    case SUCCESS_ARTICLE_LIST:
+      return getArticlesData(state, action.data)
       break;
-    case constants.GET_ARTICLE_BY_ID:
-      break;
-    case constants.CREATE_ARTICLE:
-      break;
-    case constants.UPDATE_ARTICLE:
-      break;
-    case constants.FETCH_ARTICLE_SUCCESS:
-      
+    case REQUEST_ARTICLE_BY_ID:
+      articles.fetching = true;
       return {
-        articles: getRequestData(action.data),
-      }
+        ...state,
+        articles,
+      };
+      break;
+    case SUCCESS_ARTICLE_BY_ID:
+      return getArticle(state, action.data)
+      break;
     default:
       return state;
   }

@@ -12,12 +12,54 @@
     h1 {
       font-size: 24px;
     }
+    p {
+      font-size: 16px;
+    }
     .header {
       font-size: 12px;
       margin-bottom: 10px;
       padding-bottom: 5px;
       color: #ccc;
       border-bottom: 1px dashed #ddd;
+    }
+  }
+}
+
+.edit {
+  display: flex;
+  flex-direction: column;
+  :global{
+    .header {
+      padding: 16px;
+      display: flex;
+      input {
+        flex: 1;
+        border-radius: 0;
+      }
+      button {
+        margin-left: 20px;
+      }
+    }
+    .content{
+      padding: 0 20px;
+      flex: 1;
+      display: flex;
+      .editor, .preview {
+        flex: 1;
+      }
+      .editor {
+        textarea {
+          height: 100%;
+          border-radius: 0;
+          :focus, :hover {
+            outline: none;
+          }
+        }
+      }
+      .divider {
+        width: 4px;
+      }
+
     }
   }
 }

@@ -3,12 +3,12 @@ import * as Marked from 'marked'
 import * as markedstyle from './markedstyle.scss';
 
 interface IrenderMarked {
-  content: string;
+  markdowncontent: string;
 }
 
-const RenderMarked = ({content = ''}: IrenderMarked) => {
+const RenderMarked = ({markdowncontent = ''}: IrenderMarked) => {
   return (
-    <div className={markedstyle.marked} dangerouslySetInnerHTML={{__html: Marked.parse(content)}}></div>
+    <div className={markedstyle.marked} dangerouslySetInnerHTML={{__html: Marked.parse(markdowncontent)}}></div>
   )
 }
 

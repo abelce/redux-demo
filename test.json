@@ -1,0 +1,124 @@
+{
+  "markdowncontent": 
+  "```Resize Observer```是一个新的JavaScript API，与[```Intersection Observer API```](https://alligator.io/js/intersection-observer/)、[```Mutation Observer```](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)等其他观察者API非常相似。
+它允许在尺寸发生变化时通知元素。
+
+##### 基本用法
+--------
+
+使用Resize Observer非常简单，只需实例化一个新的ResizeObserver对象并传入一个回调函数，该函数接收观察到的条目
+
+```
+const myObserver = new ResizeObserver(entries => {
+  // iterate over the entries, do something.
+});
+```
+然后，我们可以在实例上调用```observe```并传入一个元素来观察
+```
+const someEl = document.querySelector('.some-element');
+const someOtherEl = document.querySelector('.some-other-element');
+
+myObserver.observe(someEl);
+myObserver.observe(someOtherEl);
+```
+
+对于每个entry，我们都会得到一个包含```contentRect```和一个```target```属性的对象。```target```是DOM元素本身，contentRect是具有以下属性的对象：width，height，x，y，top，right，bottom和left。
+
+与元素的```getBoundingClientRect```不同，```contentRect```的```width```和```height```值不包含```padding```。```contentRect.top```是元素的顶部```padding```，contentRect.left是元素的左侧```padding```。
+
+比如要打印出被监听元素寸尺变化时```width```和```height```的值，可以像下面这样做:
+```
+const myObserver = new ResizeObserver(entries => {
+  entries.forEach(entry => {
+    console.log('width', entry.contentRect.width);
+    console.log('height', entry.contentRect.height);
+  });
+});
+
+const someEl = document.querySelector('.some-element');
+myObserver.observe(someEl);
+```
+
+
+##### 示例
+
+下面是一个简单的演示，以查看Resize Observer API的实际应用。
+通过调整浏览器窗口的大小来尝试一下，注意渐变角度和文本内容仅在元素的大小受到影响时才发生变化：
+
+
+
+让我们来分解这个简单的演示。首先，我们从一些简单的标记开始：
+
+```
+<div class=\"box\">
+  <h3 class=\"info\"></h3>
+</div>
+<div class=\"box small\">
+  <h3 class=\"inf\"></h3>
+</div>
+```
+样式：
+```
+.box {
+  text-align: center;
+  height: 20vh;
+  border-radius: 8px;
+  box-shadow: 0 0 4px var(--subtle);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 5vmin;
+  text-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.box.small {
+  max-width: 550px;
+  margin: 1rem auto;
+}
+```
+
+请注意，我们不需要将渐变背景应用于```.box```元素。
+当页面第一次加载时，resize观察者将被调用一次，然后我们将应用我们的渐变。
+现在，当我们添加下面的JavaScript代码时，就会发生奇迹了：
+
+```
+const boxes = document.querySelectorAll('.box');
+
+const myObserver = new ResizeObserver(entries => {
+  for (let entry of entries) {
+    const infoEl = entry.target.querySelector('.info');
+    const width = Math.floor(entry.contentRect.width);
+    const height = Math.floor(entry.contentRect.height);
+
+    const angle = Math.floor(width / 360 * 100);
+    const gradient = `linear-gradient(${ angle }deg, rgba(0,143,104,1) 50%, rgba(250,224,66,1) 50%)`;
+
+    entry.target.style.background = gradient;
+
+    infoEl.innerText = `I'm ${ width }px and ${ height }px tall`;
+  }
+});
+
+boxes.forEach(box => {
+  myObserver.observe(box);
+});
+```
+
+在这里，我们使用for ... of循环遍历观察者回调中的条目，但在条目上调用forEach将工作得一样。
+请注意，我们还必须迭代可以观察的元素，并调用每个元素的观察值。
+
+####浏览器支持
+浏览器支持现在非常糟糕，只有Chrome 64+支持Resize Observer开箱即用。
+谢天谢地，我们可以同时使用polyfill。
+该polyfill基于MutationObserver API。
+
+#####参考书籍
++ [A Look at the Resize Observer JavaScript API](https://alligator.io/js/resize-observer/)
+"
+}

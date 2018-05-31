@@ -1,25 +1,24 @@
 import * as React from 'react';
 import Item from './item';
 import { article } from '../../types'
-import { connect } from 'react-redux';
-import { getArticleList } from '../../actions/articleAction';
+import { connect, DispatchProp } from 'react-redux';
+import { requestArticleList } from '../../actions/articleAction';
 import * as style from './style.scss';
 
 const mapStateToProps = (state: any) => {
   return {
-    articles: state.articles
+    articles: state.articles.ids.map((id: string) => state.articles.all[id])
   }
 }
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    getArticle: dispatch(getArticleList()),
-  }
-}
+// const mapDispatchToProps = (dispatch: any) => {
+//   return {
+//     getArticle: dispatch(getArticleList()),
+//   }
+// }
 
-interface IlistCOntiner {
+interface IlistCOntiner extends DispatchProp<object>{
   articles: Array<article>;
   getArticle: Function;
-  dispatch: any;
 }
 
 @connect(mapStateToProps)
@@ -30,7 +29,7 @@ class ListContainer extends React.Component<IlistCOntiner> {
   }
 
   queryArticles = () => {
-    this.props.dispatch(getArticleList('/article/list'));
+    this.props.dispatch(requestArticleList('/article/list'));
   }
 
   render () {
