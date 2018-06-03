@@ -21,7 +21,9 @@ const Item = ({ article }: itemType) => {
         <div className="submitted"></div>
         <div className="tags"></div>
       </div>
-      <p>{article.description}</p>
+      <Link to={`/article/${article.id}`}>
+        <p className="desription">{article.description}...</p>
+      </Link>
       <div>
         <Tag>{article.createTime}</Tag>
       </div>

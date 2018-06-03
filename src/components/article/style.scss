@@ -14,6 +14,7 @@
     }
     p {
       font-size: 16px;
+      color: #000;
     }
     .header {
       font-size: 12px;
@@ -21,6 +22,21 @@
       padding-bottom: 5px;
       color: #ccc;
       border-bottom: 1px dashed #ddd;
+    }
+  }
+}
+
+.detail {
+  margin-top: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  :global {
+    .optioninfo {
+      display: flex;
+      justify-content: space-between;
+    }
+    .createTime {
+      color: #858585
     }
   }
 }
@@ -45,12 +61,18 @@
       flex: 1;
       display: flex;
       .editor, .preview {
-        flex: 1;
+        // flex: 1;
+        width: 50%;
+      }
+      .preview {
+        padding: 4px 12px;
+        overflow-y: auto;
       }
       .editor {
         textarea {
           height: 100%;
           border-radius: 0;
+          outline: none;
           :focus, :hover {
             outline: none;
           }
@@ -58,6 +80,7 @@
       }
       .divider {
         width: 2px;
+        padding: 4px 11px;
       }
 
     }
