@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import Routes from './routes';
 import './assets/style/index.scss'
 import configureStore from './store';
+import Modals from './components/common/modals';
 
 const store = configureStore();
 const render = () => {
@@ -12,7 +13,7 @@ const render = () => {
     ReactDom.render(
         <Provider store={store}>
           <BrowserRouter>
-            <Routes/>            
+            <Routes/>
           </BrowserRouter>
         </Provider>,
         document.getElementById('app')

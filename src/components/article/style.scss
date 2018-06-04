@@ -6,7 +6,7 @@
 .node {
   margin-bottom: 24px;
   border-bottom: 1px solid #d3d7d9;
-  padding-bottom: 24px;
+  padding-bottom: 8px;
 
   :global {
     h1 {
@@ -22,6 +22,9 @@
       padding-bottom: 5px;
       color: #ccc;
       border-bottom: 1px dashed #ddd;
+    }
+    .createTime {
+      color: #858585;
     }
   }
 }

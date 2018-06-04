@@ -8,6 +8,7 @@ import Artice from '../components/article';
 import ArticleDetail from '../components/article/detail';
 import Edit from '../components/article/edit';
 import * as style from './style.scss';
+import Modals from '../components/common/modals';
 
 class Routes extends React.Component {
   render() {
@@ -24,6 +25,7 @@ class Routes extends React.Component {
                 <Route exact path="/article/edit/:id" component={Edit}/>                
               </Switch>
             </Layout.Content>
+            <Modals/>                            
           </Layout>
       )
   } 

@@ -9,6 +9,8 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import RenderMarked from './renderMarked';
 import { requestArticleById, requestArticleCreate, requestArticleUpdate } from '../../actions/articleAction';
 import * as style from './style.scss';
+import Modals from '../common/modals';
+import OptionsModal from './optionsModal';
 
 const mapStateToProps = (state: any, props: any) => {
   return {
@@ -54,11 +56,7 @@ class Edit extends React.Component {
   }
 
   handleSave = () => {
-    const {article} = this.state;
-    article.description = article.markdowncontent.substr(0, 200);    
-    this.props.match.params['id'] === 'new'
-    ? this.props.dispatch(requestArticleCreate({url: '/article', article}))
-    : this.props.dispatch(requestArticleUpdate({url: `/article/${this.props.match.params['id']}`, article}));
+    this.handleShowOptions();
   }
 
   handleTitleChange = (e: any) => {
@@ -67,6 +65,19 @@ class Edit extends React.Component {
     _.set(article, 'title', e.target.value);
     this.setState({
       article
+    })
+  }
+
+  handleShowOptions = () => {
+    Modals.show(OptionsModal, {article: this.state.article})
+    .then((data) => {
+
+      const {article} = this.state;
+      article.description = article.markdowncontent.substr(0, 200);    
+      this.props.match.params['id'] === 'new'
+      ? this.props.dispatch(requestArticleCreate({url: '/article', article}))
+      : this.props.dispatch(requestArticleUpdate({url: `/article/${this.props.match.params['id']}`, article}));
+
     })
   }
 
