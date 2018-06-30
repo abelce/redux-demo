@@ -20,21 +20,18 @@ const mapStateToProps = (state: any, props: any) => {
   }
 }
 
-@connect(mapStateToProps)
 @withRouter
+@connect(mapStateToProps)
 class EditContainer extends React.Component {
   state = {
     article: null,
-    // article: {
-    //   markdowncontent: ''
-    // }
   }
 
   constructor(props: any) {
     super(props)
     if (this.props.article) {
       this.state.article = this.props.article;
-    } 
+    }
   }
 
   componentDidMount() {
@@ -44,11 +41,9 @@ class EditContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (this.props.match.params['id'] !== 'new' && !this.props.article) {
     this.setState({
       article: nextProps.article,
     })
-    // }
   }
 
   handleMarkdownChange = (e: any) => {

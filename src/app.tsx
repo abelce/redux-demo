@@ -27,6 +27,10 @@ addLocaleData([{
  }])
 //  let languageCode = getLanguageCode();
 
+store.subscribe(() =>
+  console.log(store.getState())
+)
+
 const render = () => {
   return (
     ReactDom.render(

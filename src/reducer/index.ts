@@ -68,8 +68,12 @@ const reducer = (state = initialState, action: actionType) => {
       break;
     case SUCCESS_ARTICLE_UPDATE:
       const {article} = action;
-      state.articles.all[article.id] = article;
-      return state
+      // const { articles } = state;
+      articles.all[article.id] = article;
+      return {
+        ...state,
+        articles,
+      };
     default:
       return state;
   }
