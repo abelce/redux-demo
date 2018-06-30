@@ -12,7 +12,7 @@ import {
   SUCCESS_ARTICLE_UPDATE,
 
 } from '../actions/articleAction';
-import { article } from '../types';
+import { Article } from '../types';
 
 const AxiosInstance = axios.create({
   baseURL: 'http://111.231.192.70:9001',
@@ -23,6 +23,12 @@ const AxiosInstance = axios.create({
     'Content-Type': 'application/json;charset=utf-8',
   }
 });
+
+const buildArticleData = (article: Article) => {
+  article.description = article.markdowncontent.substr(0, 200);
+  article.tags = article.tags.join(',');
+  return article;
+}
 
 function* fetchArtices(url: string) {
   const response = yield call(AxiosInstance.get, url);
@@ -35,13 +41,13 @@ function* fetchArticeByID(url: string) {
 }
 
 function* createArticle({url, article}: any) {
-  const response = yield call(AxiosInstance.post, url, article);
+  const response = yield call(AxiosInstance.post, url, buildArticleData(article));
   yield put({type: SUCCESS_ARTICLE_CREATE, data: response});
 }
 
 function* udpateArticle({url, article}: any) {
-  const response = yield call(AxiosInstance.put, url, article);
-  yield put({type: SUCCESS_ARTICLE_UPDATE, data: response});
+  const response = yield call(AxiosInstance.put, url, buildArticleData(article));
+  yield put({type: SUCCESS_ARTICLE_UPDATE, data: response, article});
 }
 
 function* watchFetchArticleList() {

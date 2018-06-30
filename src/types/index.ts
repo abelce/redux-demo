@@ -4,9 +4,10 @@ export type actionType = {
   payload?: any;
   meta?: object;
   data?: any;
+  article?: any;
 }
 
-export type article = {
+export type Article = {
   id: string;
   title: string;
   markdowncontent: string;

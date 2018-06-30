@@ -22,6 +22,7 @@
       padding-bottom: 5px;
       color: #ccc;
       border-bottom: 1px dashed #ddd;
+      
     }
     .createTime {
       color: #858585;
@@ -46,6 +47,7 @@
 
 .edit {
   display: flex;
+  flex: 1;
   flex-direction: column;
   :global{
     .header {
@@ -53,7 +55,7 @@
       display: flex;
       input {
         flex: 1;
-        border-radius: 0;
+        // border-radius: 0;
       }
       button {
         margin-left: 20px;

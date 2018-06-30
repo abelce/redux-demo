@@ -1,10 +1,11 @@
 import { actionType } from '../types'
-import { article } from '../types/index';
+import { Article } from '../types/index';
 import {
   REQUEST_ARTICLE_LIST,
   SUCCESS_ARTICLE_LIST,
   REQUEST_ARTICLE_BY_ID,
   SUCCESS_ARTICLE_BY_ID,
+  SUCCESS_ARTICLE_UPDATE,
 } from '../actions/articleAction';
 
 const initialState = {
@@ -17,7 +18,7 @@ const initialState = {
 
 function getArticlesData(state: any, { data }: any) {
   const {articles} = state;
-  data.data.forEach((at: article) => {
+  data.data.forEach((at: Article) => {
     if (!state.articles.ids.includes(at.id)) {
       articles.ids.push(at.id)
     }
@@ -65,6 +66,10 @@ const reducer = (state = initialState, action: actionType) => {
     case SUCCESS_ARTICLE_BY_ID:
       return getArticle(state, action.data)
       break;
+    case SUCCESS_ARTICLE_UPDATE:
+      const {article} = action;
+      state.articles.all[article.id] = article;
+      return state
     default:
       return state;
   }

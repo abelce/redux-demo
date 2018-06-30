@@ -6,7 +6,7 @@ import Header from '../layout/header';
 import Upload from '../components/upload';
 import Artice from '../components/article';
 import ArticleDetail from '../components/article/detail';
-import Edit from '../components/article/edit';
+import EditContainer from '../components/article/editContainer';
 import * as style from './style.scss';
 import Modals from '../components/common/modals';
 
@@ -21,8 +21,8 @@ class Routes extends React.Component {
                 <Route exact path="/upload" component={Upload}/>
                 <Route exact path="/article" component={Artice}/>
                 <Route exact path="/article/:id" component={ArticleDetail}/>
-                <Route exact path="/article/edit" component={Edit}/>                
-                <Route exact path="/article/edit/:id" component={Edit}/>                
+                <Route exact path="/article/edit" component={EditContainer}/>                
+                <Route exact path="/article/edit/:id" component={EditContainer}/>                
               </Switch>
             </Layout.Content>
             <Modals/>                            
