@@ -25,8 +25,11 @@ const Item = ({ article }: itemType) => {
       <Link to={`/article/${article.id}`}>
         <p className="desription">{article.description}...</p>
       </Link>
-      <div className="createTime">
-        {moment.unix(parseInt(article.createTime)).format('YYYY年MM月DD日 hh:mm:ss')}
+      <div className="footer">
+        <div className="createTime">
+          {moment.unix(parseInt(article.createTime)).format('YYYY年MM月DD日 hh:mm:ss')}
+        </div>
+        <span>{article.tags}</span>
       </div>
     </div>
   )

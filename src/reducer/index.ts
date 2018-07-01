@@ -18,8 +18,9 @@ const initialState = {
 
 function getArticlesData(state: any, { data }: any) {
   const {articles} = state;
+  articles.ids = [];
   data.data.forEach((at: Article) => {
-    if (!state.articles.ids.includes(at.id)) {
+    if (!articles.ids.includes(at.id)) {
       articles.ids.push(at.id)
     }
     articles.all[at.id] = at;

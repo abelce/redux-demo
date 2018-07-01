@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import * as style from './style.scss';
 
@@ -14,7 +14,7 @@ class Header extends React.Component {
             <NavLink exact activeClassName="activeClassName" to="/contact">联系我们</NavLink>
           </div>
           <div>
-            登陆
+            <Link to="/article/edit/new">写博客</Link>
           </div>
         </Layout.Header>
       )

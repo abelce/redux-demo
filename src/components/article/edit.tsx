@@ -1,20 +1,28 @@
-import * as _ from 'lodash';
 import * as React from 'react';
 import {
   Input,
   Button,
   Form,
 } from 'antd'
-import { connect } from 'react-redux';
+import { WrappedFormUtils } from 'antd/lib/form/Form'
 import RenderMarked from './renderMarked';
-import * as style from './style.scss';
-import Modals from '../common/modals';
-import OptionsModal from './optionsModal';
 import {Article} from '../../types';
 
-class Edit extends React.Component {
+import * as style from './style.scss';
 
-  constructor(props) {
+interface Iedit {
+  article: Article;
+  onShowOptions: Function;
+  onTitleChange: Function;
+  onSave: Function;
+  onMarkdownChange: Function;
+  form: WrappedFormUtils
+}
+
+
+class Edit extends React.Component<Iedit> {
+
+  constructor(props: Iedit) {
     super(props);
     const {getFieldDecorator} = this.props.form;
     getFieldDecorator('tags');

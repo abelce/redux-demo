@@ -1,18 +1,15 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import {
-  Input,
-  Button,
-  Form,
-} from 'antd'
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import RenderMarked from './renderMarked';
+import { withRouter } from 'react-router-dom';
 import { requestArticleById, requestArticleCreate, requestArticleUpdate } from '../../actions/articleAction';
-import * as style from './style.scss';
 import Modals from '../common/modals';
 import OptionsModal from './optionsModal';
 import Edit from './edit';
+import {Article} from '../../types';
+
+import * as style from './style.scss';
+import { WrappedFormUtils } from '.3.4.3@antd/lib/form/Form';
 
 const mapStateToProps = (state: any, props: any) => {
   return {
@@ -20,30 +17,52 @@ const mapStateToProps = (state: any, props: any) => {
   }
 }
 
+interface IeditContainer {
+  article: Article;
+  match: any;
+  history: any;
+  dispatch: any;
+}
+
+interface Istate {
+
+}
+
 @withRouter
 @connect(mapStateToProps)
-class EditContainer extends React.Component {
+class EditContainer extends React.Component<IeditContainer> {
   state = {
     article: null,
   }
 
-  constructor(props: any) {
+  constructor(props: IeditContainer) {
     super(props)
     if (this.props.article) {
       this.state.article = this.props.article;
     }
+    if (this.props.match.params['id'] === 'new') {
+      this.state.article = {
+        tags: '',
+        title: '',
+        markdowncontent: ''
+      }
+    }
   }
 
   componentDidMount() {
-    if (this.props.match.params['id'] !== 'new') {
+    if (this.props.match.params['id'] !== 'new' && !this.state.article) {
       this.props.dispatch(requestArticleById(`/article/${this.props.match.params['id']}`));
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: IeditContainer) {
     this.setState({
       article: nextProps.article,
     })
+  }
+
+  onSuccess = () => {
+    this.props.history.push('/article');
   }
 
   handleMarkdownChange = (e: any) => {
@@ -54,7 +73,7 @@ class EditContainer extends React.Component {
     });
   }
 
-  handleSave = (form) => {
+  handleSave = (form: WrappedFormUtils) => {
     this.handleShowOptions(form);
   }
 
@@ -67,15 +86,15 @@ class EditContainer extends React.Component {
     })
   }
 
-  handleShowOptions = (form) => {
-    Modals.show(OptionsModal, {tags: this.props.article.tags.split(',')})
+  handleShowOptions = (form: WrappedFormUtils) => {
+    Modals.show(OptionsModal, {tags: this.state.article.tags.split(',')})
     .then(({tags}) => {
-      form.validateFieldsAndScroll((err, formData) => {
+      form.validateFieldsAndScroll((err: any, formData: any) => {
         if (err) return;
         const article = {...this.props.article, ...formData, tags };
         this.props.match.params['id'] === 'new'
-        ? this.props.dispatch(requestArticleCreate({url: '/article', article}))
-        : this.props.dispatch(requestArticleUpdate({url: `/article/${this.props.match.params['id']}`, article}));
+        ? this.props.dispatch(requestArticleCreate({url: '/article', article, onSuccess: this.onSuccess}))
+        : this.props.dispatch(requestArticleUpdate({url: `/article/${this.props.match.params['id']}`, article, onSuccess: this.onSuccess}));
       })
     })
   }
@@ -89,7 +108,6 @@ class EditContainer extends React.Component {
       onSave: this.handleSave,
       onMarkdownChange: this.handleMarkdownChange,
     }
-    
     if (!article) return null;
 
     return (

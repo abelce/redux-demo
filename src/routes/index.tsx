@@ -21,7 +21,7 @@ class Routes extends React.Component {
                 <Route exact path="/upload" component={Upload}/>
                 <Route exact path="/article" component={Artice}/>
                 <Route exact path="/article/:id" component={ArticleDetail}/>
-                <Route exact path="/article/edit" component={EditContainer}/>                
+                {/* <Route exact path="/article/edit" component={EditContainer}/>                 */}
                 <Route exact path="/article/edit/:id" component={EditContainer}/>                
               </Switch>
             </Layout.Content>
