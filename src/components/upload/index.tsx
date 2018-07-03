@@ -1,6 +1,9 @@
 import * as React from 'react';
 import MyUpload from './upload';
 import { Icon, message, Table } from 'antd';
+import { connect, DispatchProp } from 'react-redux';
+import { requestFileList } from '../../actions/articleAction';
+
 import * as style from './style.scss';
 
 interface File {
@@ -11,27 +14,65 @@ interface File {
   path: string;
 }
 
+const mapStateToProps = ({files}: any) => {
+  return {
+    files: files.list,
+    total: files.total,
+  }
+}
+
+@connect(mapStateToProps)
 class Upload extends React.Component {
-  state = {
-    data:[{
-      id: '123',
-      fileName: '1.jpg',
-      type: 'jpg',
-      createDate: '2018-5-15',
-      path: '/data/upload_files'
-    }]
+
+
+  pageSize=10
+  pageNum=1;
+
+  componentDidMount() {
+    this.queryFiles({});
+  }
+
+  get pagination() {
+    return {
+      current: this.pageNum,
+      defaultCurrent: 1,
+      total: this.props.total,
+      pageSize: this.pageSize,
+    }
+  }
+
+  queryFiles = ({pageSize = 10, pageNum = 1}) => {
+    this.props.dispatch(requestFileList({url: '/files', params: {pageSize, pageNum}}));
+  }
+
+
+  handleOnSuccess = () => {
+    this.queryFiles({});
+  }
+  
+  handleOnFailed = () => {
+
+  }
+
+  handlePaginationChange = ({pageSize, current: pageNum}, filter, sort) => {
+    this.pageSize = pageSize;
+    this.pageNum = pageNum;
+    this.queryFiles({pageSize, pageNum});
   }
 
   render() {
     return (
       <div className={style.container}>
         <div className="upload">
-          <MyUpload/>          
+          <MyUpload onSuccess={this.handleOnSuccess} onFailed={this.handleOnFailed}/>
         </div>
         <div className="table">
-          <Table 
-            dataSource={this.state.data}
+          <Table
+            bordered
+            dataSource={this.props.files}
             columns={this.columns}
+            pagination={this.pagination}
+            onChange={this.handlePaginationChange} 
           />
         </div>
       </div>
@@ -56,12 +97,8 @@ class Upload extends React.Component {
       title:'创建时间',
       key: 'createDate',
     },{
-      dataIndex: 'createDate',
-      title:'创建时间',
-      key: 'createDate',
-    },{
       dataIndex: 'path',
-      title:'',
+      title:'路径',
       key: 'path',
     },
   ]

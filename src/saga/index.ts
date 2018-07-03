@@ -9,12 +9,24 @@ import {
   SUCCESS_ARTICLE_CREATE,
   REQUEST_ARTICLE_UPDATE,
   SUCCESS_ARTICLE_UPDATE,
-
+  REQUEST_FILE_LIST,
+  SUCCESS_FILE_LIST,
 } from '../actions/articleAction';
 import { Article } from '../types';
 
 const AxiosInstance = axios.create({
   baseURL: 'http://111.231.192.70:9001',
+  // baseURL: 'http://127.0.0.1:9001',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Methods': '*',
+    'Content-Type': 'application/json;charset=utf-8',
+  }
+});
+
+const AxiosInstance_file = axios.create({
+  baseURL: 'http://111.231.192.70:9010',
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': '*',
@@ -27,6 +39,11 @@ const buildArticleData = (article: Article) => {
   article.description = article.markdowncontent.substr(0, 200);
   article.tags = article.tags.join(',');
   return article;
+}
+
+function* fetchFileList({url, params}: any) {
+  const response = yield call(AxiosInstance_file.get, url, {params});
+  yield put({type: SUCCESS_FILE_LIST, data: response});
 }
 
 function* fetchArtices(url: string) {
@@ -58,6 +75,13 @@ function* watchFetchArticleList() {
   }
 }
 
+function* watchFileList() {
+  while(true) {
+    let action = yield take(REQUEST_FILE_LIST);
+    yield fork(fetchFileList, action.payload);
+  }
+}
+
 function* watchFetchArticleById() {
   while(true){
     let action = yield take(REQUEST_ARTICLE_BY_ID);
@@ -84,4 +108,5 @@ export default function* rootSaga() {
   yield fork(watchFetchArticleById);
   yield fork(watchArticleCreate);
   yield fork(watchArticleUpdate);
+  yield fork(watchFileList);
 }

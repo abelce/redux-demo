@@ -25,7 +25,7 @@ class Routes extends React.Component {
                 <Route exact path="/article/edit/:id" component={EditContainer}/>                
               </Switch>
             </Layout.Content>
-            <Modals/>                            
+            <Modals/>                     
           </Layout>
       )
   } 

@@ -6,6 +6,8 @@ import {
   REQUEST_ARTICLE_BY_ID,
   SUCCESS_ARTICLE_BY_ID,
   SUCCESS_ARTICLE_UPDATE,
+  SUCCESS_FILE_LIST,
+  REQUEST_FILE_LIST,
 } from '../actions/articleAction';
 
 const initialState = {
@@ -13,7 +15,11 @@ const initialState = {
     fetching: false,
     ids: [],
     all: {}
-  }
+  },
+  files: {
+    list: [],
+    total: 0,
+  },
 }
 
 function getArticlesData(state: any, { data }: any) {
@@ -46,7 +52,7 @@ function getArticle (state: any, {data: {data}}: any) {
 }
 
 const reducer = (state = initialState, action: actionType) => {
-  const { articles } = state;
+  let { articles, files } = state;
   switch (action.type) {
     case REQUEST_ARTICLE_LIST:
       articles.fetching = true;
@@ -75,6 +81,15 @@ const reducer = (state = initialState, action: actionType) => {
         ...state,
         articles,
       };
+    case SUCCESS_FILE_LIST:
+      const { data: {data, mate}} = action.data;
+      files.list = data;
+      files.total = mate.total;
+      return {
+        ...state,
+        files,
+      };
+      break;
     default:
       return state;
   }
