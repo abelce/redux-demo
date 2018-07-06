@@ -9,7 +9,7 @@ import Edit from './edit';
 import {Article} from '../../types';
 
 import * as style from './style.scss';
-import { WrappedFormUtils } from '.3.4.3@antd/lib/form/Form';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 const mapStateToProps = (state: any, props: any) => {
   return {
