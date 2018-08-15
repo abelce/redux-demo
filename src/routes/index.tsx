@@ -9,6 +9,8 @@ import ArticleDetail from '../components/article/detail';
 import Edit from '../components/article/edit';
 import * as style from './style.scss';
 import Modals from '../components/common/modals';
+import Test from '../components/test';
+import Image from '../components/image';
 
 class Routes extends React.Component {
   render() {
@@ -22,7 +24,9 @@ class Routes extends React.Component {
                 <Route exact path="/article" component={Artice}/>
                 <Route exact path="/article/:id" component={ArticleDetail}/>
                 <Route exact path="/article/edit" component={Edit}/>                
-                <Route exact path="/article/edit/:id" component={Edit}/>                
+                <Route exact path="/article/edit/:id" component={Edit}/>
+                <Route exact path="/test" component={Test}/> 
+                <Route exact path="/images" component={Image}/>                
               </Switch>
             </Layout.Content>
             <Modals/>                            
