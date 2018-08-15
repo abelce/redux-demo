@@ -6,7 +6,7 @@ import Header from '../layout/header';
 import Upload from '../components/upload';
 import Artice from '../components/article';
 import ArticleDetail from '../components/article/detail';
-import Edit from '../components/article/edit';
+import EditContainer from '../components/article/editContainer';
 import * as style from './style.scss';
 import Modals from '../components/common/modals';
 import Test from '../components/test';
@@ -20,16 +20,16 @@ class Routes extends React.Component {
             <Layout.Content className={style.content}>
               <Switch>
                 <Route exact path="/" component={Homepage}/>
+                <Route exact path="/images" component={Image}/>                
                 <Route exact path="/upload" component={Upload}/>
                 <Route exact path="/article" component={Artice}/>
                 <Route exact path="/article/:id" component={ArticleDetail}/>
-                <Route exact path="/article/edit" component={Edit}/>                
-                <Route exact path="/article/edit/:id" component={Edit}/>
-                <Route exact path="/test" component={Test}/> 
-                <Route exact path="/images" component={Image}/>                
+                {/* <Route exact path="/article/edit" component={EditContainer}/>                 */}
+                <Route exact path="/article/edit/:id" component={EditContainer}/>  
+                <Route exact path="/test" component={Test}/>                
               </Switch>
             </Layout.Content>
-            <Modals/>                            
+            <Modals/>                     
           </Layout>
       )
   } 

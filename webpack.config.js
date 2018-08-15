@@ -19,7 +19,12 @@ module.exports = {
         historyApiFallback: true
     },
     entry: {
-        app: __dirname + '/src/app.tsx'
+        app: __dirname + '/src/app.tsx',
+        po: [
+          './src/assets/i18ns/zh_CN.po',
+          './src/assets/i18ns/en_US.po',
+        ],
+
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -28,6 +33,22 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /zh_CN.po$/,
+                loader: 'expose-loader?zh_CN!json-loader!po-loader'
+            },
+            {
+                test: /en_US.po$/,
+                loader: 'expose-loader?en_US!json-loader!po-loader'
+            },
+            {
+                test: /axios$/,
+                loader: 'expose-loader?axios'
+            },
+            {
+                test: /moment$/,
+                loader: 'expose-loader?moment'
+            },
             {
                 test: /\.jsx$|\.js$|\.tsx$|\.ts$/,
                 include: /src/,

@@ -1,10 +1,13 @@
 import { actionType } from '../types'
-import { article } from '../types/index';
+import { Article } from '../types/index';
 import {
   REQUEST_ARTICLE_LIST,
   SUCCESS_ARTICLE_LIST,
   REQUEST_ARTICLE_BY_ID,
   SUCCESS_ARTICLE_BY_ID,
+  SUCCESS_ARTICLE_UPDATE,
+  SUCCESS_FILE_LIST,
+  REQUEST_FILE_LIST,
 } from '../actions/articleAction';
 
 const initialState = {
@@ -12,13 +15,18 @@ const initialState = {
     fetching: false,
     ids: [],
     all: {}
-  }
+  },
+  files: {
+    list: [],
+    total: 0,
+  },
 }
 
 function getArticlesData(state: any, { data }: any) {
   const {articles} = state;
-  data.data.forEach((at: article) => {
-    if (!state.articles.ids.includes(at.id)) {
+  articles.ids = [];
+  data.data.forEach((at: Article) => {
+    if (!articles.ids.includes(at.id)) {
       articles.ids.push(at.id)
     }
     articles.all[at.id] = at;
@@ -44,7 +52,7 @@ function getArticle (state: any, {data: {data}}: any) {
 }
 
 const reducer = (state = initialState, action: actionType) => {
-  const { articles } = state;
+  let { articles, files } = state;
   switch (action.type) {
     case REQUEST_ARTICLE_LIST:
       articles.fetching = true;
@@ -64,6 +72,23 @@ const reducer = (state = initialState, action: actionType) => {
       break;
     case SUCCESS_ARTICLE_BY_ID:
       return getArticle(state, action.data)
+      break;
+    case SUCCESS_ARTICLE_UPDATE:
+      const {article} = action;
+      // const { articles } = state;
+      articles.all[article.id] = article;
+      return {
+        ...state,
+        articles,
+      };
+    case SUCCESS_FILE_LIST:
+      const { data: {data, mate}} = action.data;
+      files.list = data;
+      files.total = mate.total;
+      return {
+        ...state,
+        files,
+      };
       break;
     default:
       return state;

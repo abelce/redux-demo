@@ -1,29 +1,54 @@
 import * as React from 'react';
+// import { injectIntl, FormattedMessage } from 'react-intl';
 import {
   Modal,
   Form,
   Select,
+  Row,
+  Col,
+  Checkbox,
 } from 'antd';
+const CheckboxGroup = Checkbox.Group;
 
-const types = [{
-  
-}]
+import { tags } from '../../utils';
+import * as style from './style';
 
 class OptionsModal extends React.Component {
+
+  state = {
+    tags: [],
+    article: {},
+  }
+
+  constructor(props) {
+    super(props);
+    this.state.tags = this.props.tags;
+  }
+
+  handleSubmit = () => {
+    this.props.onOk && this.props.onOk({
+      tags: this.state.tags,
+    });
+  }
+
+  handleOnChange = (tags: Array<string>) => {
+    this.setState({
+      tags,
+    });
+  }
+
   render() {
-    const { form: { getFieldDecorator } } = this.props;
     return (
       <Modal
         {...this.props}
         title="文章信息"
+        onOk={this.handleSubmit}
       >
-        <Form>
-          <Form.Item>
-            {getFieldDecorator('type')(
-              <Select>
-
-              </Select>
-            )}
+        <Form layout="horizontal">
+          <Form.Item label='个人分类'>
+            <div className={style.tagList}>
+              <CheckboxGroup options={tags} onChange={this.handleOnChange} value={this.state.tags}/>
+            </div>
           </Form.Item>
         </Form>
       </Modal>
@@ -31,16 +56,4 @@ class OptionsModal extends React.Component {
   } 
 }
 
-const proccessFields = (obj) => {
-  return Reflect.ownKeys(obj).map(key => Form.createFormField({value: obj[key]}))
-}
-
-export default Form.create({
-  mapPropsToFields: ({ article: { type, tags } }) => {
-    // const val = {};
-    let ret = {
-      type, tags
-    }
-    return proccessFields(ret);
-  }
-})(OptionsModal);
+export default OptionsModal;

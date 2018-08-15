@@ -8,7 +8,7 @@ class Homepage extends React.Component {
       return(
           <div className={style.homepage}>
             <News/>
-            <NewsFlash/>
+            {/* <NewsFlash/> */}
           </div>
       )
   }

@@ -1,6 +1,5 @@
 import { call, take, put, fork } from 'redux-saga/effects';
 import axios from 'axios';
-import * as constants from '../constants';
 import {
   REQUEST_ARTICLE_LIST,
   SUCCESS_ARTICLE_LIST,
@@ -10,12 +9,14 @@ import {
   SUCCESS_ARTICLE_CREATE,
   REQUEST_ARTICLE_UPDATE,
   SUCCESS_ARTICLE_UPDATE,
-
+  REQUEST_FILE_LIST,
+  SUCCESS_FILE_LIST,
 } from '../actions/articleAction';
-import { article } from '../types';
+import { Article } from '../types';
 
 const AxiosInstance = axios.create({
   baseURL: 'http://111.231.192.70:9001',
+  // baseURL: 'http://127.0.0.1:9001',
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': '*',
@@ -23,6 +24,27 @@ const AxiosInstance = axios.create({
     'Content-Type': 'application/json;charset=utf-8',
   }
 });
+
+const AxiosInstance_file = axios.create({
+  baseURL: 'http://111.231.192.70:9010',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Methods': '*',
+    'Content-Type': 'application/json;charset=utf-8',
+  }
+});
+
+const buildArticleData = (article: Article) => {
+  article.description = article.markdowncontent.substr(0, 200);
+  article.tags = article.tags.join(',');
+  return article;
+}
+
+function* fetchFileList({url, params}: any) {
+  const response = yield call(AxiosInstance_file.get, url, {params});
+  yield put({type: SUCCESS_FILE_LIST, data: response});
+}
 
 function* fetchArtices(url: string) {
   const response = yield call(AxiosInstance.get, url);
@@ -34,20 +56,29 @@ function* fetchArticeByID(url: string) {
   yield put({type: SUCCESS_ARTICLE_BY_ID, data: response});
 }
 
-function* createArticle({url, article}: any) {
-  const response = yield call(AxiosInstance.post, url, article);
+function* createArticle({url, article, onSuccess}: any) {
+  const response = yield call(AxiosInstance.post, url, buildArticleData(article));
   yield put({type: SUCCESS_ARTICLE_CREATE, data: response});
+  onSuccess();
 }
 
-function* udpateArticle({url, article}: any) {
-  const response = yield call(AxiosInstance.put, url, article);
-  yield put({type: SUCCESS_ARTICLE_UPDATE, data: response});
+function* udpateArticle({url, article, onSuccess}: any) {
+  const response = yield call(AxiosInstance.put, url, buildArticleData(article));
+  yield put({type: SUCCESS_ARTICLE_UPDATE, data: response, article});
+  onSuccess();
 }
 
 function* watchFetchArticleList() {
   while(true) {
     let action = yield take(REQUEST_ARTICLE_LIST);
     yield fork(fetchArtices, action.payload);
+  }
+}
+
+function* watchFileList() {
+  while(true) {
+    let action = yield take(REQUEST_FILE_LIST);
+    yield fork(fetchFileList, action.payload);
   }
 }
 
@@ -77,4 +108,5 @@ export default function* rootSaga() {
   yield fork(watchFetchArticleById);
   yield fork(watchArticleCreate);
   yield fork(watchArticleUpdate);
+  yield fork(watchFileList);
 }

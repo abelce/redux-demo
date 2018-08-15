@@ -1,32 +1,28 @@
 import * as React from 'react';
 import { Upload, Icon, message } from 'antd';
 const Dragger = Upload.Dragger;
-import { url } from '../../config';
 
-console.log('upload.tsx')
-import { test } from './test'
-// import Table from '../common/table/table';
-
-interface IState {
-
+interface ImyUpload {
+  onSuccess: Function;
+  onFailed: Function;
 }
 
-
-
-class MyUpload extends React.Component {
+class MyUpload extends React.Component<ImyUpload> {
 
   config = {
     name: 'file',
     action: 'http://111.231.192.70:9010/upload',
-    onChange(info: any) {
+    onChange: (info: any) => {
       const status = info.file.status;
       if (status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
       if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
+        this.props.onSuccess && this.props.onSuccess();
+        message.success(`${info.file.name} 上传成功`);
       } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
+        this.props.onFailed && this.props.onFailed();
+        message.error(`${info.file.name} 上传失败`);
       }
     },
   }
