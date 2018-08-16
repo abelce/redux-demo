@@ -1,5 +1,5 @@
 import { actionType } from '../types'
-import { Article } from '../types/index';
+import { Article, Image } from '../types/index';
 import {
   REQUEST_ARTICLE_LIST,
   SUCCESS_ARTICLE_LIST,
@@ -10,6 +10,12 @@ import {
   REQUEST_FILE_LIST,
 } from '../actions/articleAction';
 
+import {
+  REQUEST_IMAGR_CREATE,
+  SUCCESS_IMAGR_CREATE,
+  REQUEST_IMAGR_LIST,
+  SUCCESS_IMAGR_LIST
+} from '../actions/imageAction';
 const initialState = {
   articles: {
     fetching: false,
@@ -20,6 +26,11 @@ const initialState = {
     list: [],
     total: 0,
   },
+  images: {
+    fetching: false,
+    ids: [],
+    all: {}
+  }
 }
 
 function getArticlesData(state: any, { data }: any) {
@@ -51,8 +62,24 @@ function getArticle (state: any, {data: {data}}: any) {
   };
 }
 
+function getImageList(state: any, { data }: any) {
+  let images = state.images;
+  images.ids = [];
+  data.data.forEach((img: Image) => {
+    if (!images.ids.includes(img.id)) {
+      images.ids.push(img.id)
+    }
+    images.all[img.id] = img;
+  });
+  images.fetching = false;
+  return {
+    ...state,
+    images,
+  };
+}
+
 const reducer = (state = initialState, action: actionType) => {
-  let { articles, files } = state;
+  let { articles, files, images } = state;
   switch (action.type) {
     case REQUEST_ARTICLE_LIST:
       articles.fetching = true;
@@ -89,6 +116,16 @@ const reducer = (state = initialState, action: actionType) => {
         ...state,
         files,
       };
+      break;
+    case REQUEST_IMAGR_LIST:
+      images.fetching = true;
+      return {
+        ...state,
+        images
+      }
+      break;
+    case SUCCESS_IMAGR_LIST:
+      return getImageList(state, action.data);
       break;
     default:
       return state;

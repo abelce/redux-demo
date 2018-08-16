@@ -3,6 +3,7 @@ import MyUpload from './upload';
 import { Icon, message, Table } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
 import { requestFileList } from '../../actions/articleAction';
+import { requestImageCreate } from '../../actions/imageAction';
 
 import * as style from './style.scss';
 
@@ -46,8 +47,13 @@ class Upload extends React.Component {
   }
 
 
-  handleOnSuccess = () => {
+  handleOnSuccess = ({file:{response, type}}: any) => {
+    let imgs: Array<string>;
+    imgs = ['image/jpg', 'image/png', 'image/jpeg']; 
     this.queryFiles({});
+    if (imgs.includes(type)) {
+      this.props.dispatch(requestImageCreate({url: '/image', params: {url:  response.url}}));
+    }
   }
   
   handleOnFailed = () => {

@@ -20,3 +20,10 @@ export type Article = {
   createTime: string;
   lastUpdateTime: string;
 }
+
+export type Image = {
+  id: string;
+  url: string;
+  createTime: string;
+  lastUpdateTime: string;
+}

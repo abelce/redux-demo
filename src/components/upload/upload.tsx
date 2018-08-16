@@ -18,10 +18,10 @@ class MyUpload extends React.Component<ImyUpload> {
         console.log(info.file, info.fileList);
       }
       if (status === 'done') {
-        this.props.onSuccess && this.props.onSuccess();
+        this.props.onSuccess && this.props.onSuccess(info);
         message.success(`${info.file.name} 上传成功`);
       } else if (status === 'error') {
-        this.props.onFailed && this.props.onFailed();
+        this.props.onFailed && this.props.onFailed(info);
         message.error(`${info.file.name} 上传失败`);
       }
     },

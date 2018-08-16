@@ -12,6 +12,12 @@ import {
   REQUEST_FILE_LIST,
   SUCCESS_FILE_LIST,
 } from '../actions/articleAction';
+import {
+  REQUEST_IMAGR_CREATE,
+  SUCCESS_IMAGR_CREATE,
+  REQUEST_IMAGR_LIST,
+  SUCCESS_IMAGR_LIST,
+} from '../actions/imageAction';
 import { Article } from '../types';
 
 const AxiosInstance = axios.create({
@@ -27,6 +33,16 @@ const AxiosInstance = axios.create({
 
 const AxiosInstance_file = axios.create({
   baseURL: 'http://111.231.192.70:9010',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Methods': '*',
+    'Content-Type': 'application/json;charset=utf-8',
+  }
+});
+
+const AxiosInstance_image = axios.create({
+  baseURL: 'http://111.231.192.70:9012',
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': '*',
@@ -68,6 +84,19 @@ function* udpateArticle({url, article, onSuccess}: any) {
   onSuccess();
 }
 
+function* createImage({url, params}: any) {
+  const response = yield call(AxiosInstance_image.post, url, {url: params.url });
+  yield put({type: SUCCESS_IMAGR_CREATE, data: response});
+}
+
+function* fetchImageList(url: string) {
+  const response = yield call(AxiosInstance_image.get, url);
+  yield put({type: SUCCESS_IMAGR_LIST, data: response});
+}
+
+
+
+
 function* watchFetchArticleList() {
   while(true) {
     let action = yield take(REQUEST_ARTICLE_LIST);
@@ -103,10 +132,26 @@ function* watchArticleUpdate() {
   }
 }
 
+function* watchImageCreate() {
+  while(true) {
+    let action = yield take(REQUEST_IMAGR_CREATE);
+    yield fork(createImage, action.payload);
+  }
+}
+
+function* watchImageList() {
+  while(true) {
+    let action = yield take(REQUEST_IMAGR_LIST);
+    yield fork(fetchImageList, action.payload);
+  }
+}
+
 export default function* rootSaga() {
   yield fork(watchFetchArticleList);
   yield fork(watchFetchArticleById);
   yield fork(watchArticleCreate);
   yield fork(watchArticleUpdate);
   yield fork(watchFileList);
+  yield fork(watchImageCreate);
+  yield fork(watchImageList);
 }
