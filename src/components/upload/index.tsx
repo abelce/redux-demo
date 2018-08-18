@@ -51,9 +51,9 @@ class Upload extends React.Component {
     let imgs: Array<string>;
     imgs = ['image/jpg', 'image/png', 'image/jpeg']; 
     this.queryFiles({});
-    if (imgs.includes(type)) {
-      this.props.dispatch(requestImageCreate({url: '/image', params: {url:  response.url}}));
-    }
+    // if (imgs.includes(type)) {
+      // this.props.dispatch(requestImageCreate({url: '/image', params: {url:  response.url}}));
+    // }
   }
   
   handleOnFailed = () => {
