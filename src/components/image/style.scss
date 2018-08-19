@@ -4,16 +4,15 @@
 
   &::after {
     content: '';
-    flex-grow: 999999;
+    flex-grow: 9999999;
   }
 }
 
 .imageContainer {
   display: inline-block;
-  padding: 4px;
+  margin: 2px;
   flex-grow: 1;
   > img {
-    height: 200px;
     min-width: 100%;
     max-width: 100%;
     transition: .7s;
@@ -21,5 +20,8 @@
     &:hover{
       transform: scale(1.05);
     }
+  }
+  > .placeholder {
+    padding-bottom: 100%;
   }
 }
