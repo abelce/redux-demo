@@ -1,9 +1,27 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+
+  &::after {
+    content: '';
+    flex-grow: 9999999;
+  }
+}
+
 .imageContainer {
   display: inline-block;
-  padding: 16px;
-  width: 100%;
-  transition: .7s;
-  &:hover{
-    transform: scale(1.05);
+  margin: 2px;
+  flex-grow: 1;
+  > img {
+    min-width: 100%;
+    max-width: 100%;
+    transition: .7s;
+    object-fit: cover;
+    &:hover{
+      transform: scale(1.05);
+    }
+  }
+  > .placeholder {
+    padding-bottom: 100%;
   }
 }

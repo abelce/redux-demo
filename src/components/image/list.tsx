@@ -29,9 +29,9 @@ class Image extends React.Component {
   
   render() {
     return (
-      <div>
+      <div className={style.list}>
         {
-          this.props.images.map((img, index) => <Item key={img.id} url={img.attributes.url}/>)
+          this.props.images.map((img, index) => <Item key={img.id} image={img}/>)
         }
       </div>
     )
