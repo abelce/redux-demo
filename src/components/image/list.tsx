@@ -12,6 +12,7 @@ const mapStateToProps = (state: any) => {
 @connect(mapStateToProps)
 class Image extends React.Component {
 
+  mountedIndex = 0;
   constructor(props: any){
     super(props);
   }
@@ -23,6 +24,8 @@ class Image extends React.Component {
   queryImages = () => {
     this.props.dispatch(requestImageList('/image'));
   }
+
+  
   
   render() {
     return (
