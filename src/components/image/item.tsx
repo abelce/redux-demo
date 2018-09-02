@@ -41,7 +41,7 @@ class Item extends React.Component {
     const { loaded } = this.state
     return (
       <div ref={this.setRef} className={style.imageContainer} style={{width: `${width * 200/ height}px`, flexGrow: width * 200 / height}}>
-        <img style={{display: loaded ? 'block' : 'none'}} origin-url={url} src={ loaded ? url : this.getSVGUrl()} />
+        <img style={{display: loaded ? 'block' : 'none'}} origin-url={url} src={ loaded ? "" : this.getSVGUrl()} />
         <div style={{paddingBottom: `${height / width * 100}%`, display: loaded ? 'none' : 'block'}}></div>
       </div>
     )
