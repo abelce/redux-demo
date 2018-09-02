@@ -33,7 +33,7 @@ class Item extends React.Component {
   }
 
   getSVGUrl = () => {
-    return this.props.image.attributes.svgurl ? this.props.image.attributes : '';
+    return this.props.image.attributes.svgurl ? this.props.image.attributes.svgurl : '';
   }
 
   render() {
