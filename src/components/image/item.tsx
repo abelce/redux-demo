@@ -32,16 +32,13 @@ class Item extends React.Component {
     this.ref = r;
   }
 
-  getSVGUrl = () => {
-    return this.props.image.attributes.svgurl ? this.props.image.attributes.svgurl : '';
-  }
-
   render() {
-    const {attributes: {url, width, height }} = this.props.image;
+    const {attributes: {url, width, height, svgurl }} = this.props.image;
     const { loaded } = this.state
+
     return (
       <div ref={this.setRef} className={style.imageContainer} style={{width: `${width * 200/ height}px`, flexGrow: width * 200 / height}}>
-        <img style={{display: loaded ? 'block' : 'none'}} origin-url={url} src={ loaded ? "" : this.getSVGUrl()} />
+        <img svg-url={svgurl} origin-url={url} src={ loaded ? url : svgurl}/>
         <div style={{paddingBottom: `${height / width * 100}%`, display: loaded ? 'none' : 'block'}}></div>
       </div>
     )
