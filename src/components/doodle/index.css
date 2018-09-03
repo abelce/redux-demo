@@ -1,0 +1,14 @@
+:root {
+  --svg-example: (
+    :doodle {
+      @grid: 50 / 100vmax;
+      /* background: #0a0c27; */
+    }
+    background: rgba(96, 86, 158, @rand(.9));
+    transition: .2s ease @rand(200ms);
+    transform: rotate(@rand(360deg));
+    clip-path: polygon(
+      @rand(100%) 0, 100% @rand(100%), 0 @rand(100%)
+    );
+  )
+}

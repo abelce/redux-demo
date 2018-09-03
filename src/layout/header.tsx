@@ -14,6 +14,7 @@ class Header extends React.Component {
             <NavLink exact activeClassName="activeClassName" to="/upload">上传</NavLink>
             <NavLink exact activeClassName="activeClassName" to="/contact">联系我们</NavLink>
             <NavLink exact activeClassName="activeClassName" to="/test">TEST</NavLink>
+            <NavLink exact activeClassName="activeClassName" to="/doodle"> css-doodle</NavLink>
           </div>
           <div>
             <Link to="/article/edit/new">写博客</Link>
