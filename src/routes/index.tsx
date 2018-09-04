@@ -20,7 +20,7 @@ class Routes extends React.Component {
             <Header/>
             <Layout.Content className={style.content}>
               <Switch>
-                <Route exact path="/" component={Homepage}/>
+                <Route exact path="/" component={Doodle}/>
                 <Route exact path="/images" component={Image}/>                
                 <Route exact path="/upload" component={Upload}/>
                 <Route exact path="/article" component={Artice}/>

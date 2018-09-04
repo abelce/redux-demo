@@ -24,7 +24,7 @@ class Item extends React.Component<PItem, SItem> {
   ref: any
   
   componentDidMount() {
-    let div: Element | null | Text;
+    let div: Element;
     div = ReactDOM.findDOMNode(this.ref);
     let observer = new IntersectionObserver(entries => {
       if (entries[0].intersectionRatio > 0) {
@@ -40,7 +40,7 @@ class Item extends React.Component<PItem, SItem> {
       }
     })
 
-     observer.observe(div as Element);
+     observer.observe(div);
   }
 
   setRef = (r: any) => {

@@ -1,18 +1,33 @@
-// :root {
-//   --svg-example: (
-//     :doodle {
-//       @grid: 18 / 100vmax;
-//       background: #0a0c27;
-//     }
-//     --hue: calc(180 + 1.5 * @row() * @col());
-//     background: hsl(var(--hue), 50%, 70%);
-//     margin: -.5px;
-//     transition: @r(.5s) ease;
-//     clip-path: polygon(@pick(
-//       '0 0, 100% 0, 100% 100%',
-//       '0 0, 100% 0, 0 100%',
-//       '0 0, 100% 100%, 0 100%',
-//       '100% 0, 100% 100%, 0 100%'
-//     ));
-//   )
-// }
+.cssDoodle {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  background: #0a0c27;
+  padding: 16px;
+}
+.page {
+  display: flex;
+  flex-direction: row;
+  flex: auto;
+}
+.main {
+  flex: auto;
+  display: flex;
+  position: relative;
+  &-bg {
+    flex: 1;
+    display: flex;
+    position: relative;
+  }
+  &-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+  }
+}
+.side {
+  display: flex;
+  width: 300px;
+}
