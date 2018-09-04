@@ -1,14 +1,35 @@
 :root {
-  --svg-example: (
+  --demo1: (
     :doodle {
-      @grid: 50 / 100vmax;
-      /* background: #0a0c27; */
+      @grid: 1x10 / 85%;
+      width: 20em;
+      height: 20em;
+      background: #0a0c27;
     }
-    background: rgba(96, 86, 158, @rand(.9));
-    transition: .2s ease @rand(200ms);
-    transform: rotate(@rand(360deg));
-    clip-path: polygon(
-      @rand(100%) 0, 100% @rand(100%), 0 @rand(100%)
+    
+    @place-cell: center;
+    @size: calc(@i() * 10%);
+    
+    border-radius: 50%;
+    border-style: dashed;
+    border-width: calc(@i() * 4px);
+    border-color: hsla(
+      calc(20 * @i()), 70%, 68%,
+      calc(3 / @i() * .8)
     );
+
+    --d: @rand(20s, 40s); 
+    --rf: @rand(360deg);
+    /* --rt: @calc(var(--rf) + @pick(1turn, -1turn)); */
+  
+    /* animation: spin var(--d) linear infinite;
+    @keyframes spin {
+      from { transform: rotate(var(--rf)) }
+      to   { transform: rotate(var(--rt)) }
+    }
+    @-webkit-keyframes spin {
+      from { transform: rotate(var(--rf)) }
+      to   { transform: rotate(var(--rt)) }
+    } */
   )
 }

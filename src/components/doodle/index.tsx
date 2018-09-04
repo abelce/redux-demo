@@ -6,7 +6,7 @@ import './index.css';
 
 const Demo1 = () => {
   return (
-    <css-doodle use="var(--svg-example)"></css-doodle>
+    <css-doodle use="var(--demo1)"></css-doodle>
   )
 }
 
