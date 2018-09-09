@@ -9,6 +9,7 @@ let scl = 20;
 let cols = Math.floor(WIDTH / scl);
 let rows = Math.floor(HEIGHT / scl);
 let inc = 0.09;
+let zoff = 0.01;
 
 class Draw extends React.Component {
   refCanvas = null
@@ -54,7 +55,7 @@ class Draw extends React.Component {
       for(let y = 0; y < rows; y++) {
         xoff += inc;
         // this.rect(x * scl, y * scl, scl, scl);
-        let angle = Noise.generator.noise2d(xoff, yoff) * Math.PI * 2;
+        let angle = Noise.generator.noise3d(xoff, yoff, zoff) * Math.PI * 2;
         // this.fill(r)
         this.ctx.save();
         this.ctx.beginPath();
@@ -65,16 +66,17 @@ class Draw extends React.Component {
         this.ctx.stroke();
         this.ctx.closePath();
         this.ctx.restore();
-        // this.ctx.translate(-x * scl, -y * scl);
-        
+        // this.ctx.translate(-x * scl, -y * scl);        
       }
       yoff += inc;
+      zoff += 0.001;
+
     }
     // this.endDraw();
 
     setTimeout(() => {
-      // this.ctx.clearRect(0,0,WIDTH, HEIGHT);
-      // this.draw();
+      this.ctx.clearRect(0,0,WIDTH, HEIGHT);
+      this.draw();
       // this.ctx = null;
 
     }, 100);
