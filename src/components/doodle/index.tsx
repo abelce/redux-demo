@@ -2,6 +2,7 @@ import * as React from 'react';
 import 'css-doodle';
 
 import * as style from './style.scss';
+import Draw from './draw';
 
 const Demo1 = () => {
   return (
@@ -67,12 +68,13 @@ class DoobleDemo extends React.Component {
     return(
       <div className={style.page}>
         <div className={style.main}>
-          <div className={style['main-bg']}>
+          {/* <div className={style['main-bg']}>
             <Demo2/>
-          </div>
-          <div className={style['main-content']}>
+          </div> */}
+          {/* <div className={style['main-content']}>
             content
-          </div>
+          </div> */}
+          <Draw></Draw>
         </div>
         <div className={style.side}>
           <Demo1/>

@@ -24,6 +24,7 @@ module.exports = {
           './src/assets/i18ns/zh_CN.po',
           './src/assets/i18ns/en_US.po',
         ],
+        // noise: './src/assets/script/noise.js'
 
     },
     output: {
@@ -33,6 +34,10 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test:/\/src\/assets\/script\/noise.js/,
+                loader: 'expose-loader?noise!exports-loader!imports-loader'
+            },
             {
                 test: /zh_CN.po$/,
                 loader: 'expose-loader?zh_CN!json-loader!po-loader'
