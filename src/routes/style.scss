@@ -4,9 +4,21 @@
 }
 
 .content {
-  padding: 0 8px;
+  // padding: 0 8px;
   display: flex;
   > div{
     flex: 1;
   }
+}
+
+.slider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  background: #fff;
+}
+
+.right {
+  margin-left: 200px;
 }
