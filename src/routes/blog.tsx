@@ -3,9 +3,9 @@ import { Switch, Route, } from 'react-router-dom';
 import { Layout } from 'antd'
 import Artice from '../components/article';
 import ArticleDetail from '../components/article/detail';
-import EditContainer from '../components/article/editContainer';
-import * as style from './style.scss';
 import Modals from '../components/common/modals';
+
+import * as style from './style.scss';
 
 class Routes extends React.Component {
   render() {
@@ -16,7 +16,6 @@ class Routes extends React.Component {
                   <Route exact path="/" component={Artice}/>
                   <Route exact path="/article" component={Artice}/>
                   <Route exact path="/article/:id" component={ArticleDetail}/>
-                  <Route exact path="/article/edit/:id" component={EditContainer}/>        
                 </Switch>
               </Layout.Content>
             <Modals/>                     
