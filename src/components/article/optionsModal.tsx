@@ -16,7 +16,7 @@ class OptionsModal extends React.Component {
     tags: [],
   }
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state.tags = this.props.tags;
   }
@@ -42,7 +42,7 @@ class OptionsModal extends React.Component {
       >
         <Form layout="horizontal">
           <Form.Item label='个人分类'>
-            <div className={style.tagList}>
+            <div className={style["tagList"]}>
               <CheckboxGroup
                 options={tags}
                 onChange={this.handleOnChange} 

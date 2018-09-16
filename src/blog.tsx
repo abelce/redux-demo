@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 import Routes from './routes/blog';
 import './assets/style/index.scss'
 import configureStore from './store';
-// import { IntlProvider, addLocaleData}  from 'react-intl';
-// import { LocaleProvider} from 'antd';
+import { IntlProvider, addLocaleData}  from 'react-intl';
+import { LocaleProvider} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import * as en from 'react-intl/locale-data/en';
