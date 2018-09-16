@@ -16,6 +16,8 @@ type itemType = {
   onDelete: Function;
 }
 
+
+
 const Item = ({ article, onDelete }: itemType) => {
   return (
     <div className={style.node}>
