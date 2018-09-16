@@ -13,9 +13,10 @@ class Article extends React.Component {
       <div>
         {
           isApp()
-          && <header className={Style["new"]}>
+          ? <header className={Style["new"]}>
               <Link to="/article/edit/new">写博客</Link>
             </header>
+          : <span/>
         }
         <ListContainer/>
       </div>

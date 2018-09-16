@@ -43,7 +43,7 @@ const Item = ({ article, onDelete }: itemType) => {
         <RenderMarked markdowncontent={article.attributes.markdowncontent}/>
       </div>
       <footer>
-        { isApp() && <a onClick={() => {onDelete(article.id)}}>删除</a> }
+        { isApp() ? <a onClick={() => {onDelete(article.id)}}>删除</a>  : <span/> }
         <Link to={`/article/${article.id}`}>
           <Button size="small" type="dashed">查看全文</Button>
         </Link>

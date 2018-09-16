@@ -46,10 +46,9 @@ class Detail extends React.Component<Idetail> {
           <div className="optioninfo">
             <div className="createTime">{moment.unix(parseInt(createTime)).format('YYYY年MM月DD日 hh:mm:ss')}</div>
             {
-              isApp() && <Link to={`/article/edit/${id}`}>编辑</Link>
+              isApp() ? <Link to={`/article/edit/${id}`}>编辑</Link> : <span/>
             }
-          </div>
-          
+          </div>          
           <hr/>
         </header>
         <RenderMarked markdowncontent={markdowncontent}/>
