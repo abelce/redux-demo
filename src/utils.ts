@@ -34,6 +34,14 @@ export const tags = [
     id: '5',
     value: 'golang',
     label: 'golang',
+  }, {
+    id: '6',
+    value: 'jquery',
+    label: 'jquery',
+  }, {
+    id: '7',
+    value: 'typescript',
+    label: 'typescript',
   },
 ]
 

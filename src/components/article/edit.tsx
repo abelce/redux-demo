@@ -61,10 +61,10 @@ class Edit extends React.Component<Iedit> {
 
 export default Form.create({
   mapPropsToFields: ({article}) => {
-    const {tags, ...others} = article;
+    const { tags, ...others} = {id: article.id, ...article.attributes};
     let val = {};
     for (let key of Object.keys(others)) {
-      val[key] = Form.createFormField({value: article[key]});
+      val[key] = Form.createFormField({value: others[key]});
     }
     val.tags = Form.createFormField({value: tags.split(',')});
     return val;

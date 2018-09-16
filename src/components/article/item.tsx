@@ -16,20 +16,20 @@ const Item = ({ article }: itemType) => {
   return (
     <div className={style.node}>
       <h1>
-        <Link to={`/article/${article.id}`}>{ article.title }</Link>
+        <Link to={`/article/${article.id}`}>{ article.attributes.title }</Link>
       </h1>
       <div className="header">
         <div className="submitted"></div>
         <div className="tags"></div>
       </div>
       <Link to={`/article/${article.id}`}>
-        <p className="desription">{article.description}...</p>
+        <p className="desription">{article.attributes.description}...</p>
       </Link>
       <div className="footer">
         <div className="createTime">
-          {moment.unix(parseInt(article.createTime)).format('YYYY年MM月DD日 hh:mm:ss')}
+          {moment.unix(parseInt(article.attributes.createTime)).format('YYYY年MM月DD日 hh:mm:ss')}
         </div>
-        <span>{article.tags}</span>
+        <span>{article.attributes.tags}</span>
       </div>
     </div>
   )

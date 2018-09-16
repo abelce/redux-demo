@@ -24,7 +24,7 @@ module.exports = {
           './src/assets/i18ns/zh_CN.po',
           './src/assets/i18ns/en_US.po',
         ],
-        // noise: './src/assets/script/noise.js'
+        blog: __dirname + '/src/blog.tsx',
 
     },
     output: {
@@ -87,7 +87,8 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader?modules&localIdentName=[path][name]---[local]---[hash:base64:5]",
+                    // fallback: "style-loader?modules&localIdentName=[path][name]---[local]---[hash:base64:5]",
+                    fallback: "style-loader",
                     use: "css-loader"
                 })
             },
@@ -127,12 +128,19 @@ module.exports = {
             //     return a.id < b.id ? 1 : -1
             // },
             // // filename: 'index.[hash].html',
+            chunks: ['app', 'po'],
             template: __dirname + '/src/assets/index.ejs',
+
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['blog', 'po'],
+            filename: "blog.html",
+            template: __dirname + '/src/assets/blog.ejs',
 
         }),
         new ExtractTextPlugin({
             filename: 'style.css',
-            allChunks: true,
+            // allChunks: true,
         }),
         new webpack.DefinePlugin({
             __ENV__: JSON.stringify(process.env.APP_ENV),

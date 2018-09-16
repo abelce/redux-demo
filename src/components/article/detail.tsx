@@ -34,7 +34,7 @@ class Detail extends React.Component<Idetail> {
       return null;
     }
 
-    const {markdowncontent, title, createTime, id} = this.props.article;
+    const {attributes: {markdowncontent, title, createTime}, id} = this.props.article;
 
     return (
       <div className={style.detail}>

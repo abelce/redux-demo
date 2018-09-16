@@ -3,21 +3,17 @@ import * as React from 'react';
 import {
   Modal,
   Form,
-  Select,
-  Row,
-  Col,
   Checkbox,
 } from 'antd';
 const CheckboxGroup = Checkbox.Group;
 
 import { tags } from '../../utils';
-import * as style from './style';
+import * as style from './style.scss';
 
 class OptionsModal extends React.Component {
 
   state = {
     tags: [],
-    article: {},
   }
 
   constructor(props) {
@@ -47,7 +43,10 @@ class OptionsModal extends React.Component {
         <Form layout="horizontal">
           <Form.Item label='个人分类'>
             <div className={style.tagList}>
-              <CheckboxGroup options={tags} onChange={this.handleOnChange} value={this.state.tags}/>
+              <CheckboxGroup
+                options={tags}
+                onChange={this.handleOnChange} 
+                value={this.state.tags}/>
             </div>
           </Form.Item>
         </Form>

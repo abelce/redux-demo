@@ -8,7 +8,7 @@ class Article extends React.Component {
   render () {
     return (
       <div>
-        <header className={Style.new}>
+        <header className={Style["new"]}>
           <Link to="/article/edit/new">写博客</Link>
         </header>
         <ListContainer/>

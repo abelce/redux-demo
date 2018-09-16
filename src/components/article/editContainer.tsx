@@ -6,9 +6,7 @@ import { requestArticleById, requestArticleCreate, requestArticleUpdate } from '
 import Modals from '../common/modals';
 import OptionsModal from './optionsModal';
 import Edit from './edit';
-import {Article} from '../../types';
-
-import * as style from './style.scss';
+import { Article } from '../../types';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 const mapStateToProps = (state: any, props: any) => {
@@ -25,12 +23,12 @@ interface IeditContainer {
 }
 
 interface Istate {
-
+  article: Article,
 }
 
 @withRouter
 @connect(mapStateToProps)
-class EditContainer extends React.Component<IeditContainer> {
+class EditContainer extends React.Component<IeditContainer, Istate> {
   state = {
     article: null,
   }
@@ -42,9 +40,11 @@ class EditContainer extends React.Component<IeditContainer> {
     }
     if (this.props.match.params['id'] === 'new') {
       this.state.article = {
-        tags: '',
-        title: '',
-        markdowncontent: ''
+        attributes: {
+          tags: '',
+          title: '',
+          markdowncontent: ''
+        }
       }
     }
   }
@@ -67,7 +67,7 @@ class EditContainer extends React.Component<IeditContainer> {
 
   handleMarkdownChange = (e: any) => {
     const { article } = this.state;
-    _.set(article, 'markdowncontent', e.target.value);
+    _.set(article, 'attributes.markdowncontent', e.target.value);
     this.setState({
       article
     });
@@ -79,16 +79,16 @@ class EditContainer extends React.Component<IeditContainer> {
 
   handleTitleChange = (e: any) => {
     const { article } = this.state;
-    
-    _.set(article, 'title', e.target.value);
+    _.set(article, 'attributes.title', e.target.value);
     this.setState({
       article
     })
   }
 
   handleShowOptions = (form: WrappedFormUtils) => {
-    Modals.show(OptionsModal, {tags: this.state.article.tags.split(',')})
+    Modals.show(OptionsModal, {tags: this.state.article.attributes.tags.split(',')})
     .then(({tags}) => {
+      tags = tags.filter((t: Array<string>) => !!t);
       form.validateFieldsAndScroll((err: any, formData: any) => {
         if (err) return;
         const article = {...this.props.article, ...formData, tags };
