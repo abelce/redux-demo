@@ -5,6 +5,9 @@ import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { article } from '../../types';
 import { requestArticleById } from '../../actions/articleAction';
+
+import { isDev } from '../../utils';
+
 import * as style from './style.scss';
 
 interface Idetail extends RouteComponentProps<any, any>{
@@ -42,7 +45,9 @@ class Detail extends React.Component<Idetail> {
           <h1>{title}</h1>
           <div className="optioninfo">
             <div className="createTime">{moment.unix(parseInt(createTime)).format('YYYY年MM月DD日 hh:mm:ss')}</div>
-            <Link to={`/article/edit/${id}`}>编辑</Link>
+            {
+              isDev() && <Link to={`/article/edit/${id}`}>编辑</Link>
+            }
           </div>
           
           <hr/>

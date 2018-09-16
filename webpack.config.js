@@ -139,7 +139,7 @@ module.exports = {
 
         }),
         new ExtractTextPlugin({
-            filename: 'style.css',
+            filename: '[name].css',
             // allChunks: true,
         }),
         new webpack.DefinePlugin({
@@ -159,32 +159,4 @@ module.exports = {
 
 function isDev() {
     return process.env.APP_ENV === 'development'
-}
-
-function scssRules({global}) {
-    return [
-        'style-loader',
-        {
-            loader: 'css-loader',
-            options: global ? {
-                importLoaders: 1,
-                minimize: !isDev()
-            } : {
-                modules: true,
-                minimize: !isDev(),
-                importLoaders: 1,
-                localIdentName: '[name]__[local]___[hash:base64:5]',
-            }
-        },
-        {
-            loader: 'postcss-loader',
-            options: {
-                ident: 'postcss',
-                plugins: function () {
-                    return [require('autoprefixer')];
-                },
-            },
-        },
-        'sass-loader'
-    ]
 }

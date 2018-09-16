@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as qs from 'qs';
 import { Menu, Icon } from 'antd';
 import { NavLink } from 'react-router-dom';
 
@@ -11,7 +10,6 @@ class Slider extends React.Component {
 
   constructor(props: any) {    
     super(props);
-    // let query = qs.parse(window.location.pathname);
   }
 
   handleMenuChange = ({key} : any) => {
@@ -53,7 +51,6 @@ class Slider extends React.Component {
               <span className="nav-text">css-doodle</span>
             </NavLink>
           </Menu.Item>
-          
         </Menu>
       </div>
     )
