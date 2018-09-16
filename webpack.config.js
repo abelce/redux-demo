@@ -10,8 +10,8 @@ const hostMap = {
 
 const config = {
     mode: isDev() ? 'development' : 'production',
-    // devtool: isDev() ? "cheap-module-eval-source-map" : 'nosources-source-map',
-    devtool: "cheap-module-eval-source-map",
+    devtool: isDev() ? "cheap-module-eval-source-map" : 'nosources-source-map',
+    // devtool: "cheap-module-eval-source-map",
     devServer: {
         disableHostCheck: true,
         host: "0.0.0.0",
@@ -148,9 +148,9 @@ const config = {
     }
 }
 
-// if (!isDev()) {
-//     config.plugins.push(new UglifyWebpackPlugin());
-// }
+if (!isDev()) {
+    config.plugins.push(new UglifyWebpackPlugin());
+}
 
 module.exports = config;
 
