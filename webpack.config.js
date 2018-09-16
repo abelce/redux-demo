@@ -2,12 +2,13 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
+const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 const hostMap = {
     development: '"http://localhost:3001"',
 }
 
-module.exports = {
+const config = {
     mode: isDev() ? 'development' : 'production',
     devtool: isDev() ? "cheap-module-eval-source-map" : 'nosources-source-map',
     devServer: {
@@ -138,13 +139,19 @@ module.exports = {
             },
             _pms_host: hostMap[process.env.NODE_ENV] || ''
         }),
-        new webpack.HashedModuleIdsPlugin()
+        new webpack.HashedModuleIdsPlugin(),
     ],
     resolve: {
         modules: ['src', 'node_modules'],
         extensions: ['.js', '.tsx', '.ts', '.scss'],
     }
 }
+
+if (!isDev()) {
+    config.plugins.push(new UglifyWebpackPlugin());
+}
+
+module.exports = config;
 
 function isDev() {
     return process.env.NODE_ENV === 'development'
