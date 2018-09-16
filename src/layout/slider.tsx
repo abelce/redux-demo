@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { Menu, Icon } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
+
+const ItemKeys = ['images', 'upload', 'article', 'doodle'];
+
+@withRouter
 class Slider extends React.Component {
   
   state = {
@@ -10,6 +14,15 @@ class Slider extends React.Component {
 
   constructor(props: any) {    
     super(props);
+    console.log(this.props)
+    const {location: { pathname }} = this.props;
+    let key = ItemKeys.find((item: string) => {
+      let reg = new RegExp("^\/" + item, "gim");
+      return reg.test(pathname);
+    });
+    if (key) {
+      this.state.selectedKey = key;
+    }
   }
 
   handleMenuChange = ({key} : any) => {
