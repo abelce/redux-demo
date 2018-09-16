@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { article } from '../../types';
 import { requestArticleById } from '../../actions/articleAction';
 
-import { isDEV } from '../../utils';
+import { isApp } from '../../utils';
 
 import * as style from './style.scss';
 
@@ -46,7 +46,7 @@ class Detail extends React.Component<Idetail> {
           <div className="optioninfo">
             <div className="createTime">{moment.unix(parseInt(createTime)).format('YYYY年MM月DD日 hh:mm:ss')}</div>
             {
-              isDEV() && <Link to={`/article/edit/${id}`}>编辑</Link>
+              isApp() && <Link to={`/article/edit/${id}`}>编辑</Link>
             }
           </div>
           

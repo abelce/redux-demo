@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "export APP_ENV=development && webpack-dev-server",
-    "build": "export APP_ENV=production && rm -rf dist  && webpack --config webpack.config.js"
+    "dev": "export NODE_ENV=development && webpack-dev-server",
+    "build": "export NODE_ENV=production && rm -rf dist  && webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "babel-loader": "^7.1.3",
     "babel-plugin-import": "^1.6.5",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",

@@ -1,0 +1,22 @@
+{
+  "presets": [
+    ["env"],
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    ["import", {
+        "libraryName": "antd",
+        "style": "css"
+    }],
+    ["transform-runtime"],
+    "transform-decorators-legacy"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-remove-console"
+      ]
+    }
+  }
+}

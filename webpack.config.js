@@ -62,17 +62,6 @@ module.exports = {
                     /src\/assets/,
                 ],
                 loader: 'babel-loader',
-                query: {
-                    presets: ["env", "react", "stage-0"],
-                    plugins: [
-                        ["import", {
-                            libraryName: "antd",
-                            style: "css"
-                        }],
-                        ["transform-runtime"],
-                        'transform-decorators-legacy',
-                    ]
-                }
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg|pdf|jpg)$/,
@@ -143,11 +132,11 @@ module.exports = {
             // allChunks: true,
         }),
         new webpack.DefinePlugin({
-            __ENV__: JSON.stringify(process.env.APP_ENV),
+            __ENV__: JSON.stringify(process.env.NODE_ENV),
             __: function (k) {
                 return k;
             },
-            _pms_host: hostMap[process.env.APP_ENV] || ''
+            _pms_host: hostMap[process.env.NODE_ENV] || ''
         }),
         new webpack.HashedModuleIdsPlugin()
     ],
@@ -158,5 +147,5 @@ module.exports = {
 }
 
 function isDev() {
-    return process.env.APP_ENV === 'development'
+    return process.env.NODE_ENV === 'development'
 }

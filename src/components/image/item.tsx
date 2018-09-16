@@ -24,6 +24,12 @@ class Item extends React.Component<PItem, SItem> {
   ref: any
   
   componentDidMount() {
+    setTimeout(() => {
+      this.loadImage(); 
+    });
+  }
+
+  loadImage = () => {
     let div: Element;
     div = ReactDOM.findDOMNode(this.ref);
     let observer = new IntersectionObserver(entries => {
@@ -39,8 +45,7 @@ class Item extends React.Component<PItem, SItem> {
         })
       }
     })
-
-     observer.observe(div);
+    observer.observe(div);
   }
 
   setRef = (r: any) => {

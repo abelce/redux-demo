@@ -32,8 +32,8 @@ const Item = ({ article, onDelete }: itemType) => {
             {
               article.attributes.tags.split(',')
               .filter((tag: string) => !!tag)
-              .map((tag: string) => {
-                return <a href={`/article/${article.id}`}>{tag}</a>
+              .map((tag: string, index: number) => {
+                return <a key={index} href={`/article/${article.id}`}>{tag}</a>
               })
             }
           </span>
