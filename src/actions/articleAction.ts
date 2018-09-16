@@ -33,7 +33,16 @@ export const requestArticleUpdate = createAction(REQUEST_ARTICLE_UPDATE);
 export const successArticleUpdate = createAction(SUCCESS_ARTICLE_UPDATE);
 export const failureArticleUpdate = createAction(FAILURE_ARTICLE_UPDATE);
 
+// article delete
+export const REQUEST_ARTICLE_DELETE = 'REQUEST_ARTICLE_DELETE';
+export const SUCCESS_ARTICLE_DELETE = 'SUCCESS_ARTICLE_DELETE';
+export const FAILURE_ARTICLE_DELETE = 'FAILURE_ARTICLE_DELETE';
+export const requestArticleDelete = createAction(REQUEST_ARTICLE_DELETE);
+export const successArticleDelete = createAction(SUCCESS_ARTICLE_DELETE);
+export const failureArticleDelete = createAction(FAILURE_ARTICLE_DELETE);
+
 // file
 export const REQUEST_FILE_LIST = 'REQUEST_FILE_LIST';
 export const requestFileList = createAction(REQUEST_FILE_LIST);
 export const SUCCESS_FILE_LIST = 'SUCCESS_FILE_LIST';
+

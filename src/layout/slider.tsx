@@ -24,7 +24,7 @@ class Slider extends React.Component {
         <div className="logo" />
         <Menu 
         theme="light" 
-        mode="inline" 
+        mode="inline"
         defaultSelectedKeys={[this.state.selectedKey]}
         onSelect={this.handleMenuChange}>
             <Menu.Item key="images">

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Switch, Route, } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd'
-import Homepage from '../components/homepage';
-import Header from '../layout/header';
+// import Homepage from '../components/homepage';
+// import Header from '../layout/header';
 import Slider from '../layout/slider';
 import Upload from '../components/upload';
 import Artice from '../components/article';
@@ -22,7 +22,6 @@ class Routes extends React.Component {
               <Slider/>
             </Layout.Sider>
             <Layout className={style.right}>
-              {/* <Header/> */}
               <Layout.Content className={style.content}>
                 <Switch>
                   <Route exact path="/" component={Artice}/>

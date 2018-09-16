@@ -15,7 +15,8 @@
 .listContainer {
   max-width: 900px;
   margin: 16px auto;
-
+  padding: 24px;
+  background: #fff;
 }
 
 .node {
@@ -26,33 +27,80 @@
   :global {
     h1 {
       font-size: 24px;
+      position: relative;
+      &::after {
+        content: '';
+        width: 5px;
+        background: #1890ff;
+        position: absolute;
+        left: -24px;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+      }
     }
     p {
       font-size: 16px;
       color: #000;
     }
-    .header {
+    header {
       font-size: 12px;
       margin-bottom: 10px;
       padding-bottom: 5px;
       color: #ccc;
-      border-bottom: 1px dashed #ddd;
-      
+      border-bottom: 1px dashed #ddd;  
+      .tags {
+        > i {
+          color: #ccc;
+          transform: rotateY(180deg);
+        }
+        > a {
+          color: #ccc;
+          margin-left: 8px;
+          &:hover {
+            color: #40a9ff;
+          }
+         }
+  
+      }
     }
-    .createTime {
-      color: #858585;
-    }
-    .footer {
+    .options {
       display: flex;
       justify-content: space-between;
+    }
+    .desription {
+      div {
+        > * {
+          display: none;
+        }
+        p:first-of-type {
+          display: block;
+        }
+      }
+    }
+    footer {
+      display: flex;
+      justify-content: flex-end;
+      > a {
+        &:first-child {
+          color: #ccc;
+          margin-right: 16px;
+          &:hover {
+            color: #40a9ff;
+          }
+        }
+      }
     }
   }
 }
 
 .detail {
-  // padding: 24px 0;
+  // flex: none !important;
+  padding: 24px;
+  background: #fff;
   max-width: 1000px;
   margin: 0 auto;
+  overflow-y: auto;
   :global {
     .optioninfo {
       display: flex;

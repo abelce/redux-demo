@@ -6,6 +6,7 @@ import {
   REQUEST_ARTICLE_BY_ID,
   SUCCESS_ARTICLE_BY_ID,
   SUCCESS_ARTICLE_UPDATE,
+  SUCCESS_ARTICLE_DELETE,
   SUCCESS_FILE_LIST,
   REQUEST_FILE_LIST,
 } from '../actions/articleAction';
@@ -126,6 +127,8 @@ const reducer = (state = initialState, action: actionType) => {
       break;
     case SUCCESS_IMAGR_LIST:
       return getImageList(state, action.data);
+      break;
+    case SUCCESS_ARTICLE_DELETE:
       break;
     default:
       return state;

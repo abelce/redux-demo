@@ -87,7 +87,6 @@ export const getMessages = () => {
   return transfromLanguageJson(messageMap[getLanguageCode()]);
 }
 
-
 export const getENV = () => {
   return __ENV__;
 }
@@ -98,4 +97,8 @@ export const isDEV = () => {
 
 export const isProd = () => {
   return __ENV__ === "production";
+}
+
+export const isApp = () => {
+  return window.__CHUNK === 'app';
 }

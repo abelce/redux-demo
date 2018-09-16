@@ -9,6 +9,8 @@ import {
   SUCCESS_ARTICLE_CREATE,
   REQUEST_ARTICLE_UPDATE,
   SUCCESS_ARTICLE_UPDATE,
+  REQUEST_ARTICLE_DELETE,
+  SUCCESS_ARTICLE_DELETE,
   REQUEST_FILE_LIST,
   SUCCESS_FILE_LIST,
 } from '../actions/articleAction';
@@ -80,8 +82,13 @@ function* createArticle({url, article, onSuccess}: any) {
 
 function* udpateArticle({url, article, onSuccess}: any) {
   const response = yield call(AxiosInstance.put, url, buildArticleData(article));
-  yield put({type: SUCCESS_ARTICLE_UPDATE, data: response, article});
+  yield put({type: SUCCESS_ARTICLE_DELETE, data: response, article});
   onSuccess();
+}
+
+function* deleteArticle(url: string) {
+  const response = yield call(AxiosInstance.delete, url);
+  yield put({type: REQUEST_ARTICLE_LIST, payload: '/article/list'});
 }
 
 function* createImage({url, params}: any) {
@@ -93,9 +100,6 @@ function* fetchImageList(url: string) {
   const response = yield call(AxiosInstance_image.get, url);
   yield put({type: SUCCESS_IMAGR_LIST, data: response});
 }
-
-
-
 
 function* watchFetchArticleList() {
   while(true) {
@@ -132,6 +136,13 @@ function* watchArticleUpdate() {
   }
 }
 
+function* watchArticleDelete() {
+  while(true) {
+    let action = yield take(REQUEST_ARTICLE_DELETE);
+    yield fork(deleteArticle, action.payload);
+  }
+}
+
 function* watchImageCreate() {
   while(true) {
     let action = yield take(REQUEST_IMAGR_CREATE);
@@ -154,4 +165,5 @@ export default function* rootSaga() {
   yield fork(watchFileList);
   yield fork(watchImageCreate);
   yield fork(watchImageList);
+  yield fork(watchArticleDelete);
 }

@@ -13,6 +13,7 @@ import * as en from 'react-intl/locale-data/en';
 import * as zh from 'react-intl/locale-data/zh';
 // import { getLanguageCode, getMessages } from './utils';
 
+window.__CHUNK = 'app';
 const store = configureStore();
 let antLocaleMap = {
   'zh-CN': zhCN,
