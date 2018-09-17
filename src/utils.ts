@@ -42,6 +42,18 @@ export const tags = [
     id: '7',
     value: 'typescript',
     label: 'typescript',
+  }, {
+    id: '8',
+    value: 'css',
+    label: 'css',
+  }, {
+    id: '9',
+    value: 'scss',
+    label: 'scss',
+  }, {
+    id: '10',
+    value: 'redux-saga',
+    label: 'redux-saga',
   },
 ]
 
