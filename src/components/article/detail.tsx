@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as moment from 'moment';
+import { BackTop } from 'antd';
+
 import RenderMarked from './renderMarked';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { article } from '../../types';
 import { requestArticleById } from '../../actions/articleAction';
-
 import { isApp } from '../../utils';
 
 import * as style from './style.scss';
@@ -52,6 +53,7 @@ class Detail extends React.Component<Idetail> {
           <hr/>
         </header>
         <RenderMarked markdowncontent={markdowncontent}/>
+        <BackTop/>
       </div>
     )
   }

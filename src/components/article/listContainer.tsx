@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Item from './item';
-import { Modal } from 'antd';
+import { Modal, BackTop } from 'antd';
 import { article } from '../../types'
 import { connect, DispatchProp } from 'react-redux';
 import { requestArticleList, requestArticleDelete } from '../../actions/articleAction';
@@ -52,6 +52,7 @@ class ListContainer extends React.Component<IlistCOntiner> {
         {this.props.articles.map(article => 
           <Item key={article.id} article={article} onDelete={this.handleDelete}/>
         )}
+        <BackTop/>
       </div>
     )
   }
