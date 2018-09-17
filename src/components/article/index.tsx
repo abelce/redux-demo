@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import ListContainer from './listContainer'
 
+import ListContainer from './listContainer'
 import { isApp } from '../../utils';
 
 import * as Style from './style.scss';
