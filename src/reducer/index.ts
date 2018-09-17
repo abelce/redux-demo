@@ -128,8 +128,8 @@ const reducer = (state = initialState, action: actionType) => {
     case SUCCESS_IMAGR_LIST:
       return getImageList(state, action.data);
       break;
-    case SUCCESS_ARTICLE_DELETE:
-      break;
+    // case SUCCESS_ARTICLE_DELETE:
+    //   break;
     default:
       return state;
   }

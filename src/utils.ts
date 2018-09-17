@@ -54,6 +54,30 @@ export const tags = [
     id: '10',
     value: 'redux-saga',
     label: 'redux-saga',
+  }, {
+    id: '11',
+    value: 'es6',
+    label: 'es6',
+  },{
+    id: '12',
+    value: 'webpack',
+    label: 'webpack',
+  },{
+    id: '13',
+    value: 'html',
+    label: 'html',
+  },{
+    id: '14',
+    value: 'ruby',
+    label: 'ruby',
+  },{
+    id: '15',
+    value: '图形学',
+    label: '图形学',
+  },{
+    id: '16',
+    value: 'AI',
+    label: 'AI',
   },
 ]
 

@@ -14,10 +14,10 @@
 
 .listContainer {
   max-width: 900px;
-  margin: 16px auto;
+  margin: 0 auto;
   padding: 24px;
   background: #fff;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .25);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
 }
 
 .node {
@@ -115,8 +115,8 @@
 }
 
 .edit {
+  width: 100%;
   display: flex;
-  flex: 1;
   flex-direction: column;
   :global{
     .header {

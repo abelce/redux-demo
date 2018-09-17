@@ -10,6 +10,7 @@ import { Article } from '../../types';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 const mapStateToProps = (state: any, props: any) => {
+  if (!state || !state.articles) return null;
   return {
     article: state.articles.all[props.match.params["id"]]
   }
@@ -62,6 +63,7 @@ class EditContainer extends React.Component<IeditContainer, Istate> {
   }
 
   onSuccess = () => {
+    // debugger;
     this.props.history.push('/article');
   }
 
