@@ -10,8 +10,7 @@ const hostMap = {
 
 const config = {
     mode: isDev() ? "development" : "production",
-    devtool: isDev() ? "cheap-module-eval-source-map" : "nosources-source-map",
-    // devtool: "cheap-module-eval-source-map",
+    devtool: isDev() ? "cheap-module-eval-source-map" : false,
     devServer: {
         disableHostCheck: true,
         host: "0.0.0.0",
@@ -28,7 +27,7 @@ const config = {
     output: {
         path: path.resolve(__dirname, "dist"),
         publicPath: `${process.env.PUBLIC || "/"}`,
-        filename: isDev() ? "[name].[hash].js" : "[name].[hash].js",
+        filename: isDev() ? "[name].[hash].js" : "[name].[chunkhash].js",
     },
     module: {
         rules: [
@@ -105,12 +104,7 @@ const config = {
         ],
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin({}),
         new HtmlWebpackPlugin({
-            // chunksSortMode: function (a, b) {
-            //     return a.id < b.id ? 1 : -1
-            // },
-            // // filename: 'index.[hash].html',
             chunks: ["app", "po"],
             template: __dirname + "/src/assets/index.ejs",
         }),
@@ -121,7 +115,6 @@ const config = {
         }),
         new ExtractTextPlugin({
             filename: "[name].css",
-            // allChunks: true,
         }),
         new webpack.DefinePlugin({
             __ENV__: JSON.stringify(process.env.NODE_ENV),
@@ -131,19 +124,33 @@ const config = {
             _pms_host: hostMap[process.env.NODE_ENV] || "",
         }),
         new webpack.HashedModuleIdsPlugin(),
+
     ],
     resolve: {
         modules: ["src", "node_modules"],
         extensions: [".js", ".tsx", ".ts", ".scss"],
     },
+    // optimization: {
+    //     minimize: isDev() ? false : true,
+    //     nodeEnv: 'production',
+    //     runtimeChunk: {
+    //         name: entrypoint => `runtime~${entrypoint.name}`
+    //     },
+    //     minimizer: [
+    //         new UglifyWebpackPlugin({
+    //             // parallel: true,
+    //             sourceMap: false,
+    //             // warnings: false,
+    //             // nameCache: null,
+    //         }),
+    //     ],
+    // }
 };
 
-if (!isDev()) {
+if (isDev()) {
     config.plugins.push(
-        new UglifyWebpackPlugin({
-            sourceMap: false,
-        })
-    );
+        new webpack.HotModuleReplacementPlugin({})
+    )
 }
 
 module.exports = config;
