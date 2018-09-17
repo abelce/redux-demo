@@ -130,21 +130,12 @@ const config = {
         modules: ["src", "node_modules"],
         extensions: [".js", ".tsx", ".ts", ".scss"],
     },
-    // optimization: {
-    //     minimize: isDev() ? false : true,
-    //     nodeEnv: 'production',
-    //     runtimeChunk: {
-    //         name: entrypoint => `runtime~${entrypoint.name}`
-    //     },
-    //     minimizer: [
-    //         new UglifyWebpackPlugin({
-    //             // parallel: true,
-    //             sourceMap: false,
-    //             // warnings: false,
-    //             // nameCache: null,
-    //         }),
-    //     ],
-    // }
+    optimization: {
+        minimize: isDev() ? false : true,
+        runtimeChunk: {
+            name: entrypoint => `runtime~${entrypoint.name}`
+        },
+    }
 };
 
 if (isDev()) {
