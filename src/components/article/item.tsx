@@ -10,11 +10,11 @@ import RenderMarked from './renderMarked';
 import * as style from './style.scss';
 import { isApp } from '../../utils';
 
-
 type itemType = {
   article: article;
   onDelete: Function;
 }
+
 
 const Item = ({ article, onDelete }: itemType) => {
   return (
@@ -39,6 +39,7 @@ const Item = ({ article, onDelete }: itemType) => {
           </span>
         </div>
       </header>
+      
       <div className="desription">
         <RenderMarked markdowncontent={article.attributes.markdowncontent}/>
       </div>
