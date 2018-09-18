@@ -1,231 +1,310 @@
-var undef
-
-// Pseudo-random generator
-function Marsaglia(i1, i2) {
-  // from http://www.math.uni-bielefeld.de/~sillke/ALGORITHMS/random/marsaglia-c
-  var z=i1 || 362436069, w= i2 || 521288629;
-  var nextInt = function() {
-    z=(36969*(z&65535)+(z>>>16)) & 0xFFFFFFFF;
-    w=(18000*(w&65535)+(w>>>16)) & 0xFFFFFFFF;
-    return (((z&0xFFFF)<<16) | (w&0xFFFF)) & 0xFFFFFFFF;
-  };
-
-  this.nextDouble = function() {
-    var i = nextInt() / 4294967296;
-    return i < 0 ? 1 + i : i;
-  };
-  this.nextInt = nextInt;
-}
-
-Marsaglia.createRandomized = function() {
-  var now = new Date();
-  return new Marsaglia((now / 60000) & 0xFFFFFFFF, now & 0xFFFFFFFF);
-};
-
-// Noise functions and helpers
-function PerlinNoise(seed) {
-  var rnd = seed !== undef ? new Marsaglia(seed) : Marsaglia.createRandomized();
-  var i, j;
-  // http://www.noisemachine.com/talk1/17b.html
-  // http://mrl.nyu.edu/~perlin/noise/
-  // generate permutation
-  var perm = new Array(512) // Uint8Array(512);
-  for(i=0;i<256;++i) { perm[i] = i; }
-  for(i=0;i<256;++i) { var t = perm[j = rnd.nextInt() & 0xFF]; perm[j] = perm[i]; perm[i] = t; }
-  // copy to avoid taking mod in perm[0];
-  for(i=0;i<256;++i) { perm[i + 256] = perm[i]; }
-
-  // TODO: Benchmark
-  function grad3d(i,x,y,z) {
-    var h = i & 15; // convert into 1   2 gradient directions
-    // var u = h<8 ? x : y,
-    //     v = h<4 ? y : h===12||h===14 ? x : z;
-    // return ((h&1) === 0 ? u : -u) + ((h&2) === 0 ? v : -v);
+/*
+ * A speed-improved perlin and simplex noise algorithms for 2D.
+ *
+ * Based on example code by Stefan Gustavson (stegu@itn.liu.se).
+ * Optimisations by Peter Eastman (peastman@drizzle.stanford.edu).
+ * Better rank ordering method by Stefan Gustavson in 2012.
+ * Converted to Javascript by Joseph Gentle.
+ *
+ * Version 2012-03-09
+ *
+ * This code was placed in the public domain by its original author,
+ * Stefan Gustavson. You may use it as you see fit, but
+ * attribution is appreciated.
+ *
+ */
 
 
-    // Optimization from 
-    // http://riven8192.blogspot.com/2010/08/calculate-perlinnoise-twice-as-fast.html
-    //
-    // inline float grad(int hash, float x, float y, float z)
-    //    {  
-    //float u = (h < 8) ? x : y;
-    //float v = (h < 4) ? y : ((h == 12 || h == 14) ? x : z);
-    //return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
+  var Noise = {};
 
-    switch(h & 0xF)
-    {
-     case 0x0: return  x + y;
-     case 0x1: return -x + y;
-     case 0x2: return  x - y;
-     case 0x3: return -x - y;
-     case 0x4: return  x + z;
-     case 0x5: return -x + z;
-     case 0x6: return  x - z;
-     case 0x7: return -x - z;
-     case 0x8: return  y + z;
-     case 0x9: return -y + z;
-     case 0xA: return  y - z;
-     case 0xB: return -y - z;
-     case 0xC: return  y + x;
-     case 0xD: return -y + z;
-     case 0xE: return  y - x;
-     case 0xF: return -y - z;
-     default: return 0; // never happens
-    }
+  function Grad(x, y, z) {
+    this.x = x; this.y = y; this.z = z;
+  }
   
-  }
-
-  function grad2d(i,x,y) {
-    var v = (i & 1) === 0 ? x : y;
-    return (i&2) === 0 ? -v : v;
-  }
-
-  function grad1d(i,x) {
-    return (i&1) === 0 ? -x : x;
-  }
-
-  function lerp(t,a,b) { return a + t * (b - a); }
-
-  this.noise3d = function(x, y, z) {
-    //var X = Math.floor(x)&255, Y = Math.floor(y)&255, Z = Math.floor(z)&255;
-    //x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
-    var X = (x|0)&255, Y = (y|0)&255, Z = (z|0)&255;
-    x -= (x|0); y -= (y|0); z -= (z|0);
-    var fx = (3-2*x)*x*x, fy = (3-2*y)*y*y, fz = (3-2*z)*z*z;
-    var p0 = perm[X]+Y, p00 = perm[p0] + Z, p01 = perm[p0 + 1] + Z,
-        p1 = perm[X + 1] + Y, p10 = perm[p1] + Z, p11 = perm[p1 + 1] + Z;
-    return lerp(fz,
-      lerp(fy, lerp(fx, grad3d(perm[p00], x, y, z), grad3d(perm[p10], x-1, y, z)),
-               lerp(fx, grad3d(perm[p01], x, y-1, z), grad3d(perm[p11], x-1, y-1,z))),
-      lerp(fy, lerp(fx, grad3d(perm[p00 + 1], x, y, z-1), grad3d(perm[p10 + 1], x-1, y, z-1)),
-               lerp(fx, grad3d(perm[p01 + 1], x, y-1, z-1), grad3d(perm[p11 + 1], x-1, y-1,z-1))));
+  Grad.prototype.dot2 = function(x, y) {
+    return this.x*x + this.y*y;
   };
 
-  this.noise2d = function(x, y) {
-    var X = Math.floor(x)&255, Y = Math.floor(y)&255;
-    x -= Math.floor(x); y -= Math.floor(y);
-    var fx = (3-2*x)*x*x, fy = (3-2*y)*y*y;
-    var p0 = perm[X]+Y, p1 = perm[X + 1] + Y;
-    return lerp(fy,
-      lerp(fx, grad2d(perm[p0], x, y), grad2d(perm[p1], x-1, y)),
-      lerp(fx, grad2d(perm[p0 + 1], x, y-1), grad2d(perm[p1 + 1], x-1, y-1)));
+  Grad.prototype.dot3 = function(x, y, z) {
+    return this.x*x + this.y*y + this.z*z;
   };
 
-  this.noise1d = function(x) {
-    var X = Math.floor(x)&255;
-    x -= Math.floor(x);
-    var fx = (3-2*x)*x*x;
-    return lerp(fx, grad1d(perm[X], x), grad1d(perm[X+1], x-1));
-  };
-}
+  var grad3 = [new Grad(1,1,0),new Grad(-1,1,0),new Grad(1,-1,0),new Grad(-1,-1,0),
+               new Grad(1,0,1),new Grad(-1,0,1),new Grad(1,0,-1),new Grad(-1,0,-1),
+               new Grad(0,1,1),new Grad(0,-1,1),new Grad(0,1,-1),new Grad(0,-1,-1)];
 
-// processing defaults
-// Yuriedit: window vs. var
-window.noiseProfile = { generator: undef, octaves: 4, fallout: 0.5, seed: undef};
+  var p = [151,160,137,91,90,15,
+  131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
+  190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
+  88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
+  77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
+  102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
+  135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
+  5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
+  223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167, 43,172,9,
+  129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
+  251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
+  49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
+  138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180];
+  // To remove the need for index wrapping, double the permutation table length
+  var perm = new Array(512);
+  var gradP = new Array(512);
 
-/**
-* Returns the Perlin noise value at specified coordinates. Perlin noise is a random sequence
-* generator producing a more natural ordered, harmonic succession of numbers compared to the
-* standard random() function. It was invented by Ken Perlin in the 1980s and been used since
-* in graphical applications to produce procedural textures, natural motion, shapes, terrains etc.
-* The main difference to the random() function is that Perlin noise is defined in an infinite
-* n-dimensional space where each pair of coordinates corresponds to a fixed semi-random value
-* (fixed only for the lifespan of the program). The resulting value will always be between 0.0
-* and 1.0. Processing can compute 1D, 2D and 3D noise, depending on the number of coordinates
-* given. The noise value can be animated by moving through the noise space as demonstrated in
-* the example above. The 2nd and 3rd dimension can also be interpreted as time.
-* The actual noise is structured similar to an audio signal, in respect to the function's use
-* of frequencies. Similar to the concept of harmonics in physics, perlin noise is computed over
-* several octaves which are added together for the final result.
-* Another way to adjust the character of the resulting sequence is the scale of the input
-* coordinates. As the function works within an infinite space the value of the coordinates
-* doesn't matter as such, only the distance between successive coordinates does (eg. when using
-* noise() within a loop). As a general rule the smaller the difference between coordinates, the
-* smoother the resulting noise sequence will be. Steps of 0.005-0.03 work best for most applications,
-* but this will differ depending on use.
-*
-* @param {float} x          x coordinate in noise space
-* @param {float} y          y coordinate in noise space
-* @param {float} z          z coordinate in noise space
-*
-* @returns {float}
-*
-* @see random
-* @see noiseDetail
-*/
-
-// Yuriedit
-// caching
-window.noiseProfile.generator = new PerlinNoise(0) //noiseProfile.seed);
-
-window.noise = function(x, y, z, octaves, fallout) {
-  
-  var generator = noiseProfile.generator;
-  // Yuriedit; removed the check for the pre-existence of the generator
-
-  var effect = 1, k = 1, sum = 0;
-  // Yuriedit: Pass in octaves / fallout
-  for(var i=0; i< octaves; ++i) {
-    effect *= fallout;
-    // Yuriedit
-    switch (arguments.length) {
-    case 1:
-      sum += effect * (1 + generator.noise1d(k*x))/2; break;
-    case 2:
-      sum += effect * (1 + generator.noise2d(k*x, k*y))/2; break;
-    case 4:
-    sum += effect * (1 + generator.noise3d(k*x, k*y, k*z))/2;// break;
+  // This isn't a very good seeding function, but it works ok. It supports 2^16
+  // different seed values. Write something better if you need more seeds.
+  Noise.seed = function(seed) {
+    if(seed > 0 && seed < 1) {
+      // Scale the seed out
+      seed *= 65536;
     }
-    k *= 2;
+
+    seed = Math.floor(seed);
+    if(seed < 256) {
+      seed |= seed << 8;
+    }
+
+    for(var i = 0; i < 256; i++) {
+      var v;
+      if (i & 1) {
+        v = p[i] ^ (seed & 255);
+      } else {
+        v = p[i] ^ ((seed>>8) & 255);
+      }
+
+      perm[i] = perm[i + 256] = v;
+      gradP[i] = gradP[i + 256] = grad3[v % 12];
+    }
+  };
+
+  Noise.seed(0);
+
+  /*
+  for(var i=0; i<256; i++) {
+    perm[i] = perm[i + 256] = p[i];
+    gradP[i] = gradP[i + 256] = grad3[perm[i] % 12];
+  }*/
+
+  // Skewing and unskewing factors for 2, 3, and 4 dimensions
+  var F2 = 0.5*(Math.sqrt(3)-1);
+  var G2 = (3-Math.sqrt(3))/6;
+
+  var F3 = 1/3;
+  var G3 = 1/6;
+
+  // 2D simplex noise
+  Noise.simplex2 = function(xin, yin) {
+    var n0, n1, n2; // Noise contributions from the three corners
+    // Skew the input space to determine which simplex cell we're in
+    var s = (xin+yin)*F2; // Hairy factor for 2D
+    var i = Math.floor(xin+s);
+    var j = Math.floor(yin+s);
+    var t = (i+j)*G2;
+    var x0 = xin-i+t; // The x,y distances from the cell origin, unskewed.
+    var y0 = yin-j+t;
+    // For the 2D case, the simplex shape is an equilateral triangle.
+    // Determine which simplex we are in.
+    var i1, j1; // Offsets for second (middle) corner of simplex in (i,j) coords
+    if(x0>y0) { // lower triangle, XY order: (0,0)->(1,0)->(1,1)
+      i1=1; j1=0;
+    } else {    // upper triangle, YX order: (0,0)->(0,1)->(1,1)
+      i1=0; j1=1;
+    }
+    // A step of (1,0) in (i,j) means a step of (1-c,-c) in (x,y), and
+    // a step of (0,1) in (i,j) means a step of (-c,1-c) in (x,y), where
+    // c = (3-sqrt(3))/6
+    var x1 = x0 - i1 + G2; // Offsets for middle corner in (x,y) unskewed coords
+    var y1 = y0 - j1 + G2;
+    var x2 = x0 - 1 + 2 * G2; // Offsets for last corner in (x,y) unskewed coords
+    var y2 = y0 - 1 + 2 * G2;
+    // Work out the hashed gradient indices of the three simplex corners
+    i &= 255;
+    j &= 255;
+    var gi0 = gradP[i+perm[j]];
+    var gi1 = gradP[i+i1+perm[j+j1]];
+    var gi2 = gradP[i+1+perm[j+1]];
+    // Calculate the contribution from the three corners
+    var t0 = 0.5 - x0*x0-y0*y0;
+    if(t0<0) {
+      n0 = 0;
+    } else {
+      t0 *= t0;
+      n0 = t0 * t0 * gi0.dot2(x0, y0);  // (x,y) of grad3 used for 2D gradient
+    }
+    var t1 = 0.5 - x1*x1-y1*y1;
+    if(t1<0) {
+      n1 = 0;
+    } else {
+      t1 *= t1;
+      n1 = t1 * t1 * gi1.dot2(x1, y1);
+    }
+    var t2 = 0.5 - x2*x2-y2*y2;
+    if(t2<0) {
+      n2 = 0;
+    } else {
+      t2 *= t2;
+      n2 = t2 * t2 * gi2.dot2(x2, y2);
+    }
+    // Add contributions from each corner to get the final noise value.
+    // The result is scaled to return values in the interval [-1,1].
+    return 70 * (n0 + n1 + n2);
+  };
+
+  // 3D simplex noise
+  Noise.simplex3 = function(xin, yin, zin) {
+    var n0, n1, n2, n3; // Noise contributions from the four corners
+
+    // Skew the input space to determine which simplex cell we're in
+    var s = (xin+yin+zin)*F3; // Hairy factor for 2D
+    var i = Math.floor(xin+s);
+    var j = Math.floor(yin+s);
+    var k = Math.floor(zin+s);
+
+    var t = (i+j+k)*G3;
+    var x0 = xin-i+t; // The x,y distances from the cell origin, unskewed.
+    var y0 = yin-j+t;
+    var z0 = zin-k+t;
+
+    // For the 3D case, the simplex shape is a slightly irregular tetrahedron.
+    // Determine which simplex we are in.
+    var i1, j1, k1; // Offsets for second corner of simplex in (i,j,k) coords
+    var i2, j2, k2; // Offsets for third corner of simplex in (i,j,k) coords
+    if(x0 >= y0) {
+      if(y0 >= z0)      { i1=1; j1=0; k1=0; i2=1; j2=1; k2=0; }
+      else if(x0 >= z0) { i1=1; j1=0; k1=0; i2=1; j2=0; k2=1; }
+      else              { i1=0; j1=0; k1=1; i2=1; j2=0; k2=1; }
+    } else {
+      if(y0 < z0)      { i1=0; j1=0; k1=1; i2=0; j2=1; k2=1; }
+      else if(x0 < z0) { i1=0; j1=1; k1=0; i2=0; j2=1; k2=1; }
+      else             { i1=0; j1=1; k1=0; i2=1; j2=1; k2=0; }
+    }
+    // A step of (1,0,0) in (i,j,k) means a step of (1-c,-c,-c) in (x,y,z),
+    // a step of (0,1,0) in (i,j,k) means a step of (-c,1-c,-c) in (x,y,z), and
+    // a step of (0,0,1) in (i,j,k) means a step of (-c,-c,1-c) in (x,y,z), where
+    // c = 1/6.
+    var x1 = x0 - i1 + G3; // Offsets for second corner
+    var y1 = y0 - j1 + G3;
+    var z1 = z0 - k1 + G3;
+
+    var x2 = x0 - i2 + 2 * G3; // Offsets for third corner
+    var y2 = y0 - j2 + 2 * G3;
+    var z2 = z0 - k2 + 2 * G3;
+
+    var x3 = x0 - 1 + 3 * G3; // Offsets for fourth corner
+    var y3 = y0 - 1 + 3 * G3;
+    var z3 = z0 - 1 + 3 * G3;
+
+    // Work out the hashed gradient indices of the four simplex corners
+    i &= 255;
+    j &= 255;
+    k &= 255;
+    var gi0 = gradP[i+   perm[j+   perm[k   ]]];
+    var gi1 = gradP[i+i1+perm[j+j1+perm[k+k1]]];
+    var gi2 = gradP[i+i2+perm[j+j2+perm[k+k2]]];
+    var gi3 = gradP[i+ 1+perm[j+ 1+perm[k+ 1]]];
+
+    // Calculate the contribution from the four corners
+    var t0 = 0.6 - x0*x0 - y0*y0 - z0*z0;
+    if(t0<0) {
+      n0 = 0;
+    } else {
+      t0 *= t0;
+      n0 = t0 * t0 * gi0.dot3(x0, y0, z0);  // (x,y) of grad3 used for 2D gradient
+    }
+    var t1 = 0.6 - x1*x1 - y1*y1 - z1*z1;
+    if(t1<0) {
+      n1 = 0;
+    } else {
+      t1 *= t1;
+      n1 = t1 * t1 * gi1.dot3(x1, y1, z1);
+    }
+    var t2 = 0.6 - x2*x2 - y2*y2 - z2*z2;
+    if(t2<0) {
+      n2 = 0;
+    } else {
+      t2 *= t2;
+      n2 = t2 * t2 * gi2.dot3(x2, y2, z2);
+    }
+    var t3 = 0.6 - x3*x3 - y3*y3 - z3*z3;
+    if(t3<0) {
+      n3 = 0;
+    } else {
+      t3 *= t3;
+      n3 = t3 * t3 * gi3.dot3(x3, y3, z3);
+    }
+    // Add contributions from each corner to get the final noise value.
+    // The result is scaled to return values in the interval [-1,1].
+    return 32 * (n0 + n1 + n2 + n3);
+
+  };
+
+  // ##### Perlin noise stuff
+
+  function fade(t) {
+    return t*t*t*(t*(t*6-15)+10);
   }
-  return sum;
-};
 
-/**
-* Adjusts the character and level of detail produced by the Perlin noise function.
-* Similar to harmonics in physics, noise is computed over several octaves. Lower octaves
-* contribute more to the output signal and as such define the overal intensity of the noise,
-* whereas higher octaves create finer grained details in the noise sequence. By default,
-* noise is computed over 4 octaves with each octave contributing exactly half than its
-* predecessor, starting at 50% strength for the 1st octave. This falloff amount can be
-* changed by adding an additional function parameter. Eg. a falloff factor of 0.75 means
-* each octave will now have 75% impact (25% less) of the previous lower octave. Any value
-* between 0.0 and 1.0 is valid, however note that values greater than 0.5 might result in
-* greater than 1.0 values returned by noise(). By changing these parameters, the signal
-* created by the noise() function can be adapted to fit very specific needs and characteristics.
-*
-* @param {int} octaves          number of octaves to be used by the noise() function
-* @param {float} falloff        falloff factor for each octave
-*
-* @see noise
-*/
-window.noiseDetail = function(octaves, fallout) {
-  noiseProfile.octaves = octaves;
-  if(fallout !== undef) {
-    noiseProfile.fallout = fallout;
+  function lerp(a, b, t) {
+    return (1-t)*a + t*b;
   }
-};
 
-/**
-* Sets the seed value for noise(). By default, noise() produces different results each
-* time the program is run. Set the value parameter to a constant to return the same
-* pseudo-random numbers each time the software is run.
-*
-* @param {int} seed         int
-*
-* @returns {float}
-*
-* @see random
-* @see radomSeed
-* @see noise
-* @see noiseDetail
-*/
-window.noiseSeed = function(seed) {
-  noiseProfile.seed = seed;
-  noiseProfile.generator = undef;
-}
+  // 2D Perlin Noise
+  Noise.perlin2 = function(x, y) {
+    // Find unit grid cell containing point
+    var X = Math.floor(x), Y = Math.floor(y);
+    // Get relative xy coordinates of point within that cell
+    x = x - X; y = y - Y;
+    // Wrap the integer cells at 255 (smaller integer period can be introduced here)
+    X = X & 255; Y = Y & 255;
 
-module.exports = {
-  noise: window.noise,
-  generator: noiseProfile.generator
-};
+    // Calculate noise contributions from each of the four corners
+    var n00 = gradP[X+perm[Y]].dot2(x, y);
+    var n01 = gradP[X+perm[Y+1]].dot2(x, y-1);
+    var n10 = gradP[X+1+perm[Y]].dot2(x-1, y);
+    var n11 = gradP[X+1+perm[Y+1]].dot2(x-1, y-1);
+
+    // Compute the fade curve value for x
+    var u = fade(x);
+
+    // Interpolate the four results
+    return lerp(
+        lerp(n00, n10, u),
+        lerp(n01, n11, u),
+       fade(y));
+  };
+
+  // 3D Perlin Noise
+  Noise.perlin3 = function(x, y, z) {
+    // Find unit grid cell containing point
+    var X = Math.floor(x), Y = Math.floor(y), Z = Math.floor(z);
+    // Get relative xyz coordinates of point within that cell
+    x = x - X; y = y - Y; z = z - Z;
+    // Wrap the integer cells at 255 (smaller integer period can be introduced here)
+    X = X & 255; Y = Y & 255; Z = Z & 255;
+
+    // Calculate noise contributions from each of the eight corners
+    var n000 = gradP[X+  perm[Y+  perm[Z  ]]].dot3(x,   y,     z);
+    var n001 = gradP[X+  perm[Y+  perm[Z+1]]].dot3(x,   y,   z-1);
+    var n010 = gradP[X+  perm[Y+1+perm[Z  ]]].dot3(x,   y-1,   z);
+    var n011 = gradP[X+  perm[Y+1+perm[Z+1]]].dot3(x,   y-1, z-1);
+    var n100 = gradP[X+1+perm[Y+  perm[Z  ]]].dot3(x-1,   y,   z);
+    var n101 = gradP[X+1+perm[Y+  perm[Z+1]]].dot3(x-1,   y, z-1);
+    var n110 = gradP[X+1+perm[Y+1+perm[Z  ]]].dot3(x-1, y-1,   z);
+    var n111 = gradP[X+1+perm[Y+1+perm[Z+1]]].dot3(x-1, y-1, z-1);
+
+    // Compute the fade curve value for x, y, z
+    var u = fade(x);
+    var v = fade(y);
+    var w = fade(z);
+
+    // Interpolate
+    return lerp(
+        lerp(
+          lerp(n000, n100, u),
+          lerp(n001, n101, u), w),
+        lerp(
+          lerp(n010, n110, u),
+          lerp(n011, n111, u), w),
+       v);
+  };
+
+export default Noise;

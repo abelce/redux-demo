@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as style from './style.scss';
-const Noise = require('../../assets/script/noise.js');
+import Noise from '../../assets/script/noise.js';
+import { x } from '../article/markedstyle.scss';
 
 
 const WIDTH = 600;
@@ -11,11 +12,65 @@ let rows = Math.floor(HEIGHT / scl);
 let inc = 0.09;
 let zoff = 0.01;
 
+// const point = (x, y) => {
+//   this.x = x;
+//   this.y = y;
+// }
+
+const createVector = function(x, y) {
+  this.x = x;
+  this.y = y;
+  this.add = function(obj) {
+    this.x += obj.x;
+    this.y += obj.y;
+  }
+  this.mult = function(val) {
+    this.x *= val;
+    this.y *= val;
+  }
+}
+
+const Particle = function() {
+  this.pos = new createVector(Math.random() * WIDTH, Math.random() * HEIGHT);
+  this.vel = new  createVector(Math.random()*(Math.random() > 0.5 ? 1 : -1) * 10, Math.random()*(Math.random()>0.5?1:-1) * 10);
+  this.acc = new createVector(0, 0);
+
+  this.update = function() {
+    this.vel.add(this.acc);
+    this.pos.add(this.vel);
+    this.acc.mult(0);
+  }
+
+  this.applyForce = function(force) {
+    this.acc.add(force);
+  }
+
+  this.edges = function() {
+    if (this.pos.x < 0) this.pos.x = WIDTH;
+    if (this.pos.x > WIDTH) this.pos.x = 0;
+    if (this.pos.y < 0) this.pos.y = HEIGHT;
+    if (this.pos.y > HEIGHT) this.pos.y = 0;
+
+  }
+
+}
+
+const particles = [];
+
+var flowField = []
+
 class Draw extends React.Component {
   refCanvas = null
   ctx = null;
 
   componentDidMount() {
+
+
+    flowField = new Array(rows * cols);
+
+    for(let i = 0; i < 100; i++) {
+      particles[i] = new Particle();
+    }
     this.draw();
   }
 
@@ -47,6 +102,17 @@ class Draw extends React.Component {
     this.ctx.stroke();
   }
 
+  show = () => {
+    for(let i = 0; i < 100; i++) {
+      this.ctx.beginPath();
+      particles[i].update();
+      this.ctx.arc(particles[i].pos.x, particles[i].pos.y, 4, 0, 2 * Math.PI);
+      this.ctx.fill();
+      this.ctx.closePath();
+      particles[i].edges();
+    }
+  }
+
   draw = () => {
     this.beginDraw();
     let yoff = 0;
@@ -55,7 +121,8 @@ class Draw extends React.Component {
       for(let y = 0; y < rows; y++) {
         xoff += inc;
         // this.rect(x * scl, y * scl, scl, scl);
-        let angle = Noise.generator.noise3d(xoff, yoff, zoff) * Math.PI * 2;
+        var index = (x + y * cols);
+        let angle = Noise.perlin3(xoff, yoff, zoff) * Math.PI * 2;
         // this.fill(r)
         this.ctx.save();
         this.ctx.beginPath();
@@ -69,9 +136,10 @@ class Draw extends React.Component {
         // this.ctx.translate(-x * scl, -y * scl);        
       }
       yoff += inc;
-      zoff += 0.001;
+      // zoff += 0.001;
 
     }
+    this.show();
     // this.endDraw();
 
     setTimeout(() => {
