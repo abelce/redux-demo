@@ -28,15 +28,25 @@ const createVector = function(x, y) {
     this.x *= val;
     this.y *= val;
   }
+  this.copy = function() {
+    return {x: this.x, y: this.y};
+  }
 }
 
+let speed = 4
 const Particle = function() {
   this.pos = new createVector(Math.random() * WIDTH, Math.random() * HEIGHT);
-  this.vel = new  createVector(Math.random()*(Math.random() > 0.5 ? 1 : -1) * 10, Math.random()*(Math.random()>0.5?1:-1) * 10);
+  // this.vel = new  createVector(Math.random()*(Math.random() > 0.5 ? 1 : -1) * 10, Math.random()*(Math.random()>0.5?1:-1) * 10);
+  this.vel = new  createVector(0, 0);
   this.acc = new createVector(0, 0);
 
+  this.prevPos = this.pos.copy();
   this.update = function() {
     this.vel.add(this.acc);
+    if (this.vel.x > speed) this.vel.x = speed;
+    if (this.vel.y > speed) this.vel.y = speed;
+    if (this.vel.x < -speed) this.vel.x = -speed;
+    if (this.vel.y < -speed) this.vel.y = -speed;
     this.pos.add(this.vel);
     this.acc.mult(0);
   }
@@ -46,12 +56,40 @@ const Particle = function() {
   }
 
   this.edges = function() {
-    if (this.pos.x < 0) this.pos.x = WIDTH;
-    if (this.pos.x > WIDTH) this.pos.x = 0;
-    if (this.pos.y < 0) this.pos.y = HEIGHT;
-    if (this.pos.y > HEIGHT) this.pos.y = 0;
+    if (this.pos.x < 0) {
+      this.pos.x = WIDTH
+      this.updatePrev();
+    };
+    if (this.pos.x > WIDTH) {
+      this.pos.x = 0;
+      this.updatePrev();
+    }
+    if (this.pos.y < 0) {
+      this.pos.y = HEIGHT;
+      this.updatePrev();
+    }
+    if (this.pos.y > HEIGHT) {
+      this.pos.y = 0;
+      this.updatePrev();
+    } 
 
   }
+
+  this.updatePrev = function() {
+    this.prevPos.x = this.pos.x;
+    this.prevPos.y = this.pos.y;
+  }
+
+  this.fellow = function(forces) {
+    let x = Math.floor(this.pos.x / scl);
+    let y = Math.floor(this.pos.y / scl);
+    let index = x + y * cols;
+    if (index >= 900) index = 899;
+    let v = forces[index];
+    this.applyForce(v);
+  }
+
+
 
 }
 
@@ -68,9 +106,10 @@ class Draw extends React.Component {
 
     flowField = new Array(rows * cols);
 
-    for(let i = 0; i < 100; i++) {
+    for(let i = 0; i < rows * cols; i++) {
       particles[i] = new Particle();
     }
+    this.beginDraw();
     this.draw();
   }
 
@@ -81,6 +120,7 @@ class Draw extends React.Component {
   beginDraw = () => {
     let cvs = this.refCanvas;
     this.ctx = cvs.getContext("2d");
+    // this.ctx.globalAlpha = 0.2;
   }
 
   endDraw = () => {
@@ -103,47 +143,57 @@ class Draw extends React.Component {
   }
 
   show = () => {
-    for(let i = 0; i < 100; i++) {
+    for(let i = 0; i < 400; i++) {
       this.ctx.beginPath();
+      particles[i].fellow(flowField)
       particles[i].update();
-      this.ctx.arc(particles[i].pos.x, particles[i].pos.y, 4, 0, 2 * Math.PI);
-      this.ctx.fill();
+      // this.ctx.arc(particles[i].pos.x, particles[i].pos.y, 1, 0, 2 * Math.PI);
+      this.ctx.moveTo(particles[i].prevPos.x, particles[i].prevPos.y);
+      this.ctx.lineTo(particles[i].pos.x, particles[i].pos.y);
+      this.ctx.strokeStyle = "rgba(0,31,35,0.1)";
+      this.ctx.stroke();
       this.ctx.closePath();
+      particles[i].updatePrev();
       particles[i].edges();
     }
   }
 
   draw = () => {
-    this.beginDraw();
     let yoff = 0;
+    let len = 2;
     for(let x = 0; x < cols; x++) {
       let xoff = 0;
       for(let y = 0; y < rows; y++) {
         xoff += inc;
         // this.rect(x * scl, y * scl, scl, scl);
-        var index = (x + y * cols);
-        let angle = Noise.perlin3(xoff, yoff, zoff) * Math.PI * 2;
+        var index = x + y * cols;
+        let angle = Noise.perlin3(xoff, yoff, zoff) * Math.PI * 4;
+        let v = {
+          x: Math.cos(angle) * len,
+          y: Math.sin(angle) * len,
+        }
+        flowField[index] = v;
         // this.fill(r)
-        this.ctx.save();
-        this.ctx.beginPath();
-        this.ctx.translate(x * scl, y * scl);
-        this.ctx.rotate(angle);
-        this.ctx.moveTo(0,0);
-        this.ctx.lineTo(scl, 0);
-        this.ctx.stroke();
-        this.ctx.closePath();
-        this.ctx.restore();
+        // this.ctx.save();
+        // this.ctx.beginPath();
+        // this.ctx.translate(x * scl, y * scl);
+        // this.ctx.rotate(angle);
+        // this.ctx.moveTo(0,0);
+        // this.ctx.lineTo(scl, 0);
+        // this.ctx.stroke();
+        // this.ctx.closePath();
+        // this.ctx.restore();
         // this.ctx.translate(-x * scl, -y * scl);        
       }
       yoff += inc;
-      // zoff += 0.001;
+      zoff += 0.001;
 
     }
     this.show();
     // this.endDraw();
 
     setTimeout(() => {
-      this.ctx.clearRect(0,0,WIDTH, HEIGHT);
+      // this.ctx.clearRect(0,0,WIDTH, HEIGHT);
       this.draw();
       // this.ctx = null;
 
@@ -154,6 +204,7 @@ class Draw extends React.Component {
     return (
       <div className={style.draw}>
         <canvas ref={this.setRef} width={WIDTH} height={HEIGHT} style={{width: WIDTH + 'px', height: HEIGHT + 'px'}}></canvas>
+        <div>撸代码中</div>
       </div>
     )
   }
