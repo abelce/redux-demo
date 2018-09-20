@@ -21,6 +21,7 @@
     this.x = x; this.y = y; this.z = z;
   }
   
+  // 距离向量在梯度向量上做的投影，为正表示该定点的影响为正，
   Grad.prototype.dot2 = function(x, y) {
     return this.x*x + this.y*y;
   };
@@ -29,10 +30,12 @@
     return this.x*x + this.y*y + this.z*z;
   };
 
+  // 梯度向量, 表示的是以某个点为中心形成的单位正方体，从该点触发到每条边中点的向量
   var grad3 = [new Grad(1,1,0),new Grad(-1,1,0),new Grad(1,-1,0),new Grad(-1,-1,0),
                new Grad(1,0,1),new Grad(-1,0,1),new Grad(1,0,-1),new Grad(-1,0,-1),
                new Grad(0,1,1),new Grad(0,-1,1),new Grad(0,1,-1),new Grad(0,-1,-1)];
 
+  // 伪随机数
   var p = [151,160,137,91,90,15,
   131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
   190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
@@ -239,10 +242,12 @@
 
   // ##### Perlin noise stuff
 
+  // 非线性的插值函数 通常也被称为ease curve
   function fade(t) {
     return t*t*t*(t*(t*6-15)+10);
   }
 
+  // 加权平均值
   function lerp(a, b, t) {
     return (1-t)*a + t*b;
   }
@@ -257,6 +262,7 @@
     X = X & 255; Y = Y & 255;
 
     // Calculate noise contributions from each of the four corners
+    // 计算四个顶点的影响值
     var n00 = gradP[X+perm[Y]].dot2(x, y);
     var n01 = gradP[X+perm[Y+1]].dot2(x, y-1);
     var n10 = gradP[X+1+perm[Y]].dot2(x-1, y);
@@ -265,6 +271,7 @@
     // Compute the fade curve value for x
     var u = fade(x);
 
+    // 对四个顶点的值做插值，并做加权平均值
     // Interpolate the four results
     return lerp(
         lerp(n00, n10, u),
@@ -279,6 +286,7 @@
     // Get relative xyz coordinates of point within that cell
     x = x - X; y = y - Y; z = z - Z;
     // Wrap the integer cells at 255 (smaller integer period can be introduced here)
+    // 
     X = X & 255; Y = Y & 255; Z = Z & 255;
 
     // Calculate noise contributions from each of the eight corners
