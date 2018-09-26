@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Switch, Route, } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd'
 // import Homepage from '../components/homepage';
 // import Header from '../layout/header';
@@ -24,14 +24,14 @@ class Routes extends React.Component {
             <Layout className={style.right}>
               <Layout.Content className={style.content}>
                 <Switch>
-                  <Route exact path="/" component={Artice}/>
-                  <Route exact path="/images" component={Image}/>                
+                  <Route exact path="/" component={Image}/>
+                  <Route exact path="/images" component={Image}/>          
                   <Route exact path="/upload" component={Upload}/>
                   <Route exact path="/article" component={Artice}/>
                   <Route exact path="/article/:id" component={ArticleDetail}/>
                   <Route exact path="/article/edit/:id" component={EditContainer}/>  
                   <Route exact path="/test" component={Test}/>    
-                  <Route exact path="/doodle" component={Doodle}></Route>            
+                  <Route exact path="/doodle" component={Doodle}></Route>        
                 </Switch>
               </Layout.Content>
             </Layout>

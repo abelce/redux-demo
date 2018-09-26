@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as style from './style.scss';
 import { Image } from '../../domain';
+import Img from 'react-lazy-imager';
 
 interface PItem {
   image: Image
@@ -60,7 +61,7 @@ class Item extends React.Component<PItem, SItem> {
       <div ref={this.setRef} 
       className={style.imageContainer} 
       style={{width: `${width * 200/ height}px`, flexGrow: width * 200 / height}}>
-        <img svg-url={svgurl} origin-url={url} src={ loaded ? url : svgurl}/>
+        <Img src={url} thumbSrc={svgurl}/>
         <div style={{paddingBottom: `${height / width * 100}%`, display: loaded ? 'none' : 'block'}}></div>
       </div>
     )
