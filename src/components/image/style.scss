@@ -12,15 +12,13 @@
 .imageContainer {
   display: inline-block;
   margin: 4px;
+  background: gray;
   flex-grow: 1;
   > img {
     min-width: 100%;
     max-width: 100%;
     transition: .5s;
     object-fit: cover;
-    &:hover{
-      // transform: scale(1.05);
-    }
   }
   > .placeholder {
     padding-bottom: 100%;

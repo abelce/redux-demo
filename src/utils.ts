@@ -78,6 +78,10 @@ export const tags = [
     id: '16',
     value: 'AI',
     label: 'AI',
+  },{
+    id: '17',
+    value: '网站',
+    label: 'AI',
   },
 ]
 
