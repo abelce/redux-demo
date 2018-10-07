@@ -13,6 +13,7 @@ import Modals from '../components/common/modals';
 import Test from '../components/test';
 import Image from '../components/image';
 import Doodle from '../components/doodle';
+import Home from '../components/home';
 
 class Routes extends React.Component {
   render() {
@@ -31,7 +32,7 @@ class Routes extends React.Component {
                   <Route exact path="/article/:id" component={ArticleDetail}/>
                   <Route exact path="/article/edit/:id" component={EditContainer}/>  
                   <Route exact path="/test" component={Test}/>    
-                  <Route exact path="/doodle" component={Doodle}></Route>        
+                  <Route exact path="/doodle" component={Doodle}></Route>
                 </Switch>
               </Layout.Content>
             </Layout>

@@ -1,6 +1,7 @@
 .list {
   display: flex;
   flex-wrap: wrap;
+  padding: 8px;
 
   &::after {
     content: '';
@@ -10,18 +11,24 @@
 
 .imageContainer {
   display: inline-block;
-  margin: 2px;
+  margin: 4px;
   flex-grow: 1;
   > img {
     min-width: 100%;
     max-width: 100%;
-    transition: .7s;
+    transition: .5s;
     object-fit: cover;
     &:hover{
-      transform: scale(1.05);
+      // transform: scale(1.05);
     }
   }
   > .placeholder {
     padding-bottom: 100%;
+  }
+  &:hover {
+    background: #000000;
+    > img {
+      opacity: .5;
+    }
   }
 }
