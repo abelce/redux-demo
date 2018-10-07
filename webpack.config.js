@@ -1,8 +1,7 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
-const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
 
 const hostMap = {
   development: '"http://localhost:3001"',
@@ -20,6 +19,7 @@ const config = {
     historyApiFallback: true,
   },
   entry: {
+    vendor: ['react', 'react-dom', 'react-router-dom', 'lodash', 'moment', 'redux', 'react-redux', 'axios', 'redux-actions', 'redux-saga'],
     app: __dirname + "/src/app.tsx",
     po: ["./src/assets/i18ns/zh_CN.po", "./src/assets/i18ns/en_US.po"],
     blog: __dirname + "/src/blog.tsx",
@@ -69,11 +69,11 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          // fallback: "style-loader?modules&localIdentName=[path][name]---[local]---[hash:base64:5]",
-          fallback: "style-loader",
-          use: "css-loader",
-        }),
+        use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
       },
       {
         test: /\.scss$/,
@@ -105,16 +105,19 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      chunks: ["app", "po"],
+      // chunks: ["vendor", "app", "po"],
+      excludeChunks: ['blog'],
       template: __dirname + "/src/assets/index.ejs",
     }),
     new HtmlWebpackPlugin({
-      chunks: ["blog", "po"],
+      // chunks: ["vendor", "blog", "po"],
+      excludeChunks: ['app'],
       filename: "blog.html",
       template: __dirname + "/src/assets/blog.ejs",
     }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: "[name].css",
+      chunkFilename: "[id].css"
     }),
     new webpack.DefinePlugin({
       __ENV__: JSON.stringify(process.env.NODE_ENV),
@@ -131,9 +134,33 @@ const config = {
   },
   optimization: {
     minimize: isDev() ? false : true,
-    // runtimeChunk: {
-    //     name: entrypoint => `runtime~${entrypoint.name}`
-    // },
+    // runtimeChunk: true,
+    splitChunks: {
+      chunks: "initial",
+      minSize: 30000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        common: {
+          test: /.js$/,
+          name: 'common',
+          chunks: 'initial',
+          priority: 2,
+          minChunks: 2,
+          reuseExistingChunk: true,
+        },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+          priority: 20,
+        }
+      }
+    }
   },
 };
 
