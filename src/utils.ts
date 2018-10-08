@@ -81,7 +81,11 @@ export const tags = [
   },{
     id: '17',
     value: '网站',
-    label: 'AI',
+    label: '网站',
+  },{
+    id: '18',
+    value: '安全',
+    label: '安全',
   },
 ]
 
