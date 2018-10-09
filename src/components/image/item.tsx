@@ -23,34 +23,15 @@ class Item extends React.Component<PItem, SItem> {
   }
 
   ref: any
-  
-  componentDidMount() {
-    setTimeout(() => {
-      this.loadImage(); 
-    });
-  }
-
-  loadImage = () => {
-    let div: Element;
-    div = ReactDOM.findDOMNode(this.ref);
-    let observer = new IntersectionObserver(entries => {
-      if (entries[0].intersectionRatio > 0) {
-        new Promise((resolve) => {
-          let img = new Image()
-          img.src = this.props.image.attributes.url;
-          img.onload = resolve;
-        })
-        .then(() => {
-          this.setState({ loaded: true });
-          observer.disconnect();
-        })
-      }
-    })
-    observer.observe(div);
-  }
 
   setRef = (r: any) => {
     this.ref = r;
+  }
+
+  onLoad = () => {
+    this.setState({
+      loaded: true,
+    })
   }
 
   render() {
@@ -58,11 +39,11 @@ class Item extends React.Component<PItem, SItem> {
     const { loaded } = this.state
 
     return (
-      <div ref={this.setRef} 
+      <div ref={this.setRef}
       className={style.imageContainer} 
       style={{width: `${width * 200/ height}px`, flexGrow: width * 200 / height}}>
-        <Img src={url} thumbSrc={svgurl}/>
-        <div style={{paddingBottom: `${height / width * 100}%`, display: loaded ? 'none' : 'block'}}></div>
+        <Img src={url} thumbSrc={svgurl} onLoad={this.onLoad}/>
+        <div className="placeholder" style={{paddingBottom: `${height / width * 100}%`, display: loaded ? 'none' : 'block'}}></div>
       </div>
     )
   }

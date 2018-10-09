@@ -11,8 +11,7 @@
 
 .imageContainer {
   display: inline-block;
-  margin: 4px;
-  background: gray;
+  margin: 4px;  
   flex-grow: 1;
   > img {
     min-width: 100%;
@@ -22,6 +21,11 @@
   }
   > .placeholder {
     padding-bottom: 100%;
+  }
+  :global {
+    .placeholder {
+      background: gray;
+    }
   }
   &:hover {
     background: #000000;
