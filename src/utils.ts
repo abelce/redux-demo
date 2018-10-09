@@ -90,6 +90,10 @@ export const tags = [
     id: '19',
     value: '算法',
     label: '算法',
+  },{
+    id: '20',
+    value: '设计模式',
+    label: '设计模式',
   },
 ]
 

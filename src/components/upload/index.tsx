@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as moment from 'moment';
 import MyUpload from './upload';
 import { Icon, message, Table } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
@@ -102,6 +103,9 @@ class Upload extends React.Component {
       dataIndex: 'createDate',
       title:'创建时间',
       key: 'createDate',
+      render: (createDate: any, record: any) => (
+        <span>{moment(createDate * 1000).format('YYYY-MM-DD')}</span>
+      )
     },{
       dataIndex: 'path',
       title:'路径',
