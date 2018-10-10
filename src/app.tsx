@@ -4,7 +4,8 @@ import 'moment-timezone';
 import {Provider} from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
 import Routes from './routes';
-import './assets/style/index.scss'
+import './assets/style/index.scss';
+import './assets/plugins/editor/scss/editormd.scss';
 import configureStore from './store';
 import { IntlProvider, addLocaleData}  from 'react-intl';
 import { LocaleProvider} from 'antd';

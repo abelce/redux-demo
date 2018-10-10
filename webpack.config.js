@@ -19,8 +19,23 @@ const config = {
     historyApiFallback: true,
   },
   entry: {
-    vendor: ['react', 'react-dom', 'react-router-dom', 'lodash', 'moment', 'redux', 'react-redux', 'axios', 'redux-actions', 'redux-saga'],
-    app: __dirname + "/src/app.tsx",
+    vendor: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "lodash",
+      "moment",
+      "redux",
+      "react-redux",
+      "axios",
+      "redux-actions",
+      "redux-saga",
+    ],
+    app: [
+      "./src/script/jquery/jquery.min.js",
+      "./src/assets/plugins/editor/editormd.js",
+      __dirname + "/src/app.tsx",
+    ],
     po: ["./src/assets/i18ns/zh_CN.po", "./src/assets/i18ns/en_US.po"],
     blog: __dirname + "/src/blog.tsx",
   },
@@ -69,11 +84,7 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
+        use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.scss$/,
@@ -106,18 +117,18 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       // chunks: ["vendor", "app", "po"],
-      excludeChunks: ['blog'],
+      excludeChunks: ["blog"],
       template: __dirname + "/src/assets/index.ejs",
     }),
     new HtmlWebpackPlugin({
       // chunks: ["vendor", "blog", "po"],
-      excludeChunks: ['app'],
+      excludeChunks: ["app"],
       filename: "blog.html",
       template: __dirname + "/src/assets/blog.ejs",
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
-      chunkFilename: "[id].css"
+      chunkFilename: "[id].css",
     }),
     new webpack.DefinePlugin({
       __ENV__: JSON.stringify(process.env.NODE_ENV),
@@ -141,26 +152,26 @@ const config = {
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
+      automaticNameDelimiter: "~",
       name: true,
       cacheGroups: {
         common: {
           test: /.js$/,
-          name: 'common',
-          chunks: 'initial',
+          name: "common",
+          chunks: "initial",
           priority: 2,
           minChunks: 2,
           reuseExistingChunk: true,
         },
         styles: {
-          name: 'styles',
+          name: "styles",
           test: /\.css$/,
-          chunks: 'all',
+          chunks: "all",
           enforce: true,
           priority: 20,
-        }
-      }
-    }
+        },
+      },
+    },
   },
 };
 
