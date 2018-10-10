@@ -1,3 +1,7 @@
+
+.article {
+  flex: 1;
+}
 .new {
   height: 40px;
   line-height: 40px;
@@ -49,7 +53,7 @@
       margin-bottom: 10px;
       padding-bottom: 5px;
       color: #ccc;
-      border-bottom: 1px dashed #ddd;  
+      border-bottom: 1px dashed #ddd; 
       .tags {
         > i {
           color: #ccc;
@@ -96,6 +100,10 @@
   }
 }
 
+.detailContainer {
+  flex: 1;
+}
+
 .detail {
   box-shadow: 0 0 4px rgba(0, 0, 0, .25);
   padding: 60px;
@@ -118,45 +126,32 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  // overflow: hidden;
   :global{
-    .header {
-      padding: 16px;
-      display: flex;
-      input {
-        flex: 1;
-        // border-radius: 0;
-      }
-      button {
-        margin-left: 20px;
+    header {
+      background: #1A1A17; 
+      .header {
+        padding: 16px;
+        display: flex;
+        input {
+          flex: 1;
+          // border-radius: 0;
+        }
+        button {
+          margin-left: 20px;
+        }
       }
     }
     .content{
-      padding: 0 20px;
       flex: 1;
       display: flex;
-      .editor, .preview {
-        // flex: 1;
-        width: 50%;
+      overflow: hidden;
+      .test-editormd {
+        flex: 1;
       }
-      .preview {
-        padding: 4px 12px;
-        overflow-y: auto;
+      .editormd-preview-container {
+        overflow-x: auto;
       }
-      .editor {
-        textarea {
-          height: 100%;
-          border-radius: 0;
-          outline: none;
-          :focus, :hover {
-            outline: none;
-          }
-        }
-      }
-      .divider {
-        width: 2px;
-        padding: 4px 11px;
-      }
-
     }
   }
 }

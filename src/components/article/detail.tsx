@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { article } from '../../types';
 import { requestArticleById } from '../../actions/articleAction';
 import { isApp } from '../../utils';
+import * as Style from './style.scss';
 
 import * as style from './style.scss';
 
@@ -41,19 +42,21 @@ class Detail extends React.Component<Idetail> {
     const {attributes: {markdowncontent, title, createTime}, id} = this.props.article;
 
     return (
-      <div className={style.detail}>
-        <header>
-          <h1>{title}</h1>
-          <div className="optioninfo">
-            <div className="createTime">{moment.unix(parseInt(createTime)).format('YYYY年MM月DD日 hh:mm:ss')}</div>
-            {
-              isApp() ? <Link to={`/article/edit/${id}`}>编辑</Link> : <span/>
-            }
-          </div>          
-          <hr/>
-        </header>
-        <RenderMarked markdowncontent={markdowncontent}/>
-        <BackTop/>
+      <div className={Style.detailContainer}>
+        <div className={style.detail}>
+          <header>
+            <h1>{title}</h1>
+            <div className="optioninfo">
+              <div className="createTime">{moment.unix(parseInt(createTime)).format('YYYY年MM月DD日 hh:mm:ss')}</div>
+              {
+                isApp() ? <Link to={`/article/edit/${id}`}>编辑</Link> : <span/>
+              }
+            </div>          
+            <hr/>
+          </header>
+          <RenderMarked markdowncontent={markdowncontent}/>
+          <BackTop/>
+        </div>
       </div>
     )
   }

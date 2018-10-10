@@ -32,8 +32,8 @@ const config = {
       "redux-saga",
     ],
     app: [
-      "./src/script/jquery/jquery.min.js",
-      "./src/assets/plugins/editor/editormd.js",
+      // "./src/script/jquery/jquery.min.js",
+      // "./src/assets/plugins/editor/editormd.js",
       __dirname + "/src/app.tsx",
     ],
     po: ["./src/assets/i18ns/zh_CN.po", "./src/assets/i18ns/en_US.po"],
@@ -100,6 +100,7 @@ const config = {
               localIdentName: "[local]_[hash:base64:5]",
             },
           },
+          "resolve-url-loader",
           {
             loader: "postcss-loader",
             options: {

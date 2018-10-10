@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "export NODE_ENV=development && webpack-dev-server",
-    "build": "export NODE_ENV=production && rm -rf dist  && webpack --config webpack.config.js",
+    "build": "export NODE_ENV=production && rm -rf dist  && webpack --config webpack.config.js && cp -R ./src/assets ./dist/assets",
     "babel": "rm -rf lib && babel test -d lib"
   },
   "author": "",
@@ -44,6 +44,7 @@
     "react-redux": "^5.0.7",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "resolve-url-loader": "^3.0.0",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^2.0.0",

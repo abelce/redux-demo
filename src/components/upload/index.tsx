@@ -104,7 +104,8 @@ class Upload extends React.Component {
       title:'创建时间',
       key: 'createDate',
       render: (createDate: any, record: any) => (
-        <span>{moment(createDate * 1000).format('YYYY-MM-DD')}</span>
+        createDate
+        // <span>{moment(createDate * 1000).format('YYYY-MM-DD')}</span>
       )
     },{
       dataIndex: 'path',
