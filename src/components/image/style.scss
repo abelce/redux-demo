@@ -13,6 +13,7 @@
   display: inline-block;
   margin: 4px;  
   flex-grow: 1;
+  position: relative;
   > img {
     min-width: 100%;
     max-width: 100%;
@@ -24,6 +25,11 @@
   }
   :global {
     .placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: gray;
     }
   }
