@@ -10,8 +10,11 @@
     <!-- 提前解析dns -->
     <link rel="dns-prefetch" href="www.tangzhengxiong.com">
     <link rel="dns-prefetch" href="www.static.tangzhengxiong.com">
+    <%= HtmlWebpackPlugin.options.loading.css %>
 </head>
 <body>
-<div id="app"></div>
+<div id="app">
+    <%= HtmlWebpackPlugin.options.loading.html %>
+</div>
 </body>
 </html>

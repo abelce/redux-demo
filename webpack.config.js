@@ -3,6 +3,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
+const loading = {
+  html: fs.readFileSync(path.join(__dirname, './src/assets/loading/index.html')),
+  css: '<style>' + fs.readFileSync(path.join(__dirname, './src/assets/loading/style.css')) + '</style>',
+}
+
 const hostMap = {
   development: '"http://localhost:3001"',
 };
@@ -126,6 +131,7 @@ const config = {
       excludeChunks: ["app"],
       filename: "blog.html",
       template: __dirname + "/src/assets/blog.ejs",
+      loading,
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
