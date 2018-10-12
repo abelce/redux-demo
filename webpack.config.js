@@ -7,6 +7,7 @@ const fs = require('fs');
 const loading = {
   html: fs.readFileSync(path.join(__dirname, './src/assets/loading/index.html')),
   css: '<style>' + fs.readFileSync(path.join(__dirname, './src/assets/loading/style.css')) + '</style>',
+  js: '<script>' + fs.readFileSync(path.join(__dirname, './src/assets/loading/loading.js')) + '</script>'
 }
 
 const hostMap = {
