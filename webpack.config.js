@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const fs = require('fs');
 
 const loading = {
   html: fs.readFileSync(path.join(__dirname, './src/assets/loading/index.html')),
