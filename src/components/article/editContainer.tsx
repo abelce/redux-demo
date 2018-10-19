@@ -8,7 +8,6 @@ import OptionsModal from './optionsModal';
 import Edit from './edit';
 import { Article } from '../../types';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import * as Style from './style.scss';
 
 const mapStateToProps = (state: any, props: any) => {
   if (!state || !state.articles) return null;

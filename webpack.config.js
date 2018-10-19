@@ -2,6 +2,13 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const fs = require('fs');
+
+const loading = {
+  html: fs.readFileSync(path.join(__dirname, './src/assets/loading/index.html')),
+  css: '<style>' + fs.readFileSync(path.join(__dirname, './src/assets/loading/style.css')) + '</style>',
+  js: '<script>' + fs.readFileSync(path.join(__dirname, './src/assets/loading/loading.js')) + '</script>'
+}
 
 const hostMap = {
   development: '"http://localhost:3001"',
@@ -32,8 +39,6 @@ const config = {
       "redux-saga",
     ],
     app: [
-      // "./src/script/jquery/jquery.min.js",
-      // "./src/assets/plugins/editor/editormd.js",
       __dirname + "/src/app.tsx",
     ],
     po: ["./src/assets/i18ns/zh_CN.po", "./src/assets/i18ns/en_US.po"],
@@ -117,15 +122,14 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      // chunks: ["vendor", "app", "po"],
       excludeChunks: ["blog"],
       template: __dirname + "/src/assets/index.ejs",
     }),
     new HtmlWebpackPlugin({
-      // chunks: ["vendor", "blog", "po"],
       excludeChunks: ["app"],
       filename: "blog.html",
       template: __dirname + "/src/assets/blog.ejs",
+      loading,
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
@@ -158,11 +162,11 @@ const config = {
       cacheGroups: {
         common: {
           test: /.js$/,
-          name: "common",
-          chunks: "initial",
+          name: "common",   // 名字，设置为true，表示根据模块和缓存组自动生成，
+          chunks: "initial",  // initial: 初始块，all: 所有块，async：按需加载
           priority: 2,
-          minChunks: 2,
-          reuseExistingChunk: true,
+          minChunks: 2,   // 最小引用次数
+          reuseExistingChunk: true,  // 是否使用已经存在的chunk, 前提是代码没有变化，
         },
         styles: {
           name: "styles",
