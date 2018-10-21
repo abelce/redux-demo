@@ -1,7 +1,10 @@
 {
   "presets": [
     ["env", {
-      "modules": false  // 关闭babel的模块化，使用webpack的模块化，这样可以使用tree-shaking
+      "modules": false,  // 关闭babel的模块化，使用webpack的模块化，这样可以使用tree-shaking
+      "targets": {
+        "node": "4"
+      }
     }],
     "react",
     "stage-0"

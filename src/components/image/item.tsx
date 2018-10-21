@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as style from './style.scss';
 import { Image } from '../../domain';
 import Img from 'react-lazy-imager';
+import cn from 'classnames';
 
 interface PItem {
   image: Image
@@ -40,9 +41,9 @@ class Item extends React.Component<PItem, SItem> {
 
     return (
       <div ref={this.setRef}
-      className={style.imageContainer} 
+      className={style.imageContainer}
       style={{width: `${width * 200/ height}px`, flexGrow: width * 200 / height}}>
-        <Img src={url} thumbSrc={svgurl} onLoad={this.onLoad}/>
+        <Img src={url} thumbSrc={svgurl} onLoad={this.onLoad} className={cn({'unload': !loaded})}/>
         <div className="placeholder" style={{paddingBottom: `${height / width * 100}%`, display: loaded ? 'none' : 'block'}}></div>
       </div>
     )

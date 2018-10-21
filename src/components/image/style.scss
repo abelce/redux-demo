@@ -25,13 +25,13 @@
   }
   :global {
     .placeholder {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
       background: gray;
-      z-index: 10;
+    }
+    .unload {
+      width: 0px;
+      height: 0px;
+      position: absolute;
+      top: -40px;
     }
   }
   &:hover {
