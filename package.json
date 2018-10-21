@@ -9,6 +9,11 @@
     "build": "export NODE_ENV=production && rm -rf dist  && webpack --config webpack.config.js && cp -R ./src/assets ./dist/assets",
     "babel": "rm -rf lib && babel test -d lib"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -32,6 +37,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.0.4",
+    "husky": "^1.1.2",
     "import-loader": "^1.0.1",
     "imports-loader": "^0.8.0",
     "jest": "^23.6.0",
@@ -42,6 +48,8 @@
     "po-loader": "^0.4.1",
     "po2json": "^0.4.5",
     "postcss-loader": "^2.1.1",
+    "prettier": "^1.14.3",
+    "pretty-quick": "^1.8.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
