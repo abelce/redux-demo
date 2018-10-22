@@ -2,22 +2,22 @@ import * as React from 'react';
 import { Menu, Icon } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
 
-
 const ItemKeys = ['images', 'upload', 'article', 'doodle'];
 
 @withRouter
 class Slider extends React.Component {
-  
   state = {
     selectedKey: 'images',
-  }
+  };
 
-  constructor(props: any) {    
+  constructor(props: any) {
     super(props);
-    console.log(this.props)
-    const {location: { pathname }} = this.props;
+    console.log(this.props);
+    const {
+      location: { pathname },
+    } = this.props;
     let key = ItemKeys.find((item: string) => {
-      let reg = new RegExp("^\/" + item, "gim");
+      let reg = new RegExp('^/' + item, 'gim');
       return reg.test(pathname);
     });
     if (key) {
@@ -25,37 +25,37 @@ class Slider extends React.Component {
     }
   }
 
-  handleMenuChange = ({key} : any) => {
+  handleMenuChange = ({ key }: any) => {
     this.setState({
       selectedKey: key,
-    })
-  }
+    });
+  };
 
   render() {
     return (
       <div>
         <div className="logo" />
-        <Menu 
-        theme="light" 
-        mode="inline"
-        defaultSelectedKeys={[this.state.selectedKey]}
-        onSelect={this.handleMenuChange}>
-            <Menu.Item key="images">
-              <NavLink exact to="/images">
-              <Icon type="book" />
-                <span className="nav-text">图片</span>
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item key="upload">
-              <NavLink to="/upload">
-                <Icon type="cloud-upload" />
-                <span className="nav-text">文件上传</span>
-              </NavLink>
-            </Menu.Item>
+        <Menu
+          theme="light"
+          mode="inline"
+          defaultSelectedKeys={[this.state.selectedKey]}
+          onSelect={this.handleMenuChange}>
           <Menu.Item key="article">
             <NavLink to="/article">
               <Icon type="upload" />
               <span className="nav-text">文章</span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="images">
+            <NavLink exact to="/images">
+              <Icon type="book" />
+              <span className="nav-text">图片</span>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="upload">
+            <NavLink to="/upload">
+              <Icon type="cloud-upload" />
+              <span className="nav-text">文件上传</span>
             </NavLink>
           </Menu.Item>
           <Menu.Item key="doodle">
@@ -66,7 +66,7 @@ class Slider extends React.Component {
           </Menu.Item>
         </Menu>
       </div>
-    )
+    );
   }
 }
 
