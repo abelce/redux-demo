@@ -63,7 +63,9 @@ class Detail extends React.Component<Idetail> {
             <hr />
           </header>
           <RenderMarked markdowncontent={markdowncontent} />
-          <BackTop style={{ right: '60px' }} />
+          <BackTop>
+            <div className="ant-back-top-inner">UP</div>
+          </BackTop>
         </div>
       </div>
     );
