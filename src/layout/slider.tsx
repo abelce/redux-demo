@@ -7,12 +7,11 @@ const ItemKeys = ['images', 'upload', 'article', 'doodle'];
 @withRouter
 class Slider extends React.Component {
   state = {
-    selectedKey: 'images',
+    selectedKey: 'article',
   };
 
   constructor(props: any) {
     super(props);
-    console.log(this.props);
     const {
       location: { pathname },
     } = this.props;
