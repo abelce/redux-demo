@@ -81,6 +81,7 @@
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "css-doodle": "^0.4.8",
+    "disqus": "^0.3.0",
     "immutable": "^3.8.2",
     "install": "^0.12.1",
     "lodash-es": "^4.17.11",
