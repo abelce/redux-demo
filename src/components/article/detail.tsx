@@ -8,9 +8,8 @@ import { connect } from 'react-redux';
 import { article } from '../../types';
 import { requestArticleById } from '../../actions/articleAction';
 import { isApp } from '../../utils';
+import ReactDisqus from '../common/disqus';
 import * as Style from './style.scss';
-
-import * as style from './style.scss';
 
 interface Idetail extends RouteComponentProps<any, any> {
   article: article;
@@ -45,7 +44,7 @@ class Detail extends React.Component<Idetail> {
 
     return (
       <div className={Style.detailContainer}>
-        <div className={style.detail}>
+        <div className={Style.detail}>
           <header>
             <h1>{title}</h1>
             <div className="optioninfo">
@@ -63,6 +62,13 @@ class Detail extends React.Component<Idetail> {
             <hr />
           </header>
           <RenderMarked markdowncontent={markdowncontent} />
+          <div className={Style.disqusContainer}>
+            <ReactDisqus
+              shortname="abelce"
+              url={`//blog.tangzhengxiong.com/article/${id}`}
+              identifier={id}
+            />
+          </div>
           <BackTop>
             <div className="ant-back-top-inner">UP</div>
           </BackTop>
