@@ -5,14 +5,14 @@ import { BackTop } from 'antd';
 import RenderMarked from './renderMarked';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { article } from '../../types';
+import { Article } from '../../types';
 import { requestArticleById } from '../../actions/articleAction';
 import { isApp } from '../../utils';
 import ReactDisqus from '../common/disqus';
 import * as Style from './style.scss';
 
 interface Idetail extends RouteComponentProps<any, any> {
-  article: article;
+  article: Article;
   dispatch: any;
 }
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Input, Button, Form } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import RenderMarked from './renderMarked';
 import { Article } from '../../types';
 
 import * as style from './style.scss';
@@ -91,16 +90,6 @@ class Edit extends React.Component<Iedit> {
         </header>
         <div className="content">
           <div id="test-editormd" />
-          {/* <div className="editor">
-            {
-              getFieldDecorator('markdowncontent')(
-                <Input.TextArea/>
-              )
-            }
-          </div>
-          <div className="preview">
-            <RenderMarked markdowncontent={getFieldValue('markdowncontent')}/>
-          </div> */}
         </div>
       </div>
     );

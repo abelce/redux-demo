@@ -11,3 +11,4 @@ npm-debug.log
 .idea/
 package-lock.json
 /**/*.scss.d.ts
+/electron/
