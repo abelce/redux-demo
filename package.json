@@ -8,6 +8,7 @@
     "dev": "export NODE_ENV=development && webpack-dev-server",
     "build": "export NODE_ENV=production && rm -rf dist  && webpack --config webpack.config.js && cp -R ./src/assets ./dist/assets",
     "babel": "rm -rf lib && babel test -d lib",
+    "preElectron": "export NODE_ENV=production && rm -rf electron && webpack --config webpack.config.electron.js && cp -R ./src/assets ./electron/assets",
     "electron": "electron ."
   },
   "husky": {
@@ -32,7 +33,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.10",
-    "electron": "^3.0.9",
+    "electron": "^3.0.4",
     "export-loader": "^1.0.52",
     "exports-loader": "^0.7.0",
     "expose-loader": "^0.7.5",

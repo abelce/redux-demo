@@ -1,6 +1,5 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron');
-const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -11,18 +10,10 @@ function createWindow() {
   mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
   // and load the index.html of the app.
-  // mainWindow.loadFile('http://localhost:3010/index.html');
-
-  mainWindow.loadFile('./dist/electron.html');
-
-  // mainWindow.loadURL(url.format({
-  //   pathname: path.join(__dirname, './dist/electron.html'),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
+  mainWindow.loadFile('./electron/index.html');
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -37,16 +28,6 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
-// app.on('ready', () => {
-//   //....
-//   session.defaultSession.webRequest.onBeforeRequest({}, (details, callback) => {
-//     if (details.url.indexOf('7accc8730b0f99b5e7c0702ea89d1fa7c17bfe33') !== -1) {
-//       callback({redirectURL: details.url.replace('7accc8730b0f99b5e7c0702ea89d1fa7c17bfe33', '57c9d07b416b5a2ea23d28247300e4af36329bdc')});
-//     } else {
-//       callback({cancel: false});
-//     }
-//   });
-// });
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {

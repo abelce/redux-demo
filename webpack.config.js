@@ -47,9 +47,9 @@ const config = {
       'redux-saga',
     ],
     app: [__dirname + '/src/app.tsx'],
-    po: ['./src/assets/i18ns/zh_CN.po', './src/assets/i18ns/en_US.po'],
+    // po: ['./src/assets/i18ns/zh_CN.po', './src/assets/i18ns/en_US.po'],
     blog: __dirname + '/src/blog.tsx',
-    blog: __dirname + '/src/electron.tsx',
+    electron: __dirname + '/src/electron.tsx',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
