@@ -2,9 +2,20 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
+const fs = require('fs');
 
-const hostMap = {
-  development: '"http://localhost:3001"',
+const loading = {
+  html: fs.readFileSync(
+    path.join(__dirname, './src/assets/loading/index.html')
+  ),
+  css:
+    '<style>' +
+    fs.readFileSync(path.join(__dirname, './src/assets/loading/style.css')) +
+    '</style>',
+  js:
+    '<script>' +
+    fs.readFileSync(path.join(__dirname, './src/assets/loading/loading.js')) +
+    '</script>',
 };
 
 const config = {
@@ -112,6 +123,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: __dirname + '/src/assets/electron.ejs',
+      loading,
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
@@ -119,10 +131,10 @@ const config = {
     }),
     new webpack.DefinePlugin({
       __ENV__: JSON.stringify(process.env.NODE_ENV),
+      __TYPE__: JSON.stringify(process.env.NODE_TYPE),
       __: function(k) {
         return k;
       },
-      _pms_host: hostMap[process.env.NODE_ENV] || '',
     }),
     new webpack.HashedModuleIdsPlugin(),
   ],

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Input, Button, Form } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { Article } from '../../types';
+import { getEditorPluginPath } from '../../utils';
 
 import * as style from './style.scss';
 
@@ -29,7 +30,7 @@ class Edit extends React.Component<Iedit> {
     this.testEditor = editormd('test-editormd', {
       width: '100%',
       height: '100%',
-      path: '../../assets/plugins/editor/lib/',
+      path: getEditorPluginPath(),
       theme: 'dark',
       previewTheme: 'dark',
       editorTheme: 'pastel-on-dark',
@@ -55,7 +56,7 @@ class Edit extends React.Component<Iedit> {
       //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
       imageUpload: true,
       imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'],
-      imageUploadURL: './php/upload.php',
+      // imageUploadURL: './php/upload.php',
       onload: () => {
         // console.log('onload', this);
         //this.fullscreen();

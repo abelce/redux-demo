@@ -154,6 +154,7 @@ const config = {
         return k;
       },
       _pms_host: hostMap[process.env.NODE_ENV] || '',
+      __TYPE__: JSON.stringify('normal'),
     }),
     new webpack.HashedModuleIdsPlugin(),
   ],
