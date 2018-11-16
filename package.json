@@ -9,7 +9,7 @@
     "build": "export NODE_ENV=production && rm -rf dist  && webpack --config webpack.config.js && cp -R ./src/assets ./dist/assets",
     "babel": "rm -rf lib && babel test -d lib",
     "preElectron": "export NODE_ENV=production && rm -rf electron && webpack --config webpack.config.electron.js && cp -R ./src/assets ./electron/assets",
-    "electron": "electron ."
+    "electron": "npm run preElectron && electron ."
   },
   "husky": {
     "hooks": {

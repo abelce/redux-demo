@@ -35,7 +35,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'electron'),
-    publicPath: `${process.env.PUBLIC || '/'}`,
+    publicPath: `${process.env.PUBLIC || './'}`,
     filename: isDev() ? '[name].[hash].js' : '[name].[chunkhash].js',
   },
   module: {
@@ -115,7 +115,7 @@ const config = {
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      chunkFilename: '[id].css',
+      chunkFilename: 'style.[hash].css',
     }),
     new webpack.DefinePlugin({
       __ENV__: JSON.stringify(process.env.NODE_ENV),
