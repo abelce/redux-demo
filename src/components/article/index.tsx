@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Link, Switch, Route, withRouter } from 'react-router-dom';
-
+import { Switch, Route } from 'react-router-dom';
+import { BackTop } from 'antd';
 import Header from './header';
 import ListContainer from './listContainer';
 import ArticleDetail from './detail';
@@ -23,6 +23,7 @@ class Article extends React.Component<any> {
             component={EditContainer}
           />
         </Switch>
+        <BackTop />
       </div>
     );
   }

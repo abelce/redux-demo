@@ -57,7 +57,6 @@ class ListContainer extends React.Component {
             onDelete={this.handleDelete}
           />
         ))}
-        <BackTop />
       </div>
     );
   }

@@ -1,0 +1,113 @@
+.login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  :global {
+    .login-form {
+      width: 400px;
+    }
+    .login-form-button {
+      border: none;
+      font-size: 16px;
+      color: #fff;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      width: 100%;
+      height: 50px;
+      background-color: #57b846;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
+      transition: all 0.4s;
+
+      &:hover {
+        background-color: #333333;
+        box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
+      }
+    }
+    .ant-form-item-control {
+      line-height: 1.5;
+    }
+    .palceholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      &::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        transition: all 0.4s;
+      }
+      &::after {
+        content: attr(data-placeholder);
+        position: relative;
+        top: 15px;
+        left: 0;
+        padding-left: 12px;
+        font-size: 18px;
+        color: #999999;
+        display: block;
+        transition: all 0.4s;
+      }
+    }
+
+    .ant-form-item {
+      position: relative;
+      margin-top: 36px;
+      border-bottom: 2px solid #d9d9d9;
+      .ant-form-item-children {
+        position: static;
+      }
+      .ant-input {
+        height: 52px;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        background: #fff !important;
+        padding: 0 12px;
+        border-radius: 0;
+        font-size: 18px;
+        &:focus,
+        &:hover {
+          outline: none;
+        }
+        &:-webkit-autofill {
+          background-color: #fff !important;
+          box-shadow: 0 0 0px 1000px white inset;
+        }
+      }
+      &:focus-within {
+        .palceholder {
+          &::before {
+            width: 100%;
+            background: #57b846;
+          }
+          &::after {
+            top: -20px;
+          }
+        }
+      }
+      &:last-child {
+        border: none;
+      }
+    }
+
+    .has-val {
+      .palceholder {
+        &::after {
+          top: -20px !important;
+        }
+      }
+    }
+  }
+}

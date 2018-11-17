@@ -53,7 +53,7 @@ class ReactDisqus extends React.Component<IReactDisqus> {
 
     child.async = true;
     child.type = 'text/javascript';
-    child.src = `//${this.props.shortname}.disqus.com/embed.js`;
+    child.src = `https://${this.props.shortname}.disqus.com/embed.js`;
 
     parent.appendChild(child);
 
