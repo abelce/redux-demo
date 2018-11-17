@@ -1,5 +1,34 @@
 .article {
   flex: 1;
+  position: relative;
+  overflow: auto;
+}
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 48px;
+  width: 100%;
+  padding: 0 24px;
+  background: #ffffff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  :global {
+    .btn-group {
+      display: inline-block;
+    }
+    .btn {
+      display: inline-block;
+      height: 28px;
+      width: 36px;
+      line-height: 28px;
+      margin-right: 12px;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.11);
+      text-align: center;
+    }
+  }
 }
 .new {
   height: 40px;
@@ -107,7 +136,7 @@
   padding: 60px;
   background: #fff;
   max-width: 1000px;
-  margin: 60px auto;
+  margin: 0 auto;
   overflow-y: auto;
   :global {
     .optioninfo {
@@ -135,6 +164,7 @@
 
 .edit {
   width: 100%;
+  height: calc(100vh - 48px);
   display: flex;
   flex-direction: column;
   :global {
@@ -171,4 +201,6 @@
 }
 .disqusContainer {
   margin-top: 32px;
+}
+.create {
 }
