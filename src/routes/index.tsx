@@ -12,8 +12,25 @@ import Test from '../components/test';
 import Image from '../components/image';
 import Doodle from '../components/doodle';
 import Login from '../components/login';
+import { getAuthInfo } from '../utils';
 
 class Routes extends React.Component {
+  constructor(props: any) {
+    super(props);
+    this.init();
+  }
+  gotoLogin = () => {
+    if (window.location.pathname !== '/login') {
+      window.location.href = '/login';
+    }
+  };
+
+  init = () => {
+    if (!getAuthInfo()) {
+      this.gotoLogin();
+    }
+  };
+
   render() {
     return (
       <Switch>

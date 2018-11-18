@@ -124,8 +124,8 @@ function* fetchImageList(url: string) {
 }
 
 //user
-function* fetchLogin({ url, params }: any) {
-  const response = yield call(AxiosInstance_api.post, url, { ...params });
+function* fetchLogin({ url, data }: any) {
+  const response = yield call(AxiosInstance_api.post, url, { ...data });
   yield put({ type: SUCCESS_LOGIN, data: response });
 }
 
