@@ -10,6 +10,7 @@ import {
 import * as style from './style.scss';
 
 const mapStateToProps = (state: any) => {
+  // console.log()
   return {
     articles: state.articles.ids.map((id: string) => state.articles.all[id]),
   };

@@ -2,6 +2,10 @@ import * as Store from 'store';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
+export const apiUrl = 'http://api.tangzhengxiong.com';
+
+export const USER_KEY = 'key';
+
 export const types = [
   {
     id: '1',

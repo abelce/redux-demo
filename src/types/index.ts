@@ -5,7 +5,7 @@ export type actionType = {
   meta?: object;
   data?: any;
   article?: any;
-}
+};
 
 export type Article = {
   id: string;
@@ -20,8 +20,8 @@ export type Article = {
     status: string;
     createTime: string;
     lastUpdateTime: string;
-  }
-}
+  };
+};
 
 export type Image = {
   id: string;
@@ -29,5 +29,13 @@ export type Image = {
     url: string;
     createTime: string;
     lastUpdateTime: string;
-  }
-}
+  };
+};
+
+export type User = {
+  id: string;
+  email: string;
+  createTime: string;
+  updateTime: string;
+  token: string;
+};
