@@ -25,37 +25,6 @@ import { REQUEST_LOGIN, SUCCESS_LOGIN } from '../actions/userAction';
 import { Article, User } from '../types';
 
 const AxiosInstance = axios.create({
-  baseURL: 'http://111.231.192.70:9001',
-  // baseURL: 'http://127.0.0.1:9001',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': '*',
-    'Access-Control-Allow-Methods': '*',
-    'Content-Type': 'application/json;charset=utf-8',
-  },
-});
-
-const AxiosInstance_file = axios.create({
-  baseURL: 'http://111.231.192.70:9010',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': '*',
-    'Access-Control-Allow-Methods': '*',
-    'Content-Type': 'application/json;charset=utf-8',
-  },
-});
-
-const AxiosInstance_image = axios.create({
-  baseURL: 'http://111.231.192.70:9012',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': '*',
-    'Access-Control-Allow-Methods': '*',
-    'Content-Type': 'application/json;charset=utf-8',
-  },
-});
-
-const AxiosInstance_api = axios.create({
   baseURL: 'http://api.tangzhengxiong.com/',
   headers: {
     'Access-Control-Allow-Origin': '*',
@@ -72,7 +41,7 @@ const buildArticleData = (article: Article) => {
 };
 
 function* fetchFileList({ url, params }: any) {
-  const response = yield call(AxiosInstance_file.get, url, { params });
+  const response = yield call(AxiosInstance.get, url, { params });
   yield put({ type: SUCCESS_FILE_LIST, data: response });
 }
 
@@ -112,20 +81,20 @@ function* deleteArticle(url: string) {
 }
 
 function* createImage({ url, params }: any) {
-  const response = yield call(AxiosInstance_image.post, url, {
+  const response = yield call(AxiosInstance.post, url, {
     url: params.url,
   });
   yield put({ type: SUCCESS_IMAGR_CREATE, data: response });
 }
 
 function* fetchImageList(url: string) {
-  const response = yield call(AxiosInstance_image.get, url);
+  const response = yield call(AxiosInstance.get, url);
   yield put({ type: SUCCESS_IMAGR_LIST, data: response });
 }
 
 //user
 function* fetchLogin({ url, data }: any) {
-  const response = yield call(AxiosInstance_api.post, url, { ...data });
+  const response = yield call(AxiosInstance.post, url, { ...data });
   yield put({ type: SUCCESS_LOGIN, data: response });
 }
 
