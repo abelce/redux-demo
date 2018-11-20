@@ -14,7 +14,7 @@ class Routes extends React.Component {
         <Layout.Content className={style.content}>
           <Switch>
             <Route exact path="/" component={Artice} />
-            <Route exact path="/article" component={Artice} />
+            <Route path="/article" component={Artice} />
           </Switch>
         </Layout.Content>
         <Modals />
