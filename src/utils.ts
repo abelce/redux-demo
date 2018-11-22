@@ -120,6 +120,11 @@ export const tags = [
     value: '设计模式',
     label: '设计模式',
   },
+  {
+    id: '21',
+    value: 'mac',
+    label: 'mac',
+  },
 ];
 
 export const LanguageMap = new Map([['zh', 'zh-CN'], ['en', 'en-US']]);
