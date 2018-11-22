@@ -1,5 +1,5 @@
 {
-  "name": "redux-demo",
+  "name": "me",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -10,7 +10,17 @@
     "babel": "rm -rf lib && babel test -d lib",
     "preElectron": "export NODE_ENV=production && rm -rf electron && webpack --config webpack.config.electron.js && cp -R ./src/assets ./electron/assets",
     "electron": "export NODE_TYPE=electron && npm run preElectron && electron .",
-    "start": "npm run preElectron && electron ."
+    "start": "npm run preElectron && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.electron.redux-demo",
+    "mac": {
+      "category": "your.app.category.type",
+      "target": "dmg",
+      "icon": ""
+    }
   },
   "husky": {
     "hooks": {
@@ -35,6 +45,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.10",
     "electron": "^3.0.4",
+    "electron-builder": "^20.36.2",
     "export-loader": "^1.0.52",
     "exports-loader": "^0.7.0",
     "expose-loader": "^0.7.5",
