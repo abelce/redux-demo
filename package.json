@@ -6,13 +6,14 @@
   "scripts": {
     "test": "jest",
     "dev": "export NODE_ENV=development && webpack-dev-server",
-    "build": "export NODE_ENV=production && rm -rf dist  && webpack --config webpack.config.js && cp -R ./src/assets ./dist/assets",
+    "build": "export NODE_ENV=production && rm -rf build  && webpack --config webpack.config.js && cp -R ./src/assets ./dist/assets && npm run deploy",
     "babel": "rm -rf lib && babel test -d lib",
     "preElectron": "export NODE_ENV=production && rm -rf electron && webpack --config webpack.config.electron.js && cp -R ./src/assets ./electron/assets",
     "electron": "export NODE_TYPE=electron && npm run preElectron && electron .",
     "start": "npm run preElectron && electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "deploy": "rm -rf dist && mv build dist"
   },
   "build": {
     "appId": "com.electron.redux-demo",

@@ -30,7 +30,7 @@ const config = {
     host: '0.0.0.0',
     hot: true,
     port: 3010,
-    contentBase: __dirname + '/dist',
+    contentBase: __dirname + '/build',
     historyApiFallback: true,
   },
   entry: {
@@ -52,7 +52,7 @@ const config = {
     electron: __dirname + '/src/electron.tsx',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     publicPath: `${process.env.PUBLIC || '/'}`,
     filename: isDev() ? '[name].[hash].js' : '[name].[chunkhash].js',
   },
