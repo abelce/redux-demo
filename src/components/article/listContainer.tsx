@@ -49,6 +49,10 @@ class ListContainer extends React.Component {
   };
 
   render() {
+    const { articles } = this.props;
+    if (!articles || (Array.isArray(articles) && articles.length === 0)) {
+      return null;
+    }
     return (
       <div className={style.listContainer}>
         {this.props.articles.map(article => (
