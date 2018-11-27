@@ -15,6 +15,8 @@ class Header extends React.PureComponent {
   handleForward = this.historyFactory('Forward');
 
   render() {
+    let showNewBtn =
+      isApp() && this.props.location.pathname !== '/article/edit/new';
     return (
       <div className={Style.header}>
         <div className="btn-group">
@@ -25,7 +27,7 @@ class Header extends React.PureComponent {
             <Icon type="right" />
           </a>
         </div>
-        {isApp() ? (
+        {showNewBtn ? (
           <div className={Style.create}>
             <Link to="/article/edit/new">写博客</Link>
           </div>
