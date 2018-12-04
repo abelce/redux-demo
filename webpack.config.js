@@ -26,7 +26,7 @@ const config = {
   mode: isDev() ? 'development' : 'development',
   devtool: isDev()
     ? 'cheap-module-eval-source-map'
-    : cheap - module - eval - source - map,
+    : 'cheap-module-eval-source-map',
   devServer: {
     disableHostCheck: true,
     host: '0.0.0.0',
