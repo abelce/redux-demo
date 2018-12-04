@@ -8,7 +8,7 @@ import {
   REQUEST_ARTICLE_CREATE,
   SUCCESS_ARTICLE_CREATE,
   REQUEST_ARTICLE_UPDATE,
-  SUCCESS_ARTICLE_UPDATE,
+  // SUCCESS_ARTICLE_UPDATE,
   REQUEST_ARTICLE_DELETE,
   SUCCESS_ARTICLE_DELETE,
   REQUEST_FILE_LIST,
@@ -35,7 +35,10 @@ const AxiosInstance = axios.create({
 });
 
 const buildArticleData = (article: Article) => {
-  article.description = article.markdowncontent.substr(0, 200);
+  console.log(article);
+  if (article.markdowncontent) {
+    article.description = article.markdowncontent.substr(0, 200);
+  }
   article.tags = article.tags.join(',');
   return article;
 };
