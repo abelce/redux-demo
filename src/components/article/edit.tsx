@@ -69,7 +69,6 @@ class Edit extends React.Component<Iedit> {
 
   handleSave = () => {
     let markdowncontent = this.testEditor.getMarkdown();
-    console.log('markdowncontent', markdowncontent);
     this.props.form.setFieldsValue({ markdowncontent });
     setTimeout(() => {
       this.props.onSave(this.props.form);

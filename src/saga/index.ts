@@ -35,7 +35,6 @@ const AxiosInstance = axios.create({
 });
 
 const buildArticleData = (article: Article) => {
-  console.log(article);
   if (article.markdowncontent) {
     article.description = article.markdowncontent.substr(0, 200);
   }

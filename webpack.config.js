@@ -23,10 +23,8 @@ const hostMap = {
 };
 
 const config = {
-  mode: isDev() ? 'development' : 'development',
-  devtool: isDev()
-    ? 'cheap-module-eval-source-map'
-    : 'cheap-module-eval-source-map',
+  mode: isDev() ? 'development' : 'production',
+  devtool: isDev() ? 'cheap-module-eval-source-map' : false,
   devServer: {
     disableHostCheck: true,
     host: '0.0.0.0',
@@ -165,7 +163,7 @@ const config = {
     extensions: ['.js', '.tsx', '.ts', '.scss'],
   },
   optimization: {
-    minimize: isDev() ? false : false,
+    minimize: isDev() ? false : true,
     // runtimeChunk: true,
     splitChunks: {
       chunks: 'initial',

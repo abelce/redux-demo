@@ -45,10 +45,8 @@ class NormalLoginForm extends React.Component {
 
   handleBlur = type => {
     const { getFieldValue } = this.props.form;
-    // console.log(getFieldValue(type));
     if (getFieldValue(type)) {
       let after = window.getComputedStyle(this[type].current, ':after');
-      // console.log(after.getPropertyValue('top'));
       after.setProperty('top', '-20');
     }
   };
