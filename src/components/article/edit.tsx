@@ -20,13 +20,13 @@ class Edit extends React.Component<Iedit> {
     super(props);
     const { getFieldDecorator } = this.props.form;
     getFieldDecorator('tags');
+    getFieldDecorator('markdowncontent');
   }
 
   testEditor = null;
 
   componentDidMount() {
-    const { getFieldValue, getFieldDecorator } = this.props.form;
-    getFieldDecorator('markdowncontent');
+    const { getFieldValue } = this.props.form;
     this.testEditor = editormd('test-editormd', {
       width: '100%',
       height: '100%',
@@ -72,11 +72,13 @@ class Edit extends React.Component<Iedit> {
 
   handleSave = () => {
     let markdowncontent = this.testEditor.getMarkdown();
+    console.log('markdowncontent', markdowncontent);
     this.props.form.setFieldsValue({ markdowncontent });
     setTimeout(() => {
       this.props.onSave(this.props.form);
     }, 10);
   };
+
   render() {
     const {
       form: { getFieldDecorator },

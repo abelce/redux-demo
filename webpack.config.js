@@ -163,7 +163,7 @@ const config = {
     extensions: ['.js', '.tsx', '.ts', '.scss'],
   },
   optimization: {
-    minimize: isDev() ? false : true,
+    minimize: isDev() ? false : false,
     // runtimeChunk: true,
     splitChunks: {
       chunks: 'initial',
