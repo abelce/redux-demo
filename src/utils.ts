@@ -125,6 +125,11 @@ export const tags = [
     value: 'mac',
     label: 'mac',
   },
+  {
+    id: '22',
+    value: 'node',
+    label: 'node',
+  },
 ];
 
 export const LanguageMap = new Map([['zh', 'zh-CN'], ['en', 'en-US']]);
