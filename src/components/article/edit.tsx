@@ -18,9 +18,6 @@ interface Iedit {
 class Edit extends React.Component<Iedit> {
   constructor(props: Iedit) {
     super(props);
-    const { getFieldDecorator } = this.props.form;
-    getFieldDecorator('tags');
-    getFieldDecorator('markdowncontent');
   }
 
   testEditor = null;
@@ -83,6 +80,8 @@ class Edit extends React.Component<Iedit> {
     const {
       form: { getFieldDecorator },
     } = this.props;
+    getFieldDecorator('tags');
+    getFieldDecorator('markdowncontent');
     return (
       <div className={style.edit}>
         <header>
